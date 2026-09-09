@@ -1,8 +1,8 @@
-# 기록 형식
+# Record schema
 
-기록 파일은 `docs/ai-understanding/YYYY-MM-DD/<task-id>.md`에 둔다. 날짜는 실제 작업 날짜를 `YYYY-MM-DD`로 쓴다.
+Store each record at `docs/ai-understanding/YYYY-MM-DD/<task-id>.md`. Use the actual work date in `YYYY-MM-DD` form.
 
-맨 앞 YAML에는 아래 키가 모두 있어야 한다.
+The opening YAML must contain every key below.
 
 ```yaml
 task_id: short-kebab-case-id
@@ -18,17 +18,17 @@ execution_metadata:
   cost: unknown
 ```
 
-실행 도구가 신뢰할 수 있는 값을 직접 제공한 경우에만 `provider`, `model`, `turn`, `token`, `cost`를 바꾼다. 하나라도 알 수 없으면 그 항목은 `unknown`으로 남긴다. 현재 설정값이나 계정 전체 사용량으로 과거 실행 값을 추정하지 않는다.
+Change `provider`, `model`, `turn`, `token`, or `cost` only when the execution tool supplied that value reliably. Keep any unavailable value as `unknown`. Do not infer past execution values from the current configuration or account-wide usage.
 
-본문에는 다음 제목이 모두 있어야 한다.
+The body must include these headings:
 
-- `## 작업 목표`
-- `## 변경 파일`
-- `## 테스트 근거`
-- `## 핵심 설명`
-- `## 사용자 답변`
-- `## 이해 상태`
-- `## 남은 위험`
-- `## 다음 확인 항목`
+- `## Goal`
+- `## Changed Files`
+- `## Test Evidence`
+- `## Key Explanation`
+- `## User Response`
+- `## Understanding Status`
+- `## Remaining Risks`
+- `## Next Check`
 
-`follow_up_at`은 중요한 작업에서만 사람이 읽을 수 있는 날짜와 이유를 쓴다. 예: `2026-09-10, 2026-09-16 — authorization 경계 다시 설명`. 중요하지 않으면 `none`이다.
+Use `follow_up_at` only for important work. Include readable dates and a reason, for example: `2026-09-10, 2026-09-16 - explain the authorization boundary again`. Use `none` otherwise.

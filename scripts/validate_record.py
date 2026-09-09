@@ -11,14 +11,14 @@ STATUSES = {"confirmed", "needs_follow_up", "not_confirmed", "unknown"}
 RISK_LEVELS = {"low", "medium", "high"}
 METADATA_KEYS = ("provider", "model", "turn", "token", "cost")
 REQUIRED_SECTIONS = (
-    "작업 목표",
-    "변경 파일",
-    "테스트 근거",
-    "핵심 설명",
-    "사용자 답변",
-    "이해 상태",
-    "남은 위험",
-    "다음 확인 항목",
+    "Goal",
+    "Changed Files",
+    "Test Evidence",
+    "Key Explanation",
+    "User Response",
+    "Understanding Status",
+    "Remaining Risks",
+    "Next Check",
 )
 
 

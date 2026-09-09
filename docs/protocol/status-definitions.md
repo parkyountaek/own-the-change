@@ -1,10 +1,8 @@
-# 이해 상태 정의
+# Understanding status definitions
 
-| 상태값 | 뜻 | 사용할 때 |
-| --- | --- | --- |
-| `confirmed` | 사용자가 핵심 이유와 영향 또는 위험을 자기 말로 설명했고 큰 모순이 없다. | 사용자 답변과 변경 근거를 함께 확인했을 때만 사용한다. |
-| `needs_follow_up` | 일부 핵심 개념, 영향, 위험 설명이 빠졌다. | 빠진 내용과 다음 확인 행동을 기록한다. |
-| `not_confirmed` | 사용자가 답하지 않았거나 Understanding Check를 건너뛰었다. | 작업을 막지는 않지만 통과로 처리하지 않는다. |
-| `unknown` | 판정에 필요한 근거 또는 실행 메타데이터가 없다. | 추측으로 채우지 않는다. |
+- `confirmed`: The user explained the important reason, effect, or risk in their own words, and the actual change evidence supports that explanation.
+- `needs_follow_up`: The user answered, but an important gap remains. Record a concrete next check and, for high-risk work, a follow-up date.
+- `not_confirmed`: The user did not answer, or the conversation did not establish understanding. This is the default status.
+- `unknown`: Evidence is unavailable or cannot be trusted.
 
-테스트 성공, AI의 자기평가, 자신감 표현만으로 `confirmed`를 쓰면 안 된다. 검증기는 상태값의 철자와 필수 항목만 검사하며, 이해 여부를 판정하지 않는다.
+Passing tests, an agent's opinion, or a successful build never change the status to `confirmed` by themselves.

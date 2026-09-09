@@ -11,7 +11,7 @@ command=${1:-}
 
 case "$command" in
   claude-project)
-    printf '%s\n' "Run this from the repository root: claude --plugin-dir $root"
+    printf '%s\n' "Run this from the repository root: claude --plugin-dir $root/adapters/claude-code"
     ;;
   codex-project)
     if [ -L "$root/.agents/skills/own-the-change" ] && [ "$(readlink "$root/.agents/skills/own-the-change")" = "../../skills/own-the-change" ]; then

@@ -1,14 +1,14 @@
-# 설치 구조
+# Installation layout
 
-## 바로 쓸 수 있는 범위
+## Local use
 
-- Claude Code: 저장소 루트에서 `claude --plugin-dir .`
-- Codex: 저장소 루트의 `.agents/skills/own-the-change`을 자동 발견
-- Cursor: 저장소 루트의 `.cursor/skills/own-the-change`을 자동 발견
-- GitHub Copilot 등 Agent Skills 호환 도구: `.agents/skills/own-the-change`을 사용
+- Claude Code: `claude --plugin-dir adapters/claude-code`
+- Codex: automatically discovers `.agents/skills/own-the-change` at the repository root
+- Cursor: automatically discovers `.cursor/skills/own-the-change` at the repository root
+- GitHub Copilot and other Agent Skills-compatible tools: use `.agents/skills/own-the-change`
 
-이 저장소는 `skills/own-the-change/` 하나를 공통 skill으로 유지하고, 각 도구의 발견 경로에는 심볼릭 링크만 둔다. 학습 규칙 자체는 `docs/protocol/understanding-protocol.md` 한 곳에만 있다.
+The repository keeps one shared skill in `skills/own-the-change/`. Discovery paths are symbolic links only. The common rules live only in `docs/protocol/understanding-protocol.md`.
 
-## 아직 배포하지 않는 범위
+## Not published yet
 
-`.claude-plugin/marketplace.json`과 `.codex-plugin/plugin.json`은 나중에 공개 marketplace 배포를 준비하는 metadata다. 이 저장소는 현재 외부 게시나 push를 하지 않으며, 개발 중에는 위의 로컬 경로를 사용한다.
+`adapters/claude-code/.claude-plugin/marketplace.json` and `adapters/codex/.codex-plugin/plugin.json` are metadata for a possible future marketplace release. This repository currently does not publish or push externally; use the local paths above while developing.

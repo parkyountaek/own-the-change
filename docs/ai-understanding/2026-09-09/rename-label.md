@@ -12,28 +12,28 @@ execution_metadata:
   cost: unknown
 ---
 
-# 이해 기록: rename-label
+# Understanding record: rename-label
 
-## 작업 목표
-- 화면의 버튼 이름을 더 알기 쉽게 바꾼다.
+## Goal
+- Rename a button so its purpose is clearer.
 
-## 변경 파일
+## Changed Files
 - `src/labels.py`
 
-## 테스트 근거
-- `python3 -m unittest tests/test_labels.py -v`를 실행했고 통과했다.
+## Test Evidence
+- Ran `python3 -m unittest tests/test_labels.py -v`; it passed.
 
-## 핵심 설명
-- 버튼이 하는 일을 더 잘 드러내도록 표시 문구만 바꿨다. 동작 로직은 바꾸지 않았다.
+## Key Explanation
+- Changed only the displayed label to better describe the button. The behavior did not change.
 
-## 사용자 답변
-- 답변하지 않음.
+## User Response
+- No response.
 
-## 이해 상태
-- `not_confirmed`: 사용자의 설명이 없으므로 테스트 통과와 별개로 이해를 확인하지 못했다.
+## Understanding Status
+- `not_confirmed`: no user explanation was available, regardless of the passing test.
 
-## 남은 위험
-- 실제 화면에서 문구 길이가 잘리는지는 확인하지 않았다.
+## Remaining Risks
+- The label may still be clipped in the actual interface.
 
-## 다음 확인 항목
-- 화면을 열어 문구가 잘리지 않는지 확인한다.
+## Next Check
+- Open the interface and check that the label is visible.

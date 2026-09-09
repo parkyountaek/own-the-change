@@ -9,7 +9,7 @@ VALIDATOR = ROOT / "scripts" / "validate_record.py"
 
 
 def record(*, date="2026-09-09", status="not_confirmed", include_tests=True):
-    tests = "## 테스트 근거\n- `python3 -m unittest`를 실행했다.\n" if include_tests else ""
+    tests = "## Test Evidence\n- `python3 -m unittest` was run.\n" if include_tests else ""
     return f"""---
 task_id: sample-change
 date: {date}
@@ -24,29 +24,28 @@ execution_metadata:
   cost: unknown
 ---
 
-# 이해 기록: sample-change
+# Understanding record: sample-change
 
-## 작업 목표
-- 작은 변경을 이해한다.
+## Goal
+- Understand a small change.
 
-## 변경 파일
+## Changed Files
 - `src/example.py`
 
-{tests}
-## 핵심 설명
-- 입력을 받아 결과를 돌려준다.
+{tests}## Key Explanation
+- It accepts input and returns a result.
 
-## 사용자 답변
-- 답변하지 않음.
+## User Response
+- No response.
 
-## 이해 상태
-- not_confirmed: 사용자의 답변이 없다.
+## Understanding Status
+- not_confirmed: there is no user response.
 
-## 남은 위험
-- 실제 운영 환경은 확인하지 않았다.
+## Remaining Risks
+- The production environment was not checked.
 
-## 다음 확인 항목
-- 필요하면 다시 설명한다.
+## Next Check
+- Explain it again if needed.
 """
 
 
@@ -76,7 +75,7 @@ class ValidateRecordTests(unittest.TestCase):
     def test_rejects_missing_required_section(self):
         result = self.run_validator(record(include_tests=False))
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn("테스트 근거", result.stderr)
+        self.assertIn("Test Evidence", result.stderr)
 
     def test_rejects_invalid_or_mismatched_date(self):
         result = self.run_validator(record(date="09-09-2026"))

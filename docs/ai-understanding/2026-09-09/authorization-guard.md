@@ -3,7 +3,7 @@ task_id: authorization-guard
 date: 2026-09-09
 understanding_status: needs_follow_up
 risk_level: high
-follow_up_at: 2026-09-10, 2026-09-16 — authorization 경계를 다시 설명
+follow_up_at: 2026-09-10, 2026-09-16 - explain the authorization boundary again
 execution_metadata:
   provider: unknown
   model: unknown
@@ -12,29 +12,29 @@ execution_metadata:
   cost: unknown
 ---
 
-# 이해 기록: authorization-guard
+# Understanding record: authorization-guard
 
-## 작업 목표
-- 관리자만 설정을 바꿀 수 있게 한다.
+## Goal
+- Allow only administrators to change settings.
 
-## 변경 파일
+## Changed Files
 - `src/authz.py`
 - `tests/test_authz.py`
 
-## 테스트 근거
-- `python3 -m unittest tests/test_authz.py -v`를 실행했고 통과했다.
+## Test Evidence
+- Ran `python3 -m unittest tests/test_authz.py -v`; it passed.
 
-## 핵심 설명
-- 설정 변경 전에 사용자의 역할을 확인하는 보호 코드를 추가했다. 관리자가 아니면 변경 요청을 거절한다.
+## Key Explanation
+- Added a role check before a settings change. The request is rejected when the user is not an administrator.
 
-## 사용자 답변
-- “관리자가 아닌 사용자가 설정을 바꾸지 못하게 막는다”고 설명했다.
+## User Response
+- "It stops non-administrators from changing settings."
 
-## 이해 상태
-- `needs_follow_up`: 왜 화면 버튼을 숨기는 것만으로 충분하지 않은지, 서버 쪽 확인이 필요한 이유는 설명하지 못했다.
+## Understanding Status
+- `needs_follow_up`: the user did not explain why hiding a button is insufficient or why the server must enforce the rule.
 
-## 남은 위험
-- 실제 로그인 토큰이 잘못된 역할 정보를 담는 경우는 이 단위 테스트가 확인하지 못한다.
+## Remaining Risks
+- The unit test does not cover a real login token that contains an incorrect role.
 
-## 다음 확인 항목
-- 다음 날과 일주일 뒤에 화면 보호와 서버 보호의 차이를 코드 없이 설명한다.
+## Next Check
+- On the next day and one week later, explain the difference between interface protection and server protection without reading the code.

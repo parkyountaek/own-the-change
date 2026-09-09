@@ -6,6 +6,8 @@ ROOT = Path(__file__).resolve().parents[1]
 INSTALL = ROOT / "scripts" / "install-local.sh"
 SKILL = ROOT / "skills" / "own-the-change" / "SKILL.md"
 PROJECT_LINK = ROOT / ".agents" / "skills" / "own-the-change"
+CLAUDE_ADAPTER = ROOT / "adapters" / "claude-code"
+CODEX_ADAPTER = ROOT / "adapters" / "codex"
 
 
 class InstallLayoutTests(unittest.TestCase):
@@ -23,12 +25,12 @@ class InstallLayoutTests(unittest.TestCase):
         self.assertEqual(before, SKILL.parent.resolve())
         self.assertIn("already available", result.stdout)
 
-    def test_root_entry_points_and_discovery_links_exist(self):
-        self.assertTrue((ROOT / ".claude-plugin" / "plugin.json").is_file())
-        self.assertTrue((ROOT / ".claude-plugin" / "marketplace.json").is_file())
-        self.assertTrue((ROOT / ".codex-plugin" / "plugin.json").is_file())
-        self.assertTrue((ROOT / "commands" / "own-plan-check.md").is_file())
-        self.assertTrue((ROOT / "hooks" / "hooks.json").is_file())
+    def test_adapter_entry_points_and_discovery_links_exist(self):
+        self.assertTrue((CLAUDE_ADAPTER / ".claude-plugin" / "plugin.json").is_file())
+        self.assertTrue((CLAUDE_ADAPTER / ".claude-plugin" / "marketplace.json").is_file())
+        self.assertTrue((CODEX_ADAPTER / ".codex-plugin" / "plugin.json").is_file())
+        self.assertTrue((CLAUDE_ADAPTER / "commands" / "own-plan-check.md").is_file())
+        self.assertTrue((CLAUDE_ADAPTER / "hooks" / "hooks.json").is_file())
         self.assertTrue((ROOT / ".cursor" / "skills" / "own-the-change").is_symlink())
         self.assertEqual((ROOT / ".cursor" / "skills" / "own-the-change").resolve(), SKILL.parent.resolve())
 
@@ -38,7 +40,7 @@ class InstallLayoutTests(unittest.TestCase):
         self.assertIn("docs/protocol/understanding-protocol.md", content)
         self.assertIn("relative to this SKILL.md", content)
 
-    def test_claude_project_command_uses_repository_root(self):
+    def test_claude_project_command_uses_the_claude_adapter(self):
         result = subprocess.run(
             [str(INSTALL), "claude-project"],
             cwd=ROOT,
@@ -47,8 +49,7 @@ class InstallLayoutTests(unittest.TestCase):
             check=False,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("claude --plugin-dir " + str(ROOT), result.stdout)
-        self.assertNotIn("adapters/claude-code", result.stdout)
+        self.assertIn("claude --plugin-dir " + str(CLAUDE_ADAPTER), result.stdout)
 
 
 if __name__ == "__main__":

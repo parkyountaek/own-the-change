@@ -12,28 +12,28 @@ execution_metadata:
   cost: unknown
 ---
 
-# 이해 기록: replace-with-task-id
+# Understanding record: replace-with-task-id
 
-## 작업 목표
+## Goal
 - 
 
-## 변경 파일
+## Changed Files
 - 
 
-## 테스트 근거
-- 실제 실행한 명령과 결과만 쓴다.
+## Test Evidence
+- Write only commands that actually ran and their actual result.
 
-## 핵심 설명
-- 무엇을, 왜 바꿨는지 쉬운 말로 쓴다.
+## Key Explanation
+- Explain what changed and why in plain language.
 
-## 사용자 답변
-- 답변하지 않았으면 `답변하지 않음`이라고 쓴다.
+## User Response
+- Write `No response` when the user did not answer.
 
-## 이해 상태
-- `not_confirmed`: 답변이 없으면 통과로 처리하지 않는다.
+## Understanding Status
+- `not_confirmed`: do not treat a missing response as confirmation.
 
-## 남은 위험
+## Remaining Risks
 - 
 
-## 다음 확인 항목
+## Next Check
 - 

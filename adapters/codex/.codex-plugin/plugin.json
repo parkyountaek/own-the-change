@@ -18,7 +18,6 @@
       "Run a Change Debrief using the actual diff and test output.",
       "Help me explain this change in my own words."
     ],
-    "brandColor": "#69D6C3",
-    "logo": "./assets/logo.svg"
+    "brandColor": "#69D6C3"
   }
 }

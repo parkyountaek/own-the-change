@@ -1,68 +1,68 @@
-# 공통 이해 프로토콜
+# Understanding protocol
 
-## 목적과 범위
+## Purpose and scope
 
-이 문서는 Own The Change의 유일한 공통 학습 규칙 정본이다. Claude Code, Codex, 다른 에이전트는 이 문서를 참조하고 같은 규칙을 복사하지 않는다. 이 도구는 코드 작성·수정·품질 점수·PR 승인 도구가 아니다.
+This is the only source of common learning rules for Own The Change. Claude Code, Codex, and other agents must link here rather than copy the rules. This tool does not write or modify code, score code quality, or approve pull requests.
 
-## 시작 전: Plan Check
+## Before work: Plan Check
 
-작업을 시작하기 전에 에이전트는 목표를 쉬운 한국어 한두 문장으로 정리한다. 아래 질문을 최대 3개로 제시한다.
+Before work begins, summarize the goal in one or two plain English sentences. Ask no more than three questions:
 
-1. 바뀔 것 같은 파일 또는 동작은 무엇인가?
-2. 걱정되는 위험은 무엇인가?
-3. 어떤 테스트가 필요할 것 같은가?
+1. Which files or behavior may change?
+2. What risk matters most?
+3. Which test is likely needed?
 
-사용자가 답하지 않아도 작업을 막지 않는다. 기록에는 `not_confirmed` 또는 근거가 부족하면 `unknown`을 쓴다.
+Do not block work when the user does not answer. Record `not_confirmed`, or `unknown` when evidence is insufficient.
 
-## 작업 후: Change Debrief
+## After work: Change Debrief
 
-실제 `git diff`와 실제 테스트 결과만 근거로 짧게 설명한다. 다음 내용을 포함한다.
+Use only the actual `git diff` and actual test output. Explain:
 
-1. 무엇을 바꿨는가?
-2. 왜 바꿨는가?
-3. 어떤 파일이 영향을 받는가?
-4. 어떤 테스트를 실제로 실행했는가?
-5. 테스트가 보장하지 못하는 것은 무엇인가?
-6. 남은 위험 또는 미확인 항목은 무엇인가?
+1. What changed?
+2. Why did it change?
+3. Which files are affected?
+4. Which tests actually ran?
+5. What do those tests not prove?
+6. What remains unverified or risky?
 
-전체 코드를 되풀이하지 않는다. 핵심 동작 변경, 테스트, 부수 변경으로 나누어 한 번에 부담을 줄인다.
+Do not repeat the whole codebase. Separate core behavior, tests, and incidental changes.
 
 ## Understanding Check
 
-질문은 정답 맞히기 게임이 아니라 사용자의 설명을 듣는 자리다. 코드 화면을 보지 않고 자기 말로 설명할 수 있게 묻는다.
+This is a conversation, not a quiz. Ask the user to explain the change without reading the code.
 
-- `low`: 사실 확인 질문 1개
-- `medium`: 이유와 영향 질문 2개
-- `high`: 원인, 결과, 새 상황 적용 질문을 합쳐 최대 3개
+- `low`: one factual question
+- `medium`: two questions about reason and impact
+- `high`: at most three questions covering cause, consequence, and a new scenario
 
-답변에는 `현재 이해한 것`, `빠진 것`, `다음 확인 행동`을 구분해 짧고 구체적으로 답한다. 점수, 막연한 칭찬, AI의 자기평가는 쓰지 않는다.
+Respond with what is understood, what is missing, and the next check. Do not assign a score, offer vague praise, or treat the agent's self-assessment as evidence.
 
-## 상태 판정
+## Status
 
-정의는 [상태 정의](status-definitions.md)를 따른다. 사용자가 직접 답변하지 않았으면 절대 `confirmed`로 쓰지 않는다. 테스트 통과도 이해 확인이 아니다. 사용자의 답변과 실제 변경 근거가 있어야만 `confirmed`를 고려할 수 있다.
+Follow [status definitions](status-definitions.md). Never use `confirmed` without a direct user response. Passing tests does not confirm understanding. Consider `confirmed` only when the user's answer and the actual change evidence support it.
 
-## 기록과 복습
+## Records and follow-up
 
-[기록 형식](output-schema.md)과 템플릿을 사용해 `docs/ai-understanding/YYYY-MM-DD/<task-id>.md`에 기록한다. 실행 메타데이터가 신뢰할 수 있게 제공되지 않으면 `provider`, `model`, `turn`, `token`, `cost`는 모두 또는 해당 항목을 `unknown`으로 남긴다.
+Use the [record schema](output-schema.md) and the template to write `docs/ai-understanding/YYYY-MM-DD/<task-id>.md`. Leave unavailable `provider`, `model`, `turn`, `token`, and `cost` values as `unknown`.
 
-`authentication`, `authorization`, `payment`, `database migration`, `concurrency`, `deployment`, `external integration`처럼 중요한 변경만 `follow_up_at`에 다음 날과 일주일 뒤 확인 날짜를 적는다. 이 버전은 알림을 보내지 않는다.
+For high-risk changes such as `authentication`, `authorization`, `payment`, `database migration`, `concurrency`, `deployment`, or `external integration`, record next-day and one-week follow-up dates in `follow_up_at`. This version does not send reminders.
 
-## 개인정보과 안전
+## Privacy and safety
 
-원본 코드, 환경 변수, 비밀값, 전체 터미널 로그를 외부로 보내지 않는다. 별도 API Key를 요구하지 않는다. 자동 배포·자동 병합·자동 코드 수정은 하지 않는다. 에이전트가 보이는 현재 저장소의 diff와 사용자가 제공한 답변만 로컬 기록에 필요한 만큼 요약한다.
+Do not send source code, environment variables, secrets, or complete terminal logs outside the local environment. Do not require an API key. Do not deploy, merge, or modify code automatically. Store only the necessary local summary of the visible repository diff and the user's answer.
 
-## 읽기 쉬운 출력 형태
+## Readable output
 
-작업 중인 사용자가 다음 행동을 놓치지 않도록, 답변은 아래 형태를 우선한다.
+Use this shape to keep the next action visible:
 
-1. 첫 줄에 지금 할 수 있는 한 가지 행동 또는 현재 결론을 쓴다.
-2. 여러 단계가 필요하면 번호를 붙이고, 한 단계에는 한 행동만 둔다.
-3. 진행 중인 큰 작업은 현재 완료한 일과 바로 다음 일을 짧게 보인다.
-4. 목록이 길어지면 `지금 할 일`과 `나중에 볼 일`로 나눈다.
-5. 오류는 감탄이나 막연한 말 대신 원인, 영향, 다음 확인 행동을 쓴다.
+1. Put the current conclusion or one immediate action first.
+2. When there are several steps, number them and keep one action per step.
+3. For longer work, state what is complete and what comes next.
+4. Split long lists into `Now` and `Later`.
+5. For an error, state its cause, impact, and next check instead of adding filler.
 
-이 형태는 [i-have-adhd](https://github.com/ayghri/i-have-adhd)의 행동 우선·작은 단계·가시적 진행 원칙에서 영감을 받았다. Own The Change는 ADHD 진단이나 치료를 주장하지 않으며, 이 규칙은 누구나 긴 변경 설명을 따라가기 쉽게 하기 위한 제품 선택이다. 사용자가 자세한 설명을 요청하거나 안전 확인이 필요하면 짧게 만드는 규칙보다 설명과 안전을 우선한다.
+This format was inspired by the action-first, small-step, visible-progress principles in [i-have-adhd](https://github.com/ayghri/i-have-adhd). Own The Change does not diagnose or treat ADHD and does not copy that project's code or wording. Clear explanation and safety take priority when the user requests detail or the change needs careful review.
 
-## 연구와 제품 주장
+## Research and product claims
 
-학습 원리의 연구 근거와 이 도구의 적용 가설은 [학습 원리](../research/learning-principles.md)에 있다. 논문은 AI 코딩 도구의 효과를 보장하지 않는다. 이 제품에서의 효과는 확인이 필요한 적용 가설이다.
+The research basis and product hypotheses are in [learning principles](../research/learning-principles.md). The cited research does not guarantee that AI coding tools improve learning. Any effect in this product remains a hypothesis to test.
