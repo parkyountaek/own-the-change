@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Own The Change logo</title>
+  <desc id="desc">A dark circle containing a light blue change arrow and a small checked square.</desc>
+  <rect width="512" height="512" rx="112" fill="#17212b"/>
+  <path d="M132 202c17-68 78-117 150-117 51 0 97 25 124 65l-45 27c-18-27-47-44-79-44-43 0-80 27-94 65h48l-72 80-72-80h40z" fill="#77d9e8"/>
+  <path d="M380 310c-17 68-78 117-150 117-51 0-97-25-124-65l45-27c18 27 47 44 79 44 43 0 80-27 94-65h-48l72-80 72 80h-40z" fill="#f3bf61"/>
+  <rect x="218" y="218" width="76" height="76" rx="16" fill="#f7f4ed"/>
+  <path d="m235 255 15 15 29-31" fill="none" stroke="#17212b" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+</svg>
