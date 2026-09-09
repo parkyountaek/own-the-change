@@ -36,6 +36,7 @@ class InstallLayoutTests(unittest.TestCase):
         content = SKILL.read_text(encoding="utf-8")
         self.assertNotIn("$CLAUDE_PLUGIN_ROOT", content)
         self.assertIn("docs/protocol/understanding-protocol.md", content)
+        self.assertIn("relative to this SKILL.md", content)
 
     def test_claude_project_command_uses_repository_root(self):
         result = subprocess.run(
