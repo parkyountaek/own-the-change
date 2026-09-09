@@ -4,13 +4,34 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
-  test:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - run: python3 -m pip install -r requirements-dev.txt
+      - run: python3 -m ruff check scripts tests
+      - run: shellcheck scripts/install-local.sh adapters/claude-code/hooks/suggest-debrief.sh
+      - run: git diff --check
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ['3.11', '3.13']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
       - run: python3 -m unittest discover -s tests -v
-      - run: python3 scripts/validate_record.py docs/ai-understanding/*/*.md
+      - run: python3 scripts/validate_record.py docs/examples/records/*/*.md
+      - run: python3 scripts/build_plugins.py
+      - run: git diff --check

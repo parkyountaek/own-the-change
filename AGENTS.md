@@ -1,10 +1,7 @@
-# Repository rules
+# Repository development instructions
 
-- `docs/protocol/understanding-protocol.md` is the only source of common learning rules.
-- Agent-specific files link to that source and must not copy the common rules.
-- Do not present an explanation as fact without the actual `git diff` and execution output.
-- Without a user response, use `not_confirmed` or `unknown` for understanding status.
-- Passing tests or an agent self-assessment never justify `confirmed`.
-- Do not send source code, secrets, environment variables, or complete terminal logs outside this repository.
-- Automatic code changes, deployment, merge, and pull-request approval are out of scope.
-- After creating or changing a record, run `python3 scripts/validate_record.py <record>`.
+Read [the understanding protocol](docs/protocol/understanding-protocol.md) before running a checkpoint or changing learning behavior. It is the only source of common learning, record, and privacy rules; agent entry points must link to it instead of copying those rules.
+
+Write repository documentation, instructions, comments, examples, and test descriptions in English.
+
+For implementation changes, inspect the actual Git diff and run `python3 -m unittest discover -s tests -v`. Validate changed example records with `python3 scripts/validate_record.py <record>`. The protocol specifies the validation workflow for actual local records.

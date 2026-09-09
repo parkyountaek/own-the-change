@@ -1,5 +1,7 @@
+---
+description: Preview the likely scope, risks, and tests for a requested change.
+---
+
 # Plan Check
 
-Read `$CLAUDE_PLUGIN_ROOT/../../docs/protocol/understanding-protocol.md` first.
-
-For the requested task, state the goal in one or two plain English sentences. Ask at most three short questions: expected changed files or behavior, likely risk, and needed test. The user may skip them. Do not block the task or imply that understanding is confirmed.
+Run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/resolve_context.py" --target <current-working-directory>`. Read the reported protocol, including its **Runtime language** section, and follow **Before work: Plan Check**. Use the reported template, validator, and target record root.

@@ -1,0 +1,6 @@
+target-version = "py311"
+extend-exclude = ["dist"]
+
+[lint]
+# Catch common correctness issues without imposing a broad style rewrite.
+select = ["E4", "E7", "E9", "F"]

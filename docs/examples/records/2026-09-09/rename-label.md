@@ -1,9 +1,14 @@
 ---
 task_id: rename-label
 date: 2026-09-09
+record_kind: example
 understanding_status: not_confirmed
 risk_level: low
-follow_up_at: none
+user_response_status: not_answered
+evidence_status: available
+diff_scope: Fictional label change; no real Git diff was inspected
+follow_up_at: []
+follow_up_reason: none
 execution_metadata:
   provider: unknown
   model: unknown
@@ -13,6 +18,8 @@ execution_metadata:
 ---
 
 # Understanding record: rename-label
+
+Fictional example. All source paths, execution results, and user quotations below are illustrative, not actual evidence.
 
 ## Goal
 - Rename a button so its purpose is clearer.
@@ -27,10 +34,10 @@ execution_metadata:
 - Changed only the displayed label to better describe the button. The behavior did not change.
 
 ## User Response
-- No response.
+No response.
 
 ## Understanding Status
-- `not_confirmed`: no user explanation was available, regardless of the passing test.
+- `not_confirmed`: the user hasn't explained the change. Passing tests don't change that.
 
 ## Remaining Risks
 - The label may still be clipped in the actual interface.

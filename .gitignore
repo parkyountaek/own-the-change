@@ -1,4 +1,15 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.ruff_cache/
+.venv/
 .DS_Store
+
+# Actual learning records stay local; public fixtures live in docs/examples/records/.
+/docs/ai-understanding/
+
+# Rebuildable plugin packages; the maintained sources remain above.
+/dist/
+
+# Local review notes are not part of the published project.
+/.local-review/

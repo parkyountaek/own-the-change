@@ -1,3 +1,3 @@
 # Authentication and authorization example
 
-The [authorization-guard record](../ai-understanding/2026-09-09/authorization-guard.md) is a format-valid example. Important work records next-day and one-week follow-up dates in `follow_up_at`; an incomplete explanation remains `needs_follow_up`.
+The [authorization-guard record](records/2026-09-09/authorization-guard.md) is a fictional format example. Its tests and user response illustrate a scenario, not actual execution or learning evidence. Refer to the [canonical protocol](../protocol/understanding-protocol.md) for the decision rules.

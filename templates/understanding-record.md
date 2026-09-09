@@ -1,9 +1,14 @@
 ---
 task_id: replace-with-task-id
 date: YYYY-MM-DD
+record_kind: actual
 understanding_status: not_confirmed
 risk_level: low
-follow_up_at: none
+user_response_status: not_answered
+evidence_status: unavailable
+diff_scope: unknown
+follow_up_at: []
+follow_up_reason: none
 execution_metadata:
   provider: unknown
   model: unknown
@@ -15,25 +20,25 @@ execution_metadata:
 # Understanding record: replace-with-task-id
 
 ## Goal
-- 
+- TODO
 
 ## Changed Files
-- 
+- TODO
 
 ## Test Evidence
-- Write only commands that actually ran and their actual result.
+- TODO
 
 ## Key Explanation
-- Explain what changed and why in plain language.
+- TODO
 
 ## User Response
-- Write `No response` when the user did not answer.
+No response.
 
 ## Understanding Status
-- `not_confirmed`: do not treat a missing response as confirmation.
+- `not_confirmed`: no user explanation has been recorded.
 
 ## Remaining Risks
-- 
+- TODO
 
 ## Next Check
-- 
+- TODO

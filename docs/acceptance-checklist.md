@@ -1,0 +1,99 @@
+# Acceptance checklist
+
+This page records what has been tested and what still needs observation. The [canonical protocol](protocol/understanding-protocol.md) defines the learning rules; this checklist does not replace them. A passing test does not confirm a user's understanding.
+
+## Current verification
+
+Observed on macOS on 2026-09-09 and 2026-09-10, unless another environment is listed below. Host tests used fictional code in disposable Git repositories. They did not use private project code or establish anyone's understanding.
+
+| Area | Observed result | Limit |
+| --- | --- | --- |
+| Automated suite | All 65 tests passed after the final runtime fixes. | Structural and behavioral tests are not an agent or human assessment. |
+| Development lint | Ruff 0.16.6 and ShellCheck 0.11.0 passed with the pinned development requirements. | Lint does not prove runtime correctness. |
+| Package validation | Both packages build without symlinks or private records; the three public example records validate. Claude manifests and the Codex manifest/skill validators pass. | A valid manifest alone does not prove host discovery. |
+| Package portability | Both packages resolve a foreign nested Git target and validate a record after their original source snapshot is removed. | Host installation behavior needs a separate test. |
+| Claude Code 2.1.236 | All three commands ran through `--plugin-dir`. Interactive marketplace addition and project-scope installation succeeded; a new installed session completed a Korean debrief, four fixture tests, exact-path privacy checks, and record validation. | That local catalog remained available. Cache-only loading is unverified. |
+| Claude language and evidence | A conversation switched from Korean to English. Skipping questions kept `not_confirmed`; a stale-test probe kept the earlier pass historical and used `unknown`. Missing execution metadata stayed unknown. | These are bounded synthetic observations, not guarantees for every conversation. |
+| Claude Stop hook | The hook returned exit 0 and valid command-only `systemMessage` JSON during real sessions. A peer-run interactive launcher test observed the shortcut text in the terminal. | Display was checked by whitespace-insensitive matching of the PTY capture, not across every terminal or host version. |
+| Codex CLI 0.153.4 | The final package was installed through a temporary marketplace. From a nested target directory, all three checkpoints used the installed cache and saved valid records at the Git root. Plan/debrief prose was Korean; the Understanding Check followed an English preference and preserved the previous Korean record. | Questions were skipped; no actual user explanation was assessed. |
+| Codex cache-only loading | With the local marketplace source temporarily renamed, a new session used the installed cache, passed four fixture tests, and saved a valid Korean debrief. | `codex plugin list` failed while that local source was absent, although the session itself worked. Keep the catalog available for plugin management. |
+| Scope and privacy | Installed debriefs reported the exact record as untracked and not ignored, warned about publication, and left fixture source, tests, and Git ignore settings unchanged. Temporary test registrations were removed through each host's CLI. | These checks are not a security sandbox or a test of every sensitive-data scenario. |
+| Launcher | Seven automated tests cover the lifecycle and errors. A peer-run interactive session started, displayed all three slash commands, began a debrief, and exited with code 0; its temporary package was removed. | The debrief reached the normal tool-permission prompt, which was canceled. This wrapper test did not complete a record roundtrip. SIGKILL can leave temporary files. |
+
+The Codex Plan Check distinguished its proposed change from existing edits and did not implement it. Its existing tests were not presented as proof of the proposed behavior. Installed Understanding Checks rejected passing tests as a substitute for an answer. All no-answer records remained `not_confirmed`, with the five unavailable metadata fields set to `unknown`.
+
+The Claude installed debrief preceded the final wording and status-punctuation changes; its manifests were revalidated after those changes. The final Codex checkpoint and cache-only sessions used the revised runtime files. Neither test was an installation of a published release.
+
+### Local platform matrix
+
+All 65 tests passed in each environment after the runtime fixes:
+
+| Environment | Python |
+| --- | --- |
+| macOS | 3.11.11 |
+| macOS | 3.13.14 |
+| Debian Linux arm64 container | 3.11.16 |
+| Debian Linux arm64 container | 3.13.15 |
+
+The containers used a read-only source snapshot without original Git history or private records, and no runtime network. This local matrix is separate from the Ubuntu/macOS GitHub Actions matrix. Check [CI results](https://github.com/parkyountaek/own-the-change/actions/workflows/test.yml) for the exact commit you plan to use.
+
+Native Windows, WSL, Cursor, Copilot, and generic-agent runtime sessions are not claimed as tested.
+
+## Reproduce the checks
+
+From the source checkout:
+
+```sh
+python3 -m unittest discover -s tests -v
+python3 scripts/validate_record.py docs/examples/records/*/*.md
+python3 scripts/build_plugins.py --output /path/to/new-build
+git diff --check
+```
+
+See [CONTRIBUTING.md](../CONTRIBUTING.md) for pinned lint commands and the [host smoke test](host-smoke-test.md) for a fictional target, installation steps, and permission guidance. Use a new build path each time.
+
+| Test file | Coverage |
+| --- | --- |
+| `test_validate_record.py` | Status/response/evidence consistency, required sections, YAML scalars, status punctuation, actual/example separation, and follow-up dates |
+| `test_resolve_context.py` | Foreign nested targets, source aliases, exact record tracking/ignore checks, external links, and path conflicts |
+| `test_build_plugins.py` | Complete packages, private-input exclusion, source independence, safe output handling, and normalized POSIX permissions |
+| `test_install_layout.py` | Discovery links, repeat installation/removal, foreign-file protection, and setup hints |
+| `test_launch_claude.py` | Launcher lifecycle, prerequisites, invocation forms, arguments, signals, and cleanup |
+| `test_repository_content.py` | Maintained English text, local Markdown links, and the four-case smoke fixture |
+| `test_runtime_language.py` | Localized record prose, original answers, and follow-up reasons with stable schema identifiers |
+
+The validator checks structure and consistency. It cannot authenticate a quotation, determine whether a test really ran, or judge whether an answer demonstrates understanding.
+
+## Remaining host checks
+
+These are additional acceptance scenarios, not claims of completed testing:
+
+- [ ] Claude: test resource loading with the original local catalog unavailable.
+- [ ] Complete a debrief through the interactive launcher after the tester grants its required evidence/record permissions. Discovery, invocation, shortcut display, and cleanup are already observed; the separately installed headless flow completed the record roundtrip.
+- [ ] Exercise already-committed changes, mixed task history, and real already-tracked records in host sessions. Staged/unstaged synthetic changes and path checks are covered, but not every scope combination.
+- [ ] Observe missing and failing test evidence in separate fresh sessions. Stale-evidence handling has been observed; it is not a substitute for both scenarios.
+- [ ] Observe reuse of a real user's supplied answer without repeating the question.
+- [ ] Observe low-, medium-, and high-risk answers, specific gap feedback, and transfer to a related example with a participating user.
+
+Use only synthetic, non-sensitive fixtures for automated host probes. Role-play answers must remain labeled as examples and cannot close the real-user rows.
+
+## Delayed learning check
+
+With a participating user, revisit an important actual change on its recorded follow-up dates. Ask why the change was needed, what could fail, and where they would start a small related repair. Record only the actual answer and any gaps.
+
+- [ ] D+1: actual recall and a concrete next check recorded.
+- [ ] D+7: actual recall and a related-maintenance direction recorded.
+
+No delayed session has been observed. The user need not implement a repair, and an unobserved session stays unobserved.
+
+## Distribution and community readiness
+
+The MIT-licensed source and local installation methods are available for experimentation. Use generated packages, not source adapter directories, for plugin installation.
+
+Before a tagged release or broader community launch:
+
+- [ ] Verify a working private vulnerability-reporting channel; see [SECURITY.md](../SECURITY.md).
+- [ ] Establish a private conduct-reporting contact and an alternative for complaints involving a maintainer; see [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md).
+- [ ] Choose and authorize the release version and distribution destination, then follow the [release checklist](releasing.md).
+
+These maintainer decisions and real-user learning checks cannot be completed by marking boxes after automated tests.

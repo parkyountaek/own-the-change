@@ -1,5 +1,7 @@
+---
+description: Explain a completed change using its actual Git diff and test results.
+---
+
 # Change Debrief
 
-Read `$CLAUDE_PLUGIN_ROOT/../../docs/protocol/understanding-protocol.md` first.
-
-Inspect the current repository's actual `git diff` and actual test output. Explain in plain English what changed, why, affected files, tests that actually ran, what the tests do not guarantee, and remaining risks. Separate core behavior, tests, and incidental changes. Do not invent test results or execution metadata.
+Run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/resolve_context.py" --target <current-working-directory>`. Read the reported protocol, including its **Runtime language** section, and follow **After work: Change Debrief**. Use the reported template, validator, and target record root.

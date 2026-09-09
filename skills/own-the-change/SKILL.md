@@ -1,10 +1,10 @@
 ---
 name: own-the-change
-description: Run a local-first Plan Check, Change Debrief, or Understanding Check for AI-made code changes. Use actual local diff and test evidence only. Do not auto-edit code, score the user, approve a PR, or send repository data externally.
+description: Run a Plan Check, Change Debrief, or Understanding Check for AI-generated code changes and save a local learning record. Use when the user requests a checkpoint or an Own The Change workflow.
 ---
 
-First locate `docs/protocol/understanding-protocol.md` relative to this SKILL.md: it is two directories above this file, then under `docs/protocol/`. It is the only common learning-rule source. This matters when the skill is installed for a user but the current working directory is another project.
+Resolve this SKILL.md's real path first, following symbolic links (for example with Python `pathlib.Path(...).resolve()`). The resolved file is `<resource-root>/skills/own-the-change/SKILL.md`, in either the source checkout or an installed package. Resolve resources from that root, not from a discovery alias or the target working directory.
 
-Use a checkpoint only when the user requests it or explicitly invokes this skill. Keep the answer action-first: show the current conclusion or next small action first, then use numbered steps when needed. For a Change Debrief, inspect the current target repository's actual `git diff` and actual test output. Do not invent test results or execution metadata.
+Read `<resource-root>/docs/protocol/understanding-protocol.md`, including **Runtime language**, and use the sections relevant to the requested checkpoint. This is the only source of learning rules, record requirements, and privacy behavior.
 
-The target repository is the current working directory. Write its record to `docs/ai-understanding/YYYY-MM-DD/<task-id>.md`. Read the template and run the validator from this skill's repository, also two directories above this SKILL.md: `templates/understanding-record.md` and `scripts/validate_record.py`. Never use `confirmed` without a user answer that explains the important reason and impact or risk. Keep unavailable provider, model, turn, token, and cost values as `unknown`.
+Run `python3 <resource-root>/scripts/resolve_context.py --target <current-working-directory>` to get the target Git root and absolute protocol, template, validator, and record-root paths. Use those bundled resources even when the target is another repository.

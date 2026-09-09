@@ -1,9 +1,16 @@
 ---
 task_id: authorization-guard
 date: 2026-09-09
+record_kind: example
 understanding_status: needs_follow_up
 risk_level: high
-follow_up_at: 2026-09-10, 2026-09-16 - explain the authorization boundary again
+user_response_status: answered
+evidence_status: available
+diff_scope: Fictional authorization change; no real Git diff was inspected
+follow_up_at:
+  - 2026-09-10
+  - 2026-09-16
+follow_up_reason: Review why the server must check permissions
 execution_metadata:
   provider: unknown
   model: unknown
@@ -13,6 +20,8 @@ execution_metadata:
 ---
 
 # Understanding record: authorization-guard
+
+Fictional example. All source paths, execution results, and user quotations below are illustrative, not actual evidence.
 
 ## Goal
 - Allow only administrators to change settings.
@@ -37,4 +46,4 @@ execution_metadata:
 - The unit test does not cover a real login token that contains an incorrect role.
 
 ## Next Check
-- On the next day and one week later, explain the difference between interface protection and server protection without reading the code.
+- Tomorrow and a week from now, explain why hiding a button in the UI cannot replace a permission check on the server. Try without looking at the code.
