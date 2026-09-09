@@ -1,0 +1,8 @@
+{
+  "name": "own-the-change",
+  "version": "0.1.0",
+  "description": "Local-first learning checks for understanding AI coding changes.",
+  "author": {"name": "Own The Change contributors"},
+  "license": "MIT",
+  "keywords": ["learning", "local-first", "change-debrief"]
+}
