@@ -7,8 +7,11 @@ Own The Change는 서버 없이 저장소 안에서만 동작하는 학습 보�
 ## 구성
 
 - `docs/protocol/understanding-protocol.md`: 모든 에이전트가 따라야 하는 유일한 공통 학습 규칙 정본이다.
-- `adapters/claude-code/`: Claude Code plugin 형식의 얇은 연결층이다.
-- `adapters/codex/`: Codex가 읽는 `.agents/skills/` 연결층이다.
+- `skills/own-the-change/`: Claude Code, Codex, Cursor, Copilot 등에서 공유하는 단일 skill 연결층이다. 공통 규칙은 복사하지 않는다.
+- `.claude-plugin/`, `commands/`, `hooks/`: Claude Code plugin manifest와 명시 command, 선택형 알림 hook이다.
+- `.codex-plugin/`, `.agents/skills/`: Codex plugin metadata와 프로젝트 범위 skill 발견 경로다.
+- `.cursor/skills/`: Cursor가 같은 공통 skill을 찾는 경로다.
+- `adapters/`: 도구별 연결 방식을 설명하는 얇은 안내 파일이다.
 - `adapters/generic/`: 다른 도구가 정본을 읽도록 하는 안내 파일이다.
 - `templates/understanding-record.md`: 사람과 도구가 함께 쓰는 기록 양식이다.
 - `scripts/validate_record.py`: 기록의 형식만 결정론적으로 검사한다. 이해도를 판단하지 않는다.

@@ -2,7 +2,7 @@
 set -eu
 
 usage() {
-  printf '%s\n' 'Usage: scripts/install-local.sh claude-project|codex-project|codex-user|remove-codex-project|remove-codex-user'
+  printf '%s\n' 'Usage: scripts/install-local.sh claude-project|codex-project|codex-user|remove-codex-user'
   exit 2
 }
 
@@ -11,22 +11,20 @@ command=${1:-}
 
 case "$command" in
   claude-project)
-    printf '%s\n' "Run this from the repository root: claude --plugin-dir $root/adapters/claude-code"
+    printf '%s\n' "Run this from the repository root: claude --plugin-dir $root"
     ;;
   codex-project)
-    mkdir -p "$root/.agents/skills"
-    ln -sfn "$root/adapters/codex/.agents/skills/own-the-change" "$root/.agents/skills/own-the-change"
-    printf '%s\n' "Installed project skill: $root/.agents/skills/own-the-change"
+    if [ -L "$root/.agents/skills/own-the-change" ] && [ "$(readlink "$root/.agents/skills/own-the-change")" = "../../skills/own-the-change" ]; then
+      printf '%s\n' "Project skill already available: $root/.agents/skills/own-the-change"
+    else
+      printf '%s\n' "Project skill is missing or changed; restore the tracked .agents/skills/own-the-change link." >&2
+      exit 1
+    fi
     ;;
   codex-user)
     mkdir -p "$HOME/.agents/skills"
-    ln -sfn "$root/adapters/codex/.agents/skills/own-the-change" "$HOME/.agents/skills/own-the-change"
+    ln -sfn "$root/skills/own-the-change" "$HOME/.agents/skills/own-the-change"
     printf '%s\n' "Installed user skill: $HOME/.agents/skills/own-the-change"
-    ;;
-  remove-codex-project)
-    rm -f "$root/.agents/skills/own-the-change"
-    rmdir "$root/.agents/skills" 2>/dev/null || true
-    rmdir "$root/.agents" 2>/dev/null || true
     ;;
   remove-codex-user)
     rm -f "$HOME/.agents/skills/own-the-change"

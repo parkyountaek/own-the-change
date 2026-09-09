@@ -50,8 +50,9 @@ Plan Check ──→ AI coding ──→ Change Debrief ──→ Understanding 
 
 | 도구 | 제공 방식 | 명시 호출 |
 | --- | --- | --- |
-| Claude Code | plugin manifest, commands, skill, 선택형 Stop hook | `/own-plan-check`, `/own-change-debrief`, `/own-understanding-check` |
-| Codex CLI | `.agents/skills/` skill | `$own-the-change` 또는 checkpoint 요청 |
+| Claude Code | 루트 plugin manifest, commands, skill, 선택형 Stop hook | `/own-plan-check`, `/own-change-debrief`, `/own-understanding-check` |
+| Codex CLI | `.agents/skills/`와 `.codex-plugin/` | `$own-the-change` 또는 checkpoint 요청 |
+| Cursor · Copilot | 공통 skill을 가리키는 발견 경로 | 도구의 skill 선택 화면 또는 자연어 요청 |
 | 다른 에이전트 | 범용 안내 파일 | `adapters/generic/AGENT-INSTRUCTIONS.md` 제공 |
 
 ## 설치와 제거
@@ -69,7 +70,7 @@ python3 scripts/validate_record.py docs/ai-understanding/*/*.md
 프로젝트에서 먼저 시험할 때는 저장소 루트에서 실행합니다.
 
 ```sh
-claude --plugin-dir adapters/claude-code
+claude --plugin-dir .
 ```
 
 세션 안에서 다음 command를 호출합니다.
@@ -84,7 +85,7 @@ claude --plugin-dir adapters/claude-code
 
 ### Codex CLI
 
-프로젝트 범위 설치는 이 저장소에서만 보입니다.
+Codex는 저장소 루트의 `.agents/skills/own-the-change`을 자동으로 찾습니다. 이 경로는 공통 skill인 `skills/own-the-change/`을 가리키는 심볼릭 링크입니다. 따라서 이 저장소 안에서는 별도 설치가 필요 없습니다.
 
 ```sh
 scripts/install-local.sh codex-project
@@ -96,10 +97,9 @@ scripts/install-local.sh codex-project
 scripts/install-local.sh codex-user
 ```
 
-제거합니다.
+제거는 사용자 범위 설치에만 필요합니다.
 
 ```sh
-scripts/install-local.sh remove-codex-project
 scripts/install-local.sh remove-codex-user
 ```
 
@@ -134,13 +134,20 @@ python3 scripts/validate_record.py docs/ai-understanding/YYYY-MM-DD/<task-id>.md
 ## 저장소 구조
 
 ```text
-adapters/       Claude Code, Codex, 범용 연결층
-docs/protocol/  공통 학습 규칙과 기록 형식 정본
-docs/research/  학습 원리, 논문 근거, 제품 적용 가설
+.claude-plugin/  Claude Code plugin manifest와 local marketplace metadata
+.codex-plugin/   Codex plugin manifest
+.agents/skills/  Codex·Copilot 호환 프로젝트 범위 skill 링크
+.cursor/skills/  Cursor 호환 프로젝트 범위 skill 링크
+commands/        Claude Code 명시 command
+hooks/           사용자가 답하지 않으면 상태를 바꾸지 않는 선택형 hook
+skills/          모든 도구가 공유하는 단일 skill
+adapters/       도구별 연결 방식 설명 (공통 규칙 복사 금지)
+docs/protocol/   공통 학습 규칙과 기록 형식 정본
+docs/research/   학습 원리, 논문 근거, 제품 적용 가설
 docs/ai-understanding/  날짜별 이해 기록
-templates/      기록 템플릿
-scripts/        설치 도구와 결정론적 기록 검증기
-tests/          검증기 테스트
+templates/       기록 템플릿
+scripts/         설치 도구와 결정론적 기록 검증기
+tests/           검증기와 설치 구조 테스트
 ```
 
 자세한 구조와 일부러 만들지 않은 기능은 [architecture.md](docs/architecture.md)에 있습니다.

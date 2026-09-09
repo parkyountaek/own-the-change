@@ -1,0 +1,14 @@
+{
+  "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
+  "name": "own-the-change",
+  "description": "Local-first learning checks that help developers understand AI coding changes.",
+  "owner": {"name": "Own The Change contributors"},
+  "plugins": [
+    {
+      "name": "own-the-change",
+      "description": "Plan Check, Change Debrief, and Understanding Check for local repositories.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
