@@ -2,7 +2,7 @@
 
 ## Unreleased - 0.2.0 development
 
-This version has not been tagged or released. See the [acceptance checklist](docs/acceptance-checklist.md) for tested installation methods and known limits.
+No tag or GitHub release has been created. Development packages are available through this repository's Claude and Codex marketplaces. See the [acceptance checklist](docs/acceptance-checklist.md) for tested installation methods and known limits.
 
 ### Added
 

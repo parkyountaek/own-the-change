@@ -13,7 +13,7 @@ Observed on macOS on 2026-09-09 and 2026-09-10, unless another environment is li
 | Package validation | Both packages build without symlinks or private records; the three public example records validate. Claude manifests and the Codex manifest/skill validators pass. | A valid manifest alone does not prove host discovery. |
 | Package portability | Both packages resolve a foreign nested Git target and validate a record after their original source snapshot is removed. | Host installation behavior needs a separate test. |
 | Claude Code 2.1.236 | All three commands ran through `--plugin-dir`. Interactive marketplace addition and project-scope installation succeeded; a new installed session completed a Korean debrief, four fixture tests, exact-path privacy checks, and record validation. | That local catalog remained available. Cache-only loading is unverified. |
-| Repository-root Claude marketplace | On 2026-09-10, Claude Code 2.1.236 validated the root catalog and tracked package. With a disposable `CLAUDE_CONFIG_DIR`, CLI catalog addition and user-scope installation succeeded. `plugin details` discovered all three checkpoint commands, the shared skill, and the Stop hook. | This used a temporary local copy of the candidate. Installation from the public GitHub branch remains untested until publication. No new model conversation was run. |
+| Repository-root Claude marketplace | On 2026-09-10, Claude Code 2.1.236 validated the root catalog and tracked package. With a disposable `CLAUDE_CONFIG_DIR`, CLI catalog addition and user-scope installation succeeded. `plugin details` discovered all three checkpoint commands, the shared skill, and the Stop hook. | The first test used a temporary local copy. The published GitHub route was subsequently verified below. No new model conversation was run. |
 | Repository-root Codex marketplace | On 2026-09-10, Codex CLI 0.153.4 added the local repository marketplace, installed version 0.2.0, and listed it as enabled from `plugins/own-the-change/` in a disposable configuration. The native manifest passed the Plugin Creator validator. | This verifies local catalog discovery and copied installation, not a new model conversation or the remote GitHub route. |
 | Claude installed-cache helpers | With that temporary catalog moved away, the installed resolver found its bundled protocol, template, and validator and resolved a separate Git target. The cached Stop script returned valid shortcut JSON. | `plugin details` failed while the local catalog was absent and succeeded after restoration. Direct helper checks do not establish cache-only loading in a model session. |
 | Claude language and evidence | A conversation switched from Korean to English. Skipping questions kept `not_confirmed`; a stale-test probe kept the earlier pass historical and used `unknown`. Missing execution metadata stayed unknown. | These are bounded synthetic observations, not guarantees for every conversation. |
@@ -27,7 +27,18 @@ The Codex Plan Check distinguished its proposed change from existing edits and d
 
 The Claude installed debrief preceded the final wording and status-punctuation changes; its manifests were revalidated after those changes. The final Codex checkpoint and cache-only sessions used the revised runtime files. Neither test was an installation of a published release.
 
-The marketplace packaging change also passed Ruff 0.16.6, ShellCheck 0.11.0, distribution synchronization, and validation of all three example records. A local `file://` Git URL probe was rejected by Claude's source parser; it is not an installation route documented for users here. The GitHub source must be verified separately after the candidate is pushed.
+The marketplace packaging change also passed Ruff 0.16.6, ShellCheck 0.11.0, distribution synchronization, and validation of all three example records. A local `file://` Git URL probe was rejected by Claude's source parser; it is not an installation route documented for users here.
+
+### Published GitHub installation
+
+On 2026-09-10, commit [44b6b0f](https://github.com/parkyountaek/own-the-change/commit/44b6b0fbd620e7244177ead506364e761a097b92) was pushed to `main` after an independent subagent review found no actionable defects. That reviewer also passed all 72 tests, the sync check, and Claude validation. The commit's [GitHub Actions run](https://github.com/parkyountaek/own-the-change/actions/runs/34434988526) passed lint and all four Ubuntu/macOS Python 3.11/3.13 test jobs, including builds, example validation, and distribution checks.
+
+Fresh temporary configurations installed directly from the published GitHub repository without a manual source clone or build:
+
+- Claude Code 2.1.236: `claude plugin marketplace add parkyountaek/own-the-change`, then `claude plugin install own-the-change@own-the-change --scope user`. The CLI listed version 0.2.0 as enabled and discovered the three commands, shared skill, and Stop hook.
+- Codex CLI 0.153.4: `codex plugin marketplace add parkyountaek/own-the-change`, then `codex plugin add own-the-change@own-the-change`. The CLI listed version 0.2.0 as installed and enabled from the GitHub marketplace, using the native package.
+
+Both downloaded marketplace snapshots resolved to the tested commit. Installed package contents matched the committed distributions; Claude additionally created its `.in_use` cache marker. Both installed resolvers located their bundled resources and a separate synthetic Git target. These checks establish installation and resource availability, not a new model conversation or an assessment of user understanding. Normal user profiles were not modified.
 
 ### Local platform matrix
 
