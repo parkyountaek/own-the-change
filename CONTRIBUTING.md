@@ -77,4 +77,10 @@ Reuse an existing development environment if preferred. `shellcheck-py` is a [th
 - Update [CHANGELOG.md](CHANGELOG.md) for user-visible behavior and [the acceptance checklist](docs/acceptance-checklist.md) when evidence changes.
 - Follow [the release checklist](docs/releasing.md) for distribution work. A contribution does not authorize publication or installation on another person's machine.
 
+### AI-assisted contributions
+
+AI-assisted contributions are welcome. Describe meaningful AI assistance in your pull request, check the actual diff, and report the checks you ran. Do not describe an agent's review as independent human review.
+
+Keep your human author identity. When Codex materially assists a commit, use the [documented Codex co-author trailer](CONTRIBUTORS.md#ai-development-assistance), separated from the commit body by a blank line. Preserve existing authors and trailers, do not attribute unrelated work to an agent, and do not rewrite published history just to add credit. For other tools, disclose their involvement without guessing a GitHub account or email.
+
 Contributions use the repository's [MIT license](LICENSE). You don't need to sign a separate contributor agreement or create an account with another service. Maintainers cannot guarantee response times.

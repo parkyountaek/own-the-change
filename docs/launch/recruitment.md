@@ -2,6 +2,8 @@
 
 Drafts only. Nothing on this page indicates that a community post, message, or vendor submission was sent. Check each community's rules and finish the private conduct-reporting setup in the [release checklist](../releasing.md) before broader outreach.
 
+For the campaign image, shorter social copy, and a small launch sequence, use the [sharing kit](media-kit.md). The [GitHub announcement copy](github-announcement.md) is maintained separately; a source file alone is not evidence of publication.
+
 ## Short post
 
 Your AI changed the code. Can you explain why?

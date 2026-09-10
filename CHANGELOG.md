@@ -6,6 +6,7 @@ No tag or GitHub release has been created. Development packages are available th
 
 ### Added
 
+- A README campaign image, live test badge, sharing kit, and explicit Codex development credit with co-author guidance for new assisted commits.
 - Three native Codex checkpoint skills with picker labels and starter prompts. Use `/skills` to choose an action without writing a long prompt.
 - A runnable synthetic demo, a short reading walkthrough, and optional first-use feedback and launch drafts.
 - Contributor attribution, newcomer contribution ideas, code ownership, and support routes.

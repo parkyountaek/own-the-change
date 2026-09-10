@@ -1,8 +1,8 @@
 <h1 align="center">Own The Change</h1>
 
-<p align="center">
-  Your AI changed the code. Can you explain why?
-</p>
+![Own The Change: Your AI changed the code. Can you explain why? A code diff becomes an annotated note. For Claude Code and Codex.](docs/assets/own-the-change-social.jpg)
+
+[![Tests](https://github.com/parkyountaek/own-the-change/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/parkyountaek/own-the-change/actions/workflows/test.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-69D6C3?labelColor=101D1A)](LICENSE) [![Built with Codex](https://img.shields.io/badge/built_with-Codex-69D6C3?labelColor=101D1A)](CONTRIBUTORS.md#ai-development-assistance)
 
 <p align="center">
   Claude Code - Codex CLI - local Markdown records - no server to run - no extra API key
@@ -12,7 +12,10 @@ Turn an AI-generated diff into an explanation you can use in a pull request or y
 
 Start with a **Change Debrief** after one coding task. Questions are optional; no score or approval gate.
 
-[45-second walkthrough](docs/demo.md) · [Install for Claude](#claude-code) · [Install for Codex](#codex-cli) · [Update an existing install](docs/updating.md) · [Share feedback](docs/launch/early-access.md)
+[Install for Claude](#claude-code) · [Install for Codex](#codex-cli) · [45-second walkthrough](docs/demo.md) · [Update](docs/updating.md) · [Feedback](docs/launch/early-access.md) · [Share](docs/launch/media-kit.md)
+
+<details>
+<summary>See what a Change Debrief adds to a two-line diff</summary>
 
 ```diff
  def display_name(value):
@@ -23,6 +26,8 @@ Start with a **Change Debrief** after one coding task. Questions are optional; n
 > **An explanation worth keeping:** This also changes whitespace *inside* a name, not just at its edges. Four fixture tests cover surrounding, repeated, empty, and nonbreaking whitespace. They do not establish that changing a user's preferred spacing is acceptable. Start a related fix in `display_name` and add the missing product case.
 
 Illustrative debrief of a [runnable synthetic fixture](docs/demo.md#try-the-real-workflow). This is not a live AI transcript or evidence of anyone's understanding.
+
+</details>
 
 <details>
 <summary>Why Own The Change?</summary>
@@ -398,9 +403,15 @@ The first version includes local records, format validation, Claude Code and Cod
 
 Use the [acceptance checklist](docs/acceptance-checklist.md) to distinguish automated structural checks from real agent sessions and delayed user recall that still need observation.
 
+## Help shape the project
+
+Try a [small synthetic change](docs/demo.md), then tell us where installation or the debrief felt useful or confusing. The [first-use trial](docs/launch/early-access.md) asks for one task and an optional return visit, not your source code or private records.
+
+You can [join a discussion](https://github.com/parkyountaek/own-the-change/discussions), [make a first contribution](CONTRIBUTING.md#good-first-contributions), or [share the project](docs/launch/media-kit.md) with someone who reviews AI-generated code. Star the repository if you want to find it again; use GitHub's Watch menu for the notifications you want.
+
 ## License
 
-Built and maintained by [@parkyountaek](https://github.com/parkyountaek), with contributions welcome. See [contributors](CONTRIBUTORS.md), [good first contributions](CONTRIBUTING.md#good-first-contributions), and [support](SUPPORT.md).
+Created and maintained by [@parkyountaek](https://github.com/parkyountaek), with AI development assistance from **OpenAI Codex**. See [contributors and attribution](CONTRIBUTORS.md) for the distinction between human ownership and AI assistance. This is an independent community project, not an official OpenAI or Anthropic plugin.
 
 For contributions and development-only lint, see [CONTRIBUTING.md](CONTRIBUTING.md). Community participation follows [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md); software vulnerability reports follow [SECURITY.md](SECURITY.md). GitHub private vulnerability reporting is enabled; a separate private conduct-reporting contact is still needed. User-visible changes and release preparation are tracked in [CHANGELOG.md](CHANGELOG.md) and the [release checklist](docs/releasing.md).
 
