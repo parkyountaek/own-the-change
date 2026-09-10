@@ -6,7 +6,7 @@ Created and maintained by [@parkyountaek](https://github.com/parkyountaek).
 
 ## AI development assistance
 
-**OpenAI Codex** assists with implementation, automated tests, Claude Code and Codex packaging, documentation, and repository presentation. The maintainer directs the work and remains responsible for accepting and publishing it. AI assistance is not independent human review or a guarantee of correctness.
+**[OpenAI Codex](https://github.com/codex)** assists with implementation, automated tests, Claude Code and Codex packaging, documentation, and repository presentation. The maintainer directs the work and remains responsible for accepting and publishing it. AI assistance is not independent human review or a guarantee of correctness.
 
 The README's "Built with Codex" badge acknowledges that development assistance. The campaign illustration was generated with the built-in image-generation tool during a Codex session; its [prompt and asset notes](docs/assets/README.md) are available. Neither acknowledgment implies endorsement, sponsorship, or official marketplace curation by OpenAI or Anthropic.
 
@@ -16,7 +16,7 @@ For new commits materially assisted by Codex, preserve the human author and add 
 Co-authored-by: Codex <noreply@openai.com>
 ```
 
-This is the attribution string verified in the installed Codex CLI 0.153.4. It is not a claim that a particular GitHub account owns that address. Earlier commits have not been rewritten to add attribution.
+This is the attribution string verified in the installed Codex CLI 0.153.4. GitHub recognized Codex as the `@codex` account on the [first commit using this attribution](https://github.com/parkyountaek/own-the-change/commit/95d8d74c2241a2c30fb51bb6cf14725105e4a8e3). Earlier commits have not been rewritten to add attribution.
 
 ## How GitHub attribution works
 

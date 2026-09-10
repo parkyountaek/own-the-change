@@ -12,6 +12,12 @@ Own The Change helps developers explain the code their AI agent changed. This ki
 - [Read the small demo](https://github.com/parkyountaek/own-the-change/blob/main/docs/demo.md).
 - [Try it and share feedback](https://github.com/parkyountaek/own-the-change/blob/main/docs/launch/early-access.md).
 
+## Publication status
+
+The [first GitHub announcement](https://github.com/parkyountaek/own-the-change/discussions/1) was published in this repository's Announcements category on September 10, 2026. Its [source copy](github-announcement.md) is kept here for reuse. The external posts below remain drafts; no paid campaign or vendor directory submission has been made as part of this launch.
+
+The README image is published. Uploading it as the repository's separate **Social preview** remains a manual administrator step; see the [upload instructions](../assets/README.md#github-social-preview).
+
 ## One-line description
 
 An open-source Claude Code and Codex plugin that turns an AI-generated diff into a change debrief you can revisit.
@@ -48,7 +54,7 @@ Use "I'm building" only if you represent the project; otherwise change it to "I 
 
 ## A small, measurable launch
 
-1. Start with a GitHub announcement and the [first-use trial](early-access.md). Ask what became clearer and which step was confusing.
+1. Use the [GitHub announcement](https://github.com/parkyountaek/own-the-change/discussions/1) and the [first-use trial](early-access.md) to ask what became clearer and which step was confusing.
 2. Choose one external developer community, check its current promotion rules, and post one tailored introduction with the synthetic demo. See the [release checklist](../releasing.md) before broader outreach, including the unresolved private conduct-reporting contact.
 3. Invite an optional return on a second task within a week. Do not collect private records or chase people who decline.
 4. Fix the most frequently reported installation or action-selection problem before expanding to more channels.

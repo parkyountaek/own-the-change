@@ -407,7 +407,7 @@ Use the [acceptance checklist](docs/acceptance-checklist.md) to distinguish auto
 
 Try a [small synthetic change](docs/demo.md), then tell us where installation or the debrief felt useful or confusing. The [first-use trial](docs/launch/early-access.md) asks for one task and an optional return visit, not your source code or private records.
 
-You can [join a discussion](https://github.com/parkyountaek/own-the-change/discussions), [make a first contribution](CONTRIBUTING.md#good-first-contributions), or [share the project](docs/launch/media-kit.md) with someone who reviews AI-generated code. Star the repository if you want to find it again; use GitHub's Watch menu for the notifications you want.
+Read the [first announcement](https://github.com/parkyountaek/own-the-change/discussions/1), [join a discussion](https://github.com/parkyountaek/own-the-change/discussions), [make a first contribution](CONTRIBUTING.md#good-first-contributions), or [share the project](docs/launch/media-kit.md) with someone who reviews AI-generated code. Star the repository if you want to find it again; use GitHub's Watch menu for the notifications you want.
 
 ## License
 
