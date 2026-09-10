@@ -8,13 +8,14 @@ Observed on macOS on 2026-09-09 and 2026-09-10, unless another environment is li
 
 | Area | Observed result | Limit |
 | --- | --- | --- |
-| Automated suite | All 72 tests passed on macOS with Python 3.12.0 after the Claude and Codex GitHub marketplace packaging change. | Structural and behavioral tests are not an agent or human assessment. The earlier platform matrix below covered 65 tests. |
+| Automated suite | All 75 tests passed on macOS with Python 3.12.0 after the Codex checkpoint skills and demo preparation helper were added. | Structural and behavioral tests are not an agent or human assessment. The earlier platform matrix below covered 65 tests. |
 | Development lint | Ruff 0.16.6 and ShellCheck 0.11.0 passed with the pinned development requirements. | Lint does not prove runtime correctness. |
 | Package validation | Both packages build without symlinks or private records; the three public example records validate. Claude manifests and the Codex manifest/skill validators pass. | A valid manifest alone does not prove host discovery. |
 | Package portability | Both packages resolve a foreign nested Git target and validate a record after their original source snapshot is removed. | Host installation behavior needs a separate test. |
 | Claude Code 2.1.236 | All three commands ran through `--plugin-dir`. Interactive marketplace addition and project-scope installation succeeded; a new installed session completed a Korean debrief, four fixture tests, exact-path privacy checks, and record validation. | That local catalog remained available. Cache-only loading is unverified. |
 | Repository-root Claude marketplace | On 2026-09-10, Claude Code 2.1.236 validated the root catalog and tracked package. With a disposable `CLAUDE_CONFIG_DIR`, CLI catalog addition and user-scope installation succeeded. `plugin details` discovered all three checkpoint commands, the shared skill, and the Stop hook. | The first test used a temporary local copy. The published GitHub route was subsequently verified below. No new model conversation was run. |
 | Repository-root Codex marketplace | On 2026-09-10, Codex CLI 0.153.4 added the local repository marketplace, installed version 0.2.0, and listed it as enabled from `plugins/own-the-change/` in a disposable configuration. The native manifest passed the Plugin Creator validator. | This verifies local catalog discovery and copied installation, not a new model conversation or the remote GitHub route. |
+| Codex checkpoint picker, 0.2.1 | In a disposable profile, Codex CLI 0.153.4 installed the updated local package. App-server `skills/list` reported all four skills enabled, with labels, starter prompts, plugin-qualified names, and paths in the installed cache. The interactive `/skills` → List skills menu displayed all four labels; selecting Change Debrief inserted `$own-the-change:own-change-debrief`. | The menu-only session used a loopback-only dummy model endpoint with no model request submitted. This proves discovery, menu display, and insertion, not a completed checkpoint or desktop-app behavior. |
 | Claude installed-cache helpers | With that temporary catalog moved away, the installed resolver found its bundled protocol, template, and validator and resolved a separate Git target. The cached Stop script returned valid shortcut JSON. | `plugin details` failed while the local catalog was absent and succeeded after restoration. Direct helper checks do not establish cache-only loading in a model session. |
 | Claude language and evidence | A conversation switched from Korean to English. Skipping questions kept `not_confirmed`; a stale-test probe kept the earlier pass historical and used `unknown`. Missing execution metadata stayed unknown. | These are bounded synthetic observations, not guarantees for every conversation. |
 | Claude Stop hook | The hook returned exit 0 and valid command-only `systemMessage` JSON during real sessions. A peer-run interactive launcher test observed the shortcut text in the terminal. | Display was checked by whitespace-insensitive matching of the PTY capture, not across every terminal or host version. |
@@ -39,6 +40,10 @@ Fresh temporary configurations installed directly from the published GitHub repo
 - Codex CLI 0.153.4: `codex plugin marketplace add parkyountaek/own-the-change`, then `codex plugin add own-the-change@own-the-change`. The CLI listed version 0.2.0 as installed and enabled from the GitHub marketplace, using the native package.
 
 Both downloaded marketplace snapshots resolved to the tested commit. Installed package contents matched the committed distributions; Claude additionally created its `.in_use` cache marker. Both installed resolvers located their bundled resources and a separate synthetic Git target. These checks establish installation and resource availability, not a new model conversation or an assessment of user understanding. Normal user profiles were not modified.
+
+### GitHub project setup
+
+On 2026-09-10, the repository description, README homepage link, and nine relevant topics were set. Discussions and a `feedback` issue label were enabled for voluntary reports. GitHub's private vulnerability reporting API returned `enabled: true` after activation. No advisory, outreach post, directory application, tag, or GitHub release was created by this setup. A private conduct-reporting contact and end-to-end security-report delivery remain unverified.
 
 ### Local platform matrix
 
@@ -77,6 +82,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for pinned lint commands and the [host
 | `test_sync_marketplace.py` | Tracked distribution consistency, complete catalog target, stale-file detection, private-input exclusion, and preservation of unexpected files or symlinks |
 | `test_install_layout.py` | Discovery links, repeat installation/removal, foreign-file protection, and setup hints |
 | `test_launch_claude.py` | Launcher lifecycle, prerequisites, invocation forms, arguments, signals, and cleanup |
+| `test_prepare_demo.py` | Fresh synthetic Git/index setup, all four example tests, record exclusion, and preservation of existing destinations |
 | `test_repository_content.py` | Maintained English text, local Markdown links, and the four-case smoke fixture |
 | `test_runtime_language.py` | Localized record prose, original answers, and follow-up reasons with stable schema identifiers |
 

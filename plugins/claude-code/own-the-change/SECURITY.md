@@ -10,9 +10,7 @@ The [privacy and safety policy](docs/protocol/understanding-protocol.md#privacy-
 
 ## Report a concern privately
 
-GitHub private vulnerability reporting was disabled when checked on September 10, 2026. Until a private channel is verified, do not post sensitive details. Maintainers should recheck this setting before a release.
-
-If the repository's GitHub Security tab offers **Report a vulnerability** after it is enabled, use that private reporting channel.
+Use [GitHub's private vulnerability reporting](https://github.com/parkyountaek/own-the-change/security/advisories/new), also available as **Report a vulnerability** in the repository's Security tab. The repository setting was enabled and verified through GitHub's API on September 10, 2026. End-to-end delivery of a test report has not been checked; no test advisory was submitted.
 
 If private reporting is unavailable, open an issue asking the maintainer for a private contact method, without exploit details, source code, secrets, records, or logs. Wait for a private channel before sending sensitive information. There is no verified project security email to use as a fallback.
 

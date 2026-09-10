@@ -1,0 +1,4 @@
+interface:
+  display_name: "Own The Change: Understanding Check"
+  short_description: "Explain the change yourself and check for gaps"
+  default_prompt: "Use $own-the-change:own-understanding-check for the current task."

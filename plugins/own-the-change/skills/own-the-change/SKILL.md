@@ -7,4 +7,4 @@ Resolve this SKILL.md's real path first, following symbolic links (for example w
 
 Read `<resource-root>/docs/protocol/understanding-protocol.md`, including **Runtime language**, and use the sections relevant to the requested checkpoint. This is the only source of learning rules, record requirements, and privacy behavior.
 
-Run `python3 <resource-root>/scripts/resolve_context.py --target <current-working-directory>` to get the target Git root and absolute protocol, template, validator, and record-root paths. Use those bundled resources even when the target is another repository.
+For a requested checkpoint, run `python3 <resource-root>/scripts/resolve_context.py --target <current-working-directory>` to get the target Git root and absolute protocol, template, validator, and record-root paths. Use those bundled resources even when the target is another repository. Checkpoint selection, including bare invocations and setup-help requests, follows the protocol.

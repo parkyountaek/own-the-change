@@ -6,6 +6,8 @@ This is the single source of truth for Own The Change's shared learning rules. A
 
 Run a checkpoint when the user requests one or invokes Own The Change. A request for the complete workflow includes the relevant Plan Check, Change Debrief, Understanding Check, and record. A request for a single checkpoint stays within that scope. Optional completion suggestions must not block work, automatically run checkpoints, or create records without a requested checkpoint.
 
+A bare invocation of Own The Change defaults to a Change Debrief for the current task. If the task or change scope is missing, ask one short scope question. Honor an explicitly requested checkpoint, complete workflow, or follow-up instead of that default. A request for installation or usage help alone is not a request to run a checkpoint or create a record.
+
 Lead with the current conclusion or next small action; group core behavior, tests, and incidental changes instead of reading the whole diff aloud.
 
 Adapt the conversation to the request. Reuse answers and current evidence already supplied; do not repeat a question or rerun a test just to fill a checklist. The question counts below are maximums, not targets. A user can skip or stop a checkpoint without blocking their coding task. Output length, formatting, and order are flexible. Accurate evidence, honest status reporting, and privacy are required.

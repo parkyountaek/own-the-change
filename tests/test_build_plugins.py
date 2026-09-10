@@ -20,7 +20,7 @@ SPEC.loader.exec_module(BUILD)
 class BuildPluginsTests(unittest.TestCase):
     def copy_source_inputs(self, workspace):
         source = workspace / "source"
-        inputs = [*BUILD.SHARED_FILES, BUILD.MARKETPLACE_TEMPLATE]
+        inputs = [*BUILD.SHARED_FILES, *BUILD.CODEX_FILES, BUILD.MARKETPLACE_TEMPLATE]
         for host, paths in BUILD.HOST_FILES.items():
             inputs.extend(f"adapters/{host}/{path}" for path in paths)
         for relative in inputs:
@@ -108,6 +108,16 @@ class BuildPluginsTests(unittest.TestCase):
                     self.assertFalse((package / ".git").exists())
                     self.assertFalse((package / ".claude").exists())
                     self.assertTrue((package / "SECURITY.md").is_file())
+                    expected_skills = {"own-the-change"}
+                    if host == "codex":
+                        expected_skills.update({"own-change-debrief", "own-plan-check", "own-understanding-check"})
+                    self.assertEqual({path.name for path in (package / "skills").iterdir()}, expected_skills)
+                    for name in expected_skills:
+                        entry = package / "skills" / name
+                        self.assertTrue((entry / "SKILL.md").is_file())
+                        self.assertTrue((entry / "agents/openai.yaml").is_file())
+                        self.assertEqual((entry / "../../docs/protocol/understanding-protocol.md").resolve(),
+                                         package / "docs/protocol/understanding-protocol.md")
                     self.assertEqual((package / "docs/protocol/understanding-protocol.md").read_bytes(), expected_protocol)
                     result = subprocess.run(
                         [sys.executable, str(package / "scripts/resolve_context.py"), "--target", str(nested)],

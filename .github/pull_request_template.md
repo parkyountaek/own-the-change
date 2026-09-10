@@ -10,7 +10,7 @@ Summarize behavior changes and the commands/results actually observed. Distingui
 
 - [ ] Common behavior changes are defined in the canonical protocol, not duplicated in adapters.
 - [ ] Tests and affected documentation are updated; maintained text is in English.
-- [ ] The proposed files contain no actual learning records, secrets, complete logs, or generated packages.
+- [ ] The proposed files contain no actual learning records, secrets, complete logs, or generated packages outside the intended `plugins/` distributions.
 - [ ] User-visible changes are recorded in the changelog, with remaining acceptance checks identified.
 
 These are contribution review checks, not evidence of a user's understanding or an authorization to merge.

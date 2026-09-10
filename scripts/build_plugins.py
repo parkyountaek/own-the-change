@@ -12,6 +12,7 @@ SHARED_FILES = (
     "LICENSE",
     "SECURITY.md",
     "skills/own-the-change/SKILL.md",
+    "skills/own-the-change/agents/openai.yaml",
     "docs/protocol/understanding-protocol.md",
     "docs/protocol/status-definitions.md",
     "docs/protocol/output-schema.md",
@@ -19,6 +20,11 @@ SHARED_FILES = (
     "templates/understanding-record.md",
     "scripts/resolve_context.py",
     "scripts/validate_record.py",
+)
+CODEX_FILES = tuple(
+    f"skills/{name}/{relative}"
+    for name in ("own-change-debrief", "own-plan-check", "own-understanding-check")
+    for relative in ("SKILL.md", "agents/openai.yaml")
 )
 MARKETPLACE_TEMPLATE = "templates/claude-marketplace.json"
 HOST_FILES = {
@@ -58,6 +64,8 @@ def build_plugins(output, source=SOURCE_ROOT):
     for host, files in HOST_FILES.items():
         adapter = source / "adapters" / host
         plans[host] = [(source / path, path) for path in SHARED_FILES]
+        if host == "codex":
+            plans[host] += [(source / path, path) for path in CODEX_FILES]
         plans[host] += [(adapter / path, path) for path in files]
         for original, relative in plans[host]:
             if not original.is_file() or not original.resolve().is_relative_to(source):

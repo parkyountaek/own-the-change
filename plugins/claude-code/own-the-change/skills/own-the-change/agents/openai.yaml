@@ -1,0 +1,4 @@
+interface:
+  display_name: "Own The Change"
+  short_description: "Start with a debrief, or choose another checkpoint"
+  default_prompt: "Use $own-the-change to debrief the current task."

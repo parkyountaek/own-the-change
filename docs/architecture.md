@@ -8,6 +8,7 @@ Own The Change is a local learning aid that lives in a repository and needs no s
 
 - `docs/protocol/understanding-protocol.md`: the only common learning-rule source for every agent.
 - `skills/own-the-change/`: the shared skill entry point. It refers to the protocol without copying its rules.
+- `skills/own-change-debrief/`, `skills/own-plan-check/`, and `skills/own-understanding-check/`: thin named checkpoint entry points bundled only in the native Codex plugin. They refer to the shared entry point and protocol, with UI metadata for skill pickers.
 - `adapters/claude-code/`: Claude Code manifest, commands, hook, and a link to the shared skill.
 - `adapters/codex/`: Codex metadata and a link to the shared skill.
 - `.agents/skills/` and `.cursor/skills/`: project discovery links to the same shared skill.
@@ -16,6 +17,7 @@ Own The Change is a local learning aid that lives in a repository and needs no s
 - `scripts/validate_record.py`: checks record format and consistency. It does not assess understanding.
 - `scripts/resolve_context.py`: resolves source resources and a target Git root without writing files.
 - `scripts/launch_claude.py`: builds a temporary plugin and starts a session in the user's project without registering a marketplace.
+- `scripts/prepare_demo.py`: prepares a fresh synthetic Git change without launching an agent or creating a learning record; not bundled in runtime plugins.
 - `scripts/build_plugins.py`: copies explicitly listed canonical inputs into self-contained host packages without symlinks, private records, or a second maintained rule source.
 - `scripts/sync_marketplace.py`: refreshes or checks both tracked distributions against the canonical build.
 - `.claude-plugin/marketplace.json` and `plugins/claude-code/own-the-change/`: generated Claude catalog and complete package for installation from GitHub.

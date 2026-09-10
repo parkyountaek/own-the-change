@@ -71,6 +71,9 @@ Use ordinary-language requests in the host. The maintained examples below are in
 | Scenario | Request or action | Observation to retain |
 | --- | --- | --- |
 | Brief debrief | `Run only a brief Change Debrief for the two fixture files. Use the actual diff and test result.` | Whether the six debrief topics are covered without an unsolicited quiz or code edit |
+| Bare invocation | Select the generic Own The Change skill with a clear current fixture task and no additional instruction | Whether the protocol's default selects a Change Debrief rather than the full workflow |
+| Named checkpoint | Select each native Codex checkpoint skill from `/skills` → List skills | Whether selection inserts the plugin-qualified mention and runs only the requested checkpoint |
+| Setup help | `How do I update Own The Change?` | Setup instructions only; no checkpoint, record, or target-code changes |
 | Explicit language | `Run an Understanding Check for this fixture and explain it in Korean.` | Actual question and feedback language, not merely accepted Unicode data |
 | Skipping | Decline to answer | The real no-answer marker and resulting status |
 | Partial answer | A participating user supplies their own incomplete explanation | Specific feedback on the actual gap; no score |

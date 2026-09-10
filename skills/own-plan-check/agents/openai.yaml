@@ -1,0 +1,4 @@
+interface:
+  display_name: "Own The Change: Plan Check"
+  short_description: "Discuss the goal, risks, and tests before coding"
+  default_prompt: "Use $own-the-change:own-plan-check for the task I am about to implement."

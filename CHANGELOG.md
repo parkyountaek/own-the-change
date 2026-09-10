@@ -1,11 +1,14 @@
 # Changelog
 
-## Unreleased - 0.2.0 development
+## Unreleased - 0.2.1 development
 
 No tag or GitHub release has been created. Development packages are available through this repository's Claude and Codex marketplaces. See the [acceptance checklist](docs/acceptance-checklist.md) for tested installation methods and known limits.
 
 ### Added
 
+- Three native Codex checkpoint skills with picker labels and starter prompts. Use `/skills` to choose an action without writing a long prompt.
+- A runnable synthetic demo, a short reading walkthrough, and optional first-use feedback and launch drafts.
+- Contributor attribution, newcomer contribution ideas, code ownership, and support routes.
 - Repository-root Claude and Codex marketplaces with separate complete packages, installable from `parkyountaek/own-the-change` through each host's plugin commands without a manual clone or build.
 - A marketplace refresh command and CI checks that keep distribution files synchronized with canonical sources and reject unexpected files or symlinks.
 - Self-contained Claude Code and Codex packages built from one maintained protocol.
@@ -22,6 +25,9 @@ No tag or GitHub release has been created. Development packages are available th
 
 ### Changed
 
+- The generic skill defaults to Change Debrief when explicitly invoked without a checkpoint; installation and usage questions do not start a checkpoint.
+- The README leads with a concrete change, installation, and first use; detailed local setup is collapsible.
+- Both distribution manifests advance to 0.2.1 for the changed public package content. No tag or GitHub release is implied.
 - Records use structured response and evidence fields, an explicit diff scope, `record_kind`, and a date list plus reason for follow-up. Older records require explicit migration; validation does not rewrite them.
 - Actual local records are ignored by Git in this repository; public examples live in a separate fictional-fixture directory.
 - Checkpoints respect the requested scope, reuse supplied evidence and answers, and allow skipping without blocking coding.

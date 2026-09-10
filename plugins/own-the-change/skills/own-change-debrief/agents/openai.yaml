@@ -1,0 +1,4 @@
+interface:
+  display_name: "Own The Change: Change Debrief"
+  short_description: "Explain what changed, why, and what tests missed"
+  default_prompt: "Use $own-the-change:own-change-debrief for the current task."

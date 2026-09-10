@@ -1,16 +1,31 @@
 <h1 align="center">Own The Change</h1>
 
 <p align="center">
-  Understand, explain, and maintain the code your AI agent changes.
+  Your AI changed the code. Can you explain why?
 </p>
 
 <p align="center">
   Claude Code - Codex CLI - local Markdown records - no server to run - no extra API key
 </p>
 
-New here? [Set up your coding agent](#install-and-verify), then follow the [usage guide](#everyday-usage). If you've already finished a coding task, start with a Change Debrief. There's no need to go back and run a Plan Check.
+Turn an AI-generated diff into an explanation you can use in a pull request or your next bug fix: what changed, why, what the tests missed, and where to look if it breaks.
 
-## Background and motivation
+Start with a **Change Debrief** after one coding task. Questions are optional; no score or approval gate.
+
+[45-second walkthrough](docs/demo.md) · [Install for Claude](#claude-code) · [Install for Codex](#codex-cli) · [Update an existing install](docs/updating.md) · [Share feedback](docs/launch/early-access.md)
+
+```diff
+ def display_name(value):
+-    return value.strip()
++    return " ".join(value.split())
+```
+
+> **An explanation worth keeping:** This also changes whitespace *inside* a name, not just at its edges. Four fixture tests cover surrounding, repeated, empty, and nonbreaking whitespace. They do not establish that changing a user's preferred spacing is acceptable. Start a related fix in `display_name` and add the missing product case.
+
+Illustrative debrief of a [runnable synthetic fixture](docs/demo.md#try-the-real-workflow). This is not a live AI transcript or evidence of anyone's understanding.
+
+<details>
+<summary>Why Own The Change?</summary>
 
 AI coding agents can change a lot of code quickly. It's easy to check the result and see that tests pass without understanding every decision along the way.
 
@@ -29,29 +44,23 @@ You can skip questions and keep coding. There are no scores, and the plugin does
 
 The goal is simple: a week later, you can still explain why the change was needed, name a risk, and work out where to start a related fix. We haven't yet verified that outcome with users. See the [follow-up checklist](docs/acceptance-checklist.md#delayed-learning-check).
 
-## How it works
+### How it works
 
 1. **Plan Check (optional):** think through likely changes, risks, and tests before coding.
 2. **Change Debrief:** review what changed, why, what was tested, and what still needs checking.
 3. **Understanding Check (optional):** explain the change in your own words, with up to three questions based on its risk.
 4. **Save and revisit:** the agent saves a Markdown record at `docs/ai-understanding/YYYY-MM-DD/<task-id>.md`.
 
-## Safety rules
+The [understanding protocol](docs/protocol/understanding-protocol.md) defines learning, record, and privacy behavior. The plugin does not edit or approve your code. It adds no separate server or telemetry; your coding agent's own data policies still apply.
 
-- A passing test or the agent's own assessment cannot mark your understanding as `confirmed`.
-- When the user does not answer, use `not_confirmed` or `unknown`.
-- Keep unavailable execution metadata as `unknown`: `provider`, `model`, `turn`, `token`, and `cost`.
-- Do not send source code, environment variables, secrets, or complete terminal logs outside the local environment.
-- Automatic code modification, deployment, merge, pull-request approval, and understanding scores are out of scope.
-
-The [understanding protocol](docs/protocol/understanding-protocol.md) is the single source of truth for the learning workflow. Each agent's adapter refers to it.
+</details>
 
 ## Supported tools
 
 | Tool | Setup | How to use it |
 | --- | --- | --- |
 | Claude Code | GitHub marketplace installation with commands, bundled skill/resources, and Stop shortcut | `/own-the-change:own-plan-check`, `/own-the-change:own-change-debrief`, `/own-the-change:own-understanding-check` |
-| Codex CLI | GitHub marketplace installation or a local skill link | `$own-the-change` or a checkpoint request |
+| Codex CLI | GitHub marketplace installation | `/skills` → select a checkpoint → send |
 | Cursor and Copilot | discovery links supplied; runtime unverified | the tool's skill selection UI or a natural-language request |
 | Other agents | generic integration notes | `adapters/generic/AGENT-INSTRUCTIONS.md` |
 
@@ -107,13 +116,15 @@ codex plugin marketplace add parkyountaek/own-the-change
 codex plugin add own-the-change@own-the-change
 ```
 
-Start a new Codex session in your project, then ask:
+Start a new Codex session in your project. Type `/skills`, choose **List skills**, select **Own The Change: Change Debrief**, then send the selection. You can also type `$` and search for `own-change`. For direct input, the installed plugin uses this full name:
 
 ```text
-$own-the-change Run a Change Debrief.
+$own-the-change:own-change-debrief
 ```
 
-Codex reads `.agents/plugins/marketplace.json` and installs the native package from `plugins/own-the-change/`. It includes the shared skill and resources. No manual clone, build, or source checkout is needed. You can inspect available plugins with `/plugins` inside Codex. The CLI commands were checked on Codex CLI 0.153.4; if `codex plugin` is unavailable, update your client or use the local skill setup below. See [OpenAI's plugin documentation](https://learn.chatgpt.com/docs/build-plugins) and [marketplace format](https://learn.chatgpt.com/docs/enterprise/plugin-management#supported-formats).
+No long prompt is needed when the current task is clear. For planning or understanding questions, select the corresponding checkpoint instead. See the [Claude/Codex command map](docs/codex-usage.md) for all three actions, desktop differences, and troubleshooting.
+
+Codex reads `.agents/plugins/marketplace.json` and installs the native package from `plugins/own-the-change/`. It includes the shared skill, three checkpoint shortcuts, and their resources. No manual clone, build, or source checkout is needed. You can inspect available plugins with `/plugins` inside Codex. The CLI commands were checked on Codex CLI 0.153.4; if `codex plugin` is unavailable, update your client or use the local skill setup below. See [OpenAI's plugin documentation](https://learn.chatgpt.com/docs/build-plugins) and [marketplace format](https://learn.chatgpt.com/docs/enterprise/plugin-management#supported-formats).
 
 To update, refresh the marketplace and install its current package, then start a new session:
 
@@ -123,6 +134,9 @@ codex plugin add own-the-change@own-the-change
 ```
 
 To uninstall, run `codex plugin remove own-the-change@own-the-change`. Remove the catalog separately with `codex plugin marketplace remove own-the-change` if you no longer need it. If you already registered a local catalog with this name, inspect `codex plugin marketplace list` and follow the [migration instructions](docs/installation-layout.md#github-marketplace).
+
+<details>
+<summary>Local development and alternative installation methods</summary>
 
 ### Get the code for local development
 
@@ -218,6 +232,8 @@ python3 -m unittest discover -s tests -v
 python3 scripts/validate_record.py docs/examples/records/*/*.md
 ```
 
+</details>
+
 ## Everyday usage
 
 Run these requests in your coding agent's conversation, not in a shell. Replace example goals, filenames, and record paths with your actual task. Begin with one small change before trying a large refactor.
@@ -235,7 +251,8 @@ Use the actual diff and available test results. I only want the debrief for now.
 In Codex:
 
 ```text
-$own-the-change Run only a Change Debrief for the display-name whitespace change.
+$own-the-change:own-change-debrief
+Debrief the display-name whitespace change.
 Explain it in Korean using the actual diff and available test results.
 ```
 
@@ -245,7 +262,7 @@ If the task is already committed, supply its actual commit range. If several tas
 
 ### 2. Add a Plan Check before your next task
 
-For Claude, invoke `/own-the-change:own-plan-check`; for Codex, start with `$own-the-change Run a Plan Check.` Then describe the goal, likely scope, and completion conditions:
+For Claude, invoke `/own-the-change:own-plan-check`; for Codex, select **Own The Change: Plan Check** from `/skills`. Then describe the goal, likely scope, and completion conditions:
 
 ```text
 Goal: collapse repeated whitespace in display names.
@@ -258,7 +275,7 @@ Next, ask your coding agent to make the change. The Plan Check doesn't edit your
 
 ### 3. Explain the change in your own words
 
-When you want to check your understanding, invoke `/own-the-change:own-understanding-check` in Claude or ask `$own-the-change Run an Understanding Check for this change.` Answer the short questions in your own words; the agent identifies important gaps and records the outcome.
+When you want to check your understanding, invoke `/own-the-change:own-understanding-check` in Claude or select **Own The Change: Understanding Check** from Codex's `/skills` menu. Answer the short questions in your own words; the agent identifies important gaps and records the outcome.
 
 You can say `I don't understand the permission change yet; explain that part.` or `Skip the questions for now.` You don't need to guess to keep working. The [status definitions](docs/protocol/understanding-protocol.md#status) explain how your response is recorded. Neither a valid record nor a passing test proves you understand the change.
 
@@ -295,7 +312,7 @@ To try the workflow on a small test project, follow the [smoke test guide](docs/
 
 The repository's documentation, instructions, comments, and examples are in English. The plugin responds in the language you request, or follows the language of your conversation. An English codebase doesn't make the plugin answer in English.
 
-For example, ask `$own-the-change Run a Change Debrief and explain it in Korean.` No locale setting is needed. Explanations and your original answer can use that language; schema keys, status values, required headings, paths, and commands stay unchanged. See the [language rules](docs/protocol/understanding-protocol.md#runtime-language).
+For example, select Change Debrief and add `Explain it in Korean.` No locale setting is needed. Explanations and your original answer can use that language; schema keys, status values, required headings, paths, and commands stay unchanged. See the [language rules](docs/protocol/understanding-protocol.md#runtime-language).
 
 The language choice is handled by the agent's instructions. Test sessions produced Korean debriefs in both Claude and installed Codex, and a Claude conversation switched from Korean to English. We haven't yet tested language switching in installed Codex or feedback on real users' answers in multiple languages.
 
@@ -383,6 +400,8 @@ Use the [acceptance checklist](docs/acceptance-checklist.md) to distinguish auto
 
 ## License
 
-For contributions and development-only lint, see [CONTRIBUTING.md](CONTRIBUTING.md). Community participation follows [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md); software vulnerability reports follow [SECURITY.md](SECURITY.md). Private reporting channels still need maintainer verification. User-visible changes and release preparation are tracked in [CHANGELOG.md](CHANGELOG.md) and the [release checklist](docs/releasing.md).
+Built and maintained by [@parkyountaek](https://github.com/parkyountaek), with contributions welcome. See [contributors](CONTRIBUTORS.md), [good first contributions](CONTRIBUTING.md#good-first-contributions), and [support](SUPPORT.md).
+
+For contributions and development-only lint, see [CONTRIBUTING.md](CONTRIBUTING.md). Community participation follows [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md); software vulnerability reports follow [SECURITY.md](SECURITY.md). GitHub private vulnerability reporting is enabled; a separate private conduct-reporting contact is still needed. User-visible changes and release preparation are tracked in [CHANGELOG.md](CHANGELOG.md) and the [release checklist](docs/releasing.md).
 
 [MIT](LICENSE)

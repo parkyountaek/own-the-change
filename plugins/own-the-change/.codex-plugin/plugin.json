@@ -1,6 +1,6 @@
 {
   "name": "own-the-change",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Local-first learning checks for understanding AI coding changes.",
   "author": {"name": "Own The Change contributors"},
   "homepage": "https://github.com/parkyountaek/own-the-change",
@@ -12,13 +12,13 @@
     "displayName": "Own The Change",
     "developerName": "Own The Change contributors",
     "shortDescription": "Understand AI coding changes before you depend on them",
-    "longDescription": "A local-first Plan Check, Change Debrief, and Understanding Check that writes Markdown records without sending code or secrets externally.",
+    "longDescription": "Explain AI code changes, their risks, and test limits. Choose a Change Debrief, Plan Check, or Understanding Check from the skills picker and keep local Markdown records. No separate server or telemetry; your host's data policies still apply.",
     "category": "Productivity",
     "capabilities": ["Instructions"],
     "defaultPrompt": [
-      "Use Own The Change for this coding task.",
-      "Run a Change Debrief using the actual diff and test output.",
-      "Help me explain this change in my own words."
+      "$own-the-change:own-change-debrief",
+      "$own-the-change:own-plan-check",
+      "$own-the-change:own-understanding-check"
     ],
     "brandColor": "#69D6C3"
   }

@@ -7,7 +7,7 @@ These unchecked boxes are a reusable checklist for each release candidate, not a
 ## Before proposing a release
 
 - [ ] Review the [acceptance checklist](acceptance-checklist.md) and run the [host smoke test](host-smoke-test.md) on each host claimed as tested. Record host/version, operating system, installation method, scope, and actual outcomes.
-- [ ] Establish a working private security-reporting channel and update [SECURITY.md](../SECURITY.md) if needed. This local task does not enable GitHub repository settings.
+- [ ] Verify the private security-reporting channel described in [SECURITY.md](../SECURITY.md), including delivery before a public release. Private vulnerability reporting is enabled; this checklist does not change repository settings.
 - [ ] Establish a private conduct-reporting route and a conflict-of-interest alternative before inviting broader community participation; update [CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md) with verified contact information only.
 - [ ] Set matching semantic versions in both adapter manifests. Use a new version for a published content change; do not represent an older installed cache as the new build.
 - [ ] Update [CHANGELOG.md](../CHANGELOG.md) and distinguish experimental support from verified support. Delayed learning benefits remain a hypothesis until actual user follow-up.

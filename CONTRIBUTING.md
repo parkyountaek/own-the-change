@@ -12,6 +12,19 @@ Participation follows the [code of conduct](CODE_OF_CONDUCT.md). Its private rep
 
 ## Development
 
+### Good first contributions
+
+You do not need to change the learning protocol to help:
+
+- Try the [small demo](docs/demo.md) and report where installation or action selection becomes confusing.
+- Improve a specific unclear sentence or broken link in the getting-started instructions.
+- Reproduce an issue in a synthetic repository and report host/plugin versions and the exact failed step.
+- Test an unverified host or platform from the [acceptance checklist](docs/acceptance-checklist.md), distinguishing observed behavior from assumptions.
+
+For a larger change, open a feature issue first to agree on scope. Maintainers use `good first issue` and `help wanted` only on actual, scoped issues; this list is not a claim that those issues already exist. See [contributors](CONTRIBUTORS.md) for attribution.
+
+### Local setup
+
 Use Python 3.11 or newer, Git, and a POSIX shell on macOS or Linux. The scripts use the Python standard library, so the local test suite needs no extra packages or API key. Native Windows and WSL have not been tested.
 
 Keep changes focused and preserve unrelated work. Write maintained documentation, instructions, comments, and examples in English. Runtime conversation and private record prose follow the [canonical language policy](docs/protocol/understanding-protocol.md#runtime-language). Use Unicode escapes in localization test source so it remains English-readable.
