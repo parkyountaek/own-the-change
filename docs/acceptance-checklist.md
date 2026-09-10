@@ -41,6 +41,17 @@ Fresh temporary configurations installed directly from the published GitHub repo
 
 Both downloaded marketplace snapshots resolved to the tested commit. Installed package contents matched the committed distributions; Claude additionally created its `.in_use` cache marker. Both installed resolvers located their bundled resources and a separate synthetic Git target. These checks establish installation and resource availability, not a new model conversation or an assessment of user understanding. Normal user profiles were not modified.
 
+### Published update from 0.2.0 to 0.2.1
+
+Commit [fbb1625](https://github.com/parkyountaek/own-the-change/commit/fbb1625f1cd29406eeb233f22d7df9608c369b01) added the Codex checkpoint skills and onboarding improvements. Its [GitHub Actions run](https://github.com/parkyountaek/own-the-change/actions/runs/34455724622) passed lint and all four Ubuntu/macOS Python 3.11/3.13 jobs, each running the 75-test suite, example validation, builds, and distribution checks.
+
+Before publication, separate temporary profiles installed the public 0.2.0 package. After publication, the exact sequences in the [update guide](updating.md) produced these results on September 10, 2026:
+
+- Claude Code 2.1.236 reported an update from 0.2.0 to 0.2.1 at user scope and listed it as enabled.
+- Codex CLI 0.153.4 refreshed the GitHub catalog, installed 0.2.1, and listed it as installed and enabled. A fresh app-server skill listing found the three new checkpoint entries and the original generic entry in the updated cache.
+
+Both marketplace snapshots resolved to the published commit, and both installed packages matched the committed files (excluding Claude's host-generated `.in_use` marker). These are upgrade and discovery checks, not new model conversations. Normal user profiles and learning records were not changed.
+
 ### GitHub project setup
 
 On 2026-09-10, the repository description, README homepage link, and nine relevant topics were set. Discussions and a `feedback` issue label were enabled for voluntary reports. GitHub's private vulnerability reporting API returned `enabled: true` after activation. No advisory, outreach post, directory application, tag, or GitHub release was created by this setup. A private conduct-reporting contact and end-to-end security-report delivery remain unverified.

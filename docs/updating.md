@@ -2,6 +2,8 @@
 
 You do not need to clone the repository again. Refresh the marketplace, update its installed package, then start a new session. These steps apply to installation from `parkyountaek/own-the-change`; [local installations](#local-installations) use a different source.
 
+On September 10, 2026, both command sequences below upgraded existing GitHub installations from 0.2.0 to 0.2.1 in disposable profiles, using Claude Code 2.1.236 and Codex CLI 0.153.4. See the [verification details](acceptance-checklist.md#published-update-from-020-to-021).
+
 ## Claude Code
 
 Run in a terminal:
