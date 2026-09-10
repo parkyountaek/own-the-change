@@ -17,6 +17,9 @@ Own The Change is a local learning aid that lives in a repository and needs no s
 - `scripts/resolve_context.py`: resolves source resources and a target Git root without writing files.
 - `scripts/launch_claude.py`: builds a temporary plugin and starts a session in the user's project without registering a marketplace.
 - `scripts/build_plugins.py`: copies explicitly listed canonical inputs into self-contained host packages without symlinks, private records, or a second maintained rule source.
+- `scripts/sync_marketplace.py`: refreshes or checks both tracked distributions against the canonical build.
+- `.claude-plugin/marketplace.json` and `plugins/claude-code/own-the-change/`: generated Claude catalog and complete package for installation from GitHub.
+- `.agents/plugins/marketplace.json` and `plugins/own-the-change/`: generated Codex catalog and native package for installation from the same repository.
 - `docs/ai-understanding/YYYY-MM-DD/`: private local records for actual work, ignored by Git.
 - `docs/examples/records/YYYY-MM-DD/`: explicitly fictional public fixtures.
 - `dist/`: generated Claude Code and Codex packages, ignored by Git.

@@ -6,6 +6,8 @@ This version has not been tagged or released. See the [acceptance checklist](doc
 
 ### Added
 
+- Repository-root Claude and Codex marketplaces with separate complete packages, installable from `parkyountaek/own-the-change` through each host's plugin commands without a manual clone or build.
+- A marketplace refresh command and CI checks that keep distribution files synchronized with canonical sources and reject unexpected files or symlinks.
 - Self-contained Claude Code and Codex packages built from one maintained protocol.
 - A generated Claude marketplace catalog that references its adjacent complete package.
 - Explicit runtime language selection, preserving English schema identifiers and original user answers.

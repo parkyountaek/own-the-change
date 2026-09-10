@@ -50,8 +50,8 @@ The [understanding protocol](docs/protocol/understanding-protocol.md) is the sin
 
 | Tool | Setup | How to use it |
 | --- | --- | --- |
-| Claude Code | generated package with commands, bundled skill/resources, and Stop shortcut | `/own-the-change:own-plan-check`, `/own-the-change:own-change-debrief`, `/own-the-change:own-understanding-check` |
-| Codex CLI | `.agents/skills/` discovery link or a generated plugin package | `$own-the-change` or a checkpoint request |
+| Claude Code | GitHub marketplace installation with commands, bundled skill/resources, and Stop shortcut | `/own-the-change:own-plan-check`, `/own-the-change:own-change-debrief`, `/own-the-change:own-understanding-check` |
+| Codex CLI | GitHub marketplace installation or a local skill link | `$own-the-change` or a checkpoint request |
 | Cursor and Copilot | discovery links supplied; runtime unverified | the tool's skill selection UI or a natural-language request |
 | Other agents | generic integration notes | `adapters/generic/AGENT-INSTRUCTIONS.md` |
 
@@ -63,16 +63,77 @@ You'll need Git, Python 3.11 or newer, and a POSIX shell on macOS or Linux. The 
 
 We haven't tested the plugin in native Windows or WSL sessions. Unit tests cover the local scripts and packages; real-agent tests are tracked separately. The [smoke test guide](docs/host-smoke-test.md) provides a small test project, and the [acceptance checklist](docs/acceptance-checklist.md) records the results.
 
-### Get the code
+### Claude Code
+
+Run these commands inside Claude Code:
+
+```text
+/plugin marketplace add parkyountaek/own-the-change
+/plugin install own-the-change@own-the-change
+```
+
+Choose your installation scope when prompted. Follow Claude's activation instructions, or start a new session in **the project whose changes you want to understand**. Then try:
+
+```text
+/own-the-change:own-change-debrief
+```
+
+Claude downloads the marketplace and installs the bundled plugin from `plugins/claude-code/own-the-change/`. You don't need to clone this repository, build a package, or run the launcher. See [Claude's marketplace guide](https://code.claude.com/docs/en/plugin-marketplaces).
+
+You can also install from a terminal:
+
+```sh
+claude plugin marketplace add parkyountaek/own-the-change
+claude plugin install own-the-change@own-the-change --scope user
+```
+
+To update from a terminal, refresh the catalog and then the installed plugin:
+
+```sh
+claude plugin marketplace update own-the-change
+claude plugin update own-the-change@own-the-change --scope user
+```
+
+Start a new Claude session after updating. To uninstall a user-scoped installation, run `claude plugin uninstall own-the-change@own-the-change --scope user`. If you chose another scope, use that scope for update and uninstall. You can then remove the catalog with `claude plugin marketplace remove own-the-change`.
+
+If you previously registered a local build under the same marketplace name, check `claude plugin marketplace list` before switching its source. See the [installation layout](docs/installation-layout.md#github-marketplace) for migration instructions.
+
+### Codex CLI
+
+Codex also supports GitHub marketplaces. Run these commands in your terminal:
+
+```sh
+codex plugin marketplace add parkyountaek/own-the-change
+codex plugin add own-the-change@own-the-change
+```
+
+Start a new Codex session in your project, then ask:
+
+```text
+$own-the-change Run a Change Debrief.
+```
+
+Codex reads `.agents/plugins/marketplace.json` and installs the native package from `plugins/own-the-change/`. It includes the shared skill and resources. No manual clone, build, or source checkout is needed. You can inspect available plugins with `/plugins` inside Codex. The CLI commands were checked on Codex CLI 0.153.4; if `codex plugin` is unavailable, update your client or use the local skill setup below. See [OpenAI's plugin documentation](https://learn.chatgpt.com/docs/build-plugins) and [marketplace format](https://learn.chatgpt.com/docs/enterprise/plugin-management#supported-formats).
+
+To update, refresh the marketplace and install its current package, then start a new session:
+
+```sh
+codex plugin marketplace upgrade own-the-change
+codex plugin add own-the-change@own-the-change
+```
+
+To uninstall, run `codex plugin remove own-the-change@own-the-change`. Remove the catalog separately with `codex plugin marketplace remove own-the-change` if you no longer need it. If you already registered a local catalog with this name, inspect `codex plugin marketplace list` and follow the [migration instructions](docs/installation-layout.md#github-marketplace).
+
+### Get the code for local development
 
 ```sh
 git clone https://github.com/parkyountaek/own-the-change.git
 cd own-the-change
 ```
 
-Already have a checkout? Open a terminal there and choose your agent below. You don't need to build packages manually for the quick start.
+Already have a checkout? Open a terminal there and choose the local setup below.
 
-### Claude Code
+### Claude Code from a local checkout
 
 Run one command from this checkout, replacing the path with **the project whose changes you want to understand**:
 
@@ -88,7 +149,7 @@ Once Claude opens, try:
 /own-the-change:own-change-debrief
 ```
 
-The [usage guide](#everyday-usage) covers planning and understanding questions too. For a persistent installation, see the [marketplace setup instructions](docs/releasing.md#build-and-inspect).
+The [usage guide](#everyday-usage) covers planning and understanding questions too. For persistent installation, use the [GitHub marketplace](#claude-code).
 
 <details>
 <summary>Manual build and session setup</summary>
@@ -107,7 +168,7 @@ In the example above, the catalog is `dist/first-use/claude-code/.claude-plugin/
 
 </details>
 
-### Codex CLI
+### Codex from a local checkout
 
 Run this once from the Own The Change checkout to make the skill available in your other projects:
 
@@ -276,6 +337,10 @@ Earlier records using a scalar `follow_up_at` need explicit migration to the dat
 ## Repository layout
 
 ```text
+.claude-plugin/        GitHub marketplace catalog
+.agents/plugins/      Codex GitHub marketplace catalog
+plugins/claude-code/own-the-change/ tracked Claude distribution
+plugins/own-the-change/ tracked Codex distribution
 adapters/claude-code/  Claude Code manifest, commands, hook, and shared-skill link
 adapters/codex/        Codex manifest and shared-skill link
 adapters/generic/      generic agent integration notes

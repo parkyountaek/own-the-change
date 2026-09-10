@@ -1,0 +1,20 @@
+{
+  "name": "own-the-change",
+  "interface": {
+    "displayName": "Own The Change"
+  },
+  "plugins": [
+    {
+      "name": "own-the-change",
+      "source": {
+        "source": "local",
+        "path": "./plugins/own-the-change"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "own-the-change",
+  "version": "0.2.0",
+  "description": "Local-first learning checks for understanding AI coding changes.",
+  "author": {"name": "Own The Change contributors"},
+  "homepage": "https://github.com/parkyountaek/own-the-change",
+  "repository": "https://github.com/parkyountaek/own-the-change",
+  "license": "MIT",
+  "keywords": ["learning", "local-first", "change-debrief"]
+}

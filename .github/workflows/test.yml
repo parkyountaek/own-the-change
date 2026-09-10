@@ -34,4 +34,5 @@ jobs:
       - run: python3 -m unittest discover -s tests -v
       - run: python3 scripts/validate_record.py docs/examples/records/*/*.md
       - run: python3 scripts/build_plugins.py
+      - run: python3 scripts/sync_marketplace.py --check
       - run: git diff --check

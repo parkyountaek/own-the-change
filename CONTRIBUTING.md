@@ -21,6 +21,7 @@ Keep shared learning and privacy rules in the [canonical protocol](docs/protocol
 Run from the repository root:
 
 ```sh
+python3 scripts/sync_marketplace.py
 python3 -m unittest discover -s tests -v
 python3 scripts/validate_record.py docs/examples/records/*/*.md
 python3 scripts/build_plugins.py --output dist/contribution-check
@@ -28,6 +29,8 @@ git diff --check
 ```
 
 Choose a fresh build destination if it already exists. The builder preserves existing output. Tests use temporary synthetic repositories and do not install into your real agent configuration.
+
+The Claude and Codex catalogs and their packages under `plugins/` are tracked generated files. Refresh them after editing package inputs and include their diff with the canonical source change. CI runs `python3 scripts/sync_marketplace.py --check` to reject stale copies and unexpected package files. All learning rules remain maintained in the canonical protocol.
 
 The [host smoke test](docs/host-smoke-test.md) is separate from the automated suite. If you haven't run a session, mark it as not tested.
 
@@ -57,7 +60,7 @@ Reuse an existing development environment if preferred. `shellcheck-py` is a [th
 ## Before submitting
 
 - Include the reason for the change, concise test results, and any remaining limits.
-- Check staged and untracked files for private records, secrets, generated packages, and accidental local paths. Keep public examples fictional.
+- Check staged and untracked files for private records, secrets, accidental local paths, and generated packages outside the intended `plugins/` distributions. Keep public examples fictional.
 - Update [CHANGELOG.md](CHANGELOG.md) for user-visible behavior and [the acceptance checklist](docs/acceptance-checklist.md) when evidence changes.
 - Follow [the release checklist](docs/releasing.md) for distribution work. A contribution does not authorize publication or installation on another person's machine.
 

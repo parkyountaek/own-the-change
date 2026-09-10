@@ -1,0 +1,25 @@
+{
+  "name": "own-the-change",
+  "version": "0.2.0",
+  "description": "Local-first learning checks for understanding AI coding changes.",
+  "author": {"name": "Own The Change contributors"},
+  "homepage": "https://github.com/parkyountaek/own-the-change",
+  "repository": "https://github.com/parkyountaek/own-the-change",
+  "license": "MIT",
+  "keywords": ["learning", "local-first", "change-debrief", "codex"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Own The Change",
+    "developerName": "Own The Change contributors",
+    "shortDescription": "Understand AI coding changes before you depend on them",
+    "longDescription": "A local-first Plan Check, Change Debrief, and Understanding Check that writes Markdown records without sending code or secrets externally.",
+    "category": "Productivity",
+    "capabilities": ["Instructions"],
+    "defaultPrompt": [
+      "Use Own The Change for this coding task.",
+      "Run a Change Debrief using the actual diff and test output.",
+      "Help me explain this change in my own words."
+    ],
+    "brandColor": "#69D6C3"
+  }
+}

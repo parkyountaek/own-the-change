@@ -13,6 +13,40 @@ These unchecked boxes are a reusable checklist for each release candidate, not a
 - [ ] Update [CHANGELOG.md](../CHANGELOG.md) and distinguish experimental support from verified support. Delayed learning benefits remain a hypothesis until actual user follow-up.
 - [ ] Run the full suite, example validation, and development-only lint from [CONTRIBUTING.md](../CONTRIBUTING.md). Review each configured CI job and matrix result; defining a workflow does not mean it has run.
 
+## Prepare the GitHub marketplace
+
+The repository itself provides both marketplaces. Claude's root catalog references `plugins/claude-code/own-the-change/`; Codex's `.agents/plugins/marketplace.json` references `plugins/own-the-change/`. Both packages are generated from the same explicit inputs as the temporary packages.
+
+```sh
+python3 scripts/sync_marketplace.py
+python3 scripts/sync_marketplace.py --check
+claude plugin validate .
+claude plugin validate plugins/claude-code/own-the-change
+git diff --check
+```
+
+Review the canonical source changes, the root catalog, and all generated package changes together. Commit them together after authorization. The sync command refreshes expected generated files, rejects unexpected files or symlinks, and never publishes. If a build input was removed, review and remove its obsolete distribution file explicitly before syncing. CI fails when the tracked distribution is stale.
+
+After the reviewed files are pushed to the GitHub default branch, users can install without a manual clone or build:
+
+```text
+/plugin marketplace add parkyountaek/own-the-change
+/plugin install own-the-change@own-the-change
+```
+
+For Codex, run these commands in a terminal and start a new thread:
+
+```sh
+codex plugin marketplace add parkyountaek/own-the-change
+codex plugin add own-the-change@own-the-change
+```
+
+This uses a project-owned marketplace and requires no official marketplace submission. Test the GitHub route after publication; local validation and installation do not prove the remote branch contains the candidate. Use the root checkout's absolute path to test the same catalog locally before publication. See [installation layout](installation-layout.md#github-marketplace) for users migrating from a local catalog with the same name.
+
+For each published package content change, increment both adapter manifest versions before syncing so installed caches can receive the update. Users then run `claude plugin marketplace update own-the-change` and `claude plugin update own-the-change@own-the-change --scope user`, followed by a new session. Match the scope to the actual installation. Uninstall with `claude plugin uninstall own-the-change@own-the-change --scope user`, then remove the catalog with `claude plugin marketplace remove own-the-change` if no longer needed.
+
+Codex updates use `codex plugin marketplace upgrade own-the-change` followed by `codex plugin add own-the-change@own-the-change` and a new thread. Remove the plugin with `codex plugin remove own-the-change@own-the-change`; remove the catalog separately with `codex plugin marketplace remove own-the-change`. Validate its manifest with the Plugin Creator validator available in the maintainer's Codex skill installation, and test an actual installation from a fresh profile. Publishing these catalogs does not submit to either vendor's official directory or change workspace administration settings.
+
 ## Build and inspect
 
 ```sh
@@ -49,7 +83,7 @@ claude plugin install own-the-change@own-the-change --scope local
 
 For a disposable test, use a distinct temporary catalog name, record the actual installed scope, and remove only that test plugin/catalog afterward using the host CLI. An `installPath` entry alone does not prove the model used cached resources; inspect the resolver path in a fresh session. The source directory remained available during the observed local-catalog test.
 
-The generated Claude marketplace root is `claude-code/`; its catalog points to `./own-the-change`. Copy or distribute the whole root for catalog-based installation. A raw URL to the catalog alone cannot supply its relative package files. No Codex marketplace is created or registered by this builder; choose and verify that distribution destination separately.
+The temporary Claude marketplace root is `claude-code/`; its catalog points to `./own-the-change`. Copy or distribute the whole root for catalog-based installation. A raw URL to the catalog alone cannot supply its relative package files. The temporary builder does not create a Codex catalog; `sync_marketplace.py` creates the repository's tracked Codex catalog and package. Neither command registers a marketplace on the user's machine.
 
 ## Publication decision
 

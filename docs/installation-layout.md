@@ -1,5 +1,33 @@
 # Installation layout
 
+## GitHub marketplace
+
+Claude Code can install the committed distribution directly from this repository:
+
+```text
+/plugin marketplace add parkyountaek/own-the-change
+/plugin install own-the-change@own-the-change
+```
+
+The root `.claude-plugin/marketplace.json` points to `./plugins/claude-code/own-the-change`. That directory contains the complete generated Claude package as ordinary tracked files, so users need no manual checkout or build. This is a project-owned marketplace; installation does not depend on acceptance into Anthropic's official catalog.
+
+Codex CLI uses the same GitHub repository:
+
+```sh
+codex plugin marketplace add parkyountaek/own-the-change
+codex plugin add own-the-change@own-the-change
+```
+
+Its catalog is `.agents/plugins/marketplace.json`, with a local source object pointing to `./plugins/own-the-change`. Codex resolves this path from the repository root. The native package contains its own manifest, skill, and shared resources. Keeping separate complete packages gives each host only its own integration files. See [OpenAI's supported marketplace formats](https://learn.chatgpt.com/docs/enterprise/plugin-management#supported-formats). Distribution through this repository does not submit the plugin to OpenAI's public directory or install it in an organization's workspace.
+
+For a local checkout test, substitute its absolute path for `parkyountaek/own-the-change`. Both routes use the same catalog and package. Claude copies only the package directory into its installed cache. The package excludes local records, credentials, host settings, and repository history.
+
+If you already registered a generated local catalog named `own-the-change`, inspect `claude plugin marketplace list`. To switch deliberately, uninstall `own-the-change@own-the-change` in the scope you used, remove that catalog with `claude plugin marketplace remove own-the-change`, then add the GitHub source and reinstall. Removing a marketplace also removes its installed plugins; it does not delete learning records in your target projects.
+
+For the corresponding Codex migration, inspect `codex plugin marketplace list`, remove the plugin with `codex plugin remove own-the-change@own-the-change`, remove the old catalog with `codex plugin marketplace remove own-the-change`, then run the GitHub commands above. Start a new thread after installation. If you previously installed the user skill link from this checkout, use `scripts/install-local.sh remove-codex-user` when you want to use only the marketplace copy; the script removes only its own link.
+
+Maintainers run `python3 scripts/sync_marketplace.py` after changing package inputs and include both catalogs and package changes in the same commit. `python3 scripts/sync_marketplace.py --check` and the test suite detect stale content or unexpected package files. The refresh refuses symlinks and unexpected files instead of overwriting or deleting them. Edit canonical inputs, not the distribution copies. See the [release checklist](releasing.md#prepare-the-github-marketplace).
+
 ## Local use
 
 - Claude Code: run `python3 scripts/launch_claude.py /absolute/path/to/your-project` for a temporary, session-only installation
@@ -9,7 +37,7 @@
 
 The repository keeps one shared skill in `skills/own-the-change/`. Discovery paths are symbolic links only. The common rules live only in `docs/protocol/understanding-protocol.md`.
 
-The Claude launcher checks for Claude Code, Git, and a valid target repository before building. It creates a fresh temporary package for each session, starts Claude in the requested directory, and removes that package when Claude exits. It does not install a marketplace or change host configuration. It doesn't erase Claude's own conversation history. Use a manual build and marketplace installation when you need a package that remains available after the session.
+The Claude launcher checks for Claude Code, Git, and a valid target repository before building. It creates a fresh temporary package for each session, starts Claude in the requested directory, and removes that package when Claude exits. It does not install a marketplace or change host configuration. It doesn't erase Claude's own conversation history. Use the GitHub marketplace when you need a persistent installation.
 
 Resolve entry-point symlinks before finding the resource root. `scripts/resolve_context.py --target <working-directory>` reports resources and the target Git root, including when the working directory is nested in a different repository. Source-discovery links require the checkout; generated packages include their own resources.
 
@@ -30,9 +58,9 @@ Each package includes its own license, protocol, template, context helper, and v
 
 The portability test builds both packages from a temporary source snapshot, removes that snapshot's original path, and exercises each package against a different nested Git target. The source protocol remains the only maintained rule source; generated copies are build artifacts.
 
-## Not published yet
+## Distribution and verification
 
-`templates/claude-marketplace.json` is copied to the generated Claude marketplace root. Its relative source is `./own-the-change`, not the incomplete source adapter. The Codex manifest is copied into the Codex package; the builder does not create a Codex marketplace or alter a personal marketplace. This repository currently does not publish or push externally; use the local paths above while developing.
+`templates/claude-marketplace.json` is copied to the temporary Claude marketplace root with source `./own-the-change`. The sync script uses that template with source `./plugins/claude-code/own-the-change` for the tracked root catalog, and copies `templates/codex-marketplace.json` to `.agents/plugins/marketplace.json`. Neither catalog references an incomplete source adapter. Building and syncing do not push to GitHub or register anything in the user's host configuration.
 
 Automated tests cover resource lookup after copying a package. Temporary Claude and Codex marketplace installations also passed a debrief with record creation and validation. Codex used its installed cache; Claude used the still-available local catalog package. Those test registrations were removed afterward. No public release or marketplace submission was made. See the [acceptance checklist](acceptance-checklist.md) for versions and remaining tests.
 

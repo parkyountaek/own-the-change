@@ -8,11 +8,14 @@ Observed on macOS on 2026-09-09 and 2026-09-10, unless another environment is li
 
 | Area | Observed result | Limit |
 | --- | --- | --- |
-| Automated suite | All 65 tests passed after the final runtime fixes. | Structural and behavioral tests are not an agent or human assessment. |
+| Automated suite | All 72 tests passed on macOS with Python 3.12.0 after the Claude and Codex GitHub marketplace packaging change. | Structural and behavioral tests are not an agent or human assessment. The earlier platform matrix below covered 65 tests. |
 | Development lint | Ruff 0.16.6 and ShellCheck 0.11.0 passed with the pinned development requirements. | Lint does not prove runtime correctness. |
 | Package validation | Both packages build without symlinks or private records; the three public example records validate. Claude manifests and the Codex manifest/skill validators pass. | A valid manifest alone does not prove host discovery. |
 | Package portability | Both packages resolve a foreign nested Git target and validate a record after their original source snapshot is removed. | Host installation behavior needs a separate test. |
 | Claude Code 2.1.236 | All three commands ran through `--plugin-dir`. Interactive marketplace addition and project-scope installation succeeded; a new installed session completed a Korean debrief, four fixture tests, exact-path privacy checks, and record validation. | That local catalog remained available. Cache-only loading is unverified. |
+| Repository-root Claude marketplace | On 2026-09-10, Claude Code 2.1.236 validated the root catalog and tracked package. With a disposable `CLAUDE_CONFIG_DIR`, CLI catalog addition and user-scope installation succeeded. `plugin details` discovered all three checkpoint commands, the shared skill, and the Stop hook. | This used a temporary local copy of the candidate. Installation from the public GitHub branch remains untested until publication. No new model conversation was run. |
+| Repository-root Codex marketplace | On 2026-09-10, Codex CLI 0.153.4 added the local repository marketplace, installed version 0.2.0, and listed it as enabled from `plugins/own-the-change/` in a disposable configuration. The native manifest passed the Plugin Creator validator. | This verifies local catalog discovery and copied installation, not a new model conversation or the remote GitHub route. |
+| Claude installed-cache helpers | With that temporary catalog moved away, the installed resolver found its bundled protocol, template, and validator and resolved a separate Git target. The cached Stop script returned valid shortcut JSON. | `plugin details` failed while the local catalog was absent and succeeded after restoration. Direct helper checks do not establish cache-only loading in a model session. |
 | Claude language and evidence | A conversation switched from Korean to English. Skipping questions kept `not_confirmed`; a stale-test probe kept the earlier pass historical and used `unknown`. Missing execution metadata stayed unknown. | These are bounded synthetic observations, not guarantees for every conversation. |
 | Claude Stop hook | The hook returned exit 0 and valid command-only `systemMessage` JSON during real sessions. A peer-run interactive launcher test observed the shortcut text in the terminal. | Display was checked by whitespace-insensitive matching of the PTY capture, not across every terminal or host version. |
 | Codex CLI 0.153.4 | The final package was installed through a temporary marketplace. From a nested target directory, all three checkpoints used the installed cache and saved valid records at the Git root. Plan/debrief prose was Korean; the Understanding Check followed an English preference and preserved the previous Korean record. | Questions were skipped; no actual user explanation was assessed. |
@@ -23,6 +26,8 @@ Observed on macOS on 2026-09-09 and 2026-09-10, unless another environment is li
 The Codex Plan Check distinguished its proposed change from existing edits and did not implement it. Its existing tests were not presented as proof of the proposed behavior. Installed Understanding Checks rejected passing tests as a substitute for an answer. All no-answer records remained `not_confirmed`, with the five unavailable metadata fields set to `unknown`.
 
 The Claude installed debrief preceded the final wording and status-punctuation changes; its manifests were revalidated after those changes. The final Codex checkpoint and cache-only sessions used the revised runtime files. Neither test was an installation of a published release.
+
+The marketplace packaging change also passed Ruff 0.16.6, ShellCheck 0.11.0, distribution synchronization, and validation of all three example records. A local `file://` Git URL probe was rejected by Claude's source parser; it is not an installation route documented for users here. The GitHub source must be verified separately after the candidate is pushed.
 
 ### Local platform matrix
 
@@ -44,6 +49,7 @@ Native Windows, WSL, Cursor, Copilot, and generic-agent runtime sessions are not
 From the source checkout:
 
 ```sh
+python3 scripts/sync_marketplace.py --check
 python3 -m unittest discover -s tests -v
 python3 scripts/validate_record.py docs/examples/records/*/*.md
 python3 scripts/build_plugins.py --output /path/to/new-build
@@ -57,6 +63,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for pinned lint commands and the [host
 | `test_validate_record.py` | Status/response/evidence consistency, required sections, YAML scalars, status punctuation, actual/example separation, and follow-up dates |
 | `test_resolve_context.py` | Foreign nested targets, source aliases, exact record tracking/ignore checks, external links, and path conflicts |
 | `test_build_plugins.py` | Complete packages, private-input exclusion, source independence, safe output handling, and normalized POSIX permissions |
+| `test_sync_marketplace.py` | Tracked distribution consistency, complete catalog target, stale-file detection, private-input exclusion, and preservation of unexpected files or symlinks |
 | `test_install_layout.py` | Discovery links, repeat installation/removal, foreign-file protection, and setup hints |
 | `test_launch_claude.py` | Launcher lifecycle, prerequisites, invocation forms, arguments, signals, and cleanup |
 | `test_repository_content.py` | Maintained English text, local Markdown links, and the four-case smoke fixture |
