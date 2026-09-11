@@ -94,7 +94,7 @@ When it clarifies an important behavior, use one small before/after input-output
 
 ### Default: a short multiple-choice sequence
 
-Plan a short check from the actual scoped change, normally three questions. Adjust the total to the consequences of the change:
+Normally plan three questions from the scoped change. Where possible, check the reason with a before/after case or test, not an abstract "why" first. Adjust for risk:
 
 | Risk | Question budget | Distinct coverage |
 | --- | --- | --- |
@@ -110,9 +110,9 @@ Keep each question short and change-specific. Ask about a reason, predicted beha
 
 Keep the options unambiguous, similarly concise, and grounded in the change. Do not mark the correct choice as recommended, preselect it, or reveal the answer before the user responds. Establish the answer from the evidence before evaluating a selection; do not change the key to agree with the user. If the required evidence is missing or no reliable question can be formed, explain that limit and finish with `unknown` instead of inventing a correct answer.
 
-Each distractor should represent a different plausible misunderstanding, such as confusing old and new behavior, extending a guarantee beyond the tested boundary, or fixing the wrong layer. Prefer predicting a concrete input's behavior or locating a related repair over repeating the debrief's wording. Avoid overlapping answers, joke options, "all/none of the above," and length or vocabulary clues. If three defensible distractors cannot be formed, choose another distinct supported point or shorten the check with a reason; do not add nonsense to fill the choices. More options do not prove unaided understanding or psychometric validity.
+Use parallel options: competing outputs, tests, or fixes for the same concrete question. Before ordering, identify internally the specific code or requirement misunderstanding behind each distractor and the evidence that rules it out. Replace choices dismissible by unrelated features or terminology; an extra option is not useful merely because it is false. Avoid overlap, joke options, "all/none," and wording or length clues. If three defensible distractors are unavailable, change the supported point or shorten the check with a reason. Do not print this review or add it to the helper payload. More options do not prove learning or discrimination.
 
-Within the existing budget, include a behavior-prediction or related-fix scenario when supported. Use a small new input or changed requirement, not an option just explained. On a wrong selection, explain its specific mistaken boundary and the supported behavior; a tiny counterexample can replace a long explanation. Do not leave a selected false option uncorrected.
+Within the existing budget, include a new-input prediction or related-fix scenario when supported, not a restatement of the preceding answer. On a wrong selection, contrast that option's mistaken boundary with the supported behavior, using one small counterexample when useful. Do not leave a selected false option uncorrected.
 
 Before displaying each question, run `python3 <resource-root>/scripts/prepare_question.py` with JSON on stdin containing `choices` (four strings), `answer` (the exact best-choice string), `unsure` (localized text), and `previous_positions` (the earlier displayed answer positions in this checkpoint, or `[]`). Keep the question and evidence rationale in context; do not duplicate them in the helper input. The helper returns reordered `choices` and `answer_position`, keeps uncertainty last, and avoids repeating the immediately preceding correct position without a fixed cycle. Number the returned choices 1 to 5. Show the question and choices only, then evaluate against that unchanged returned key. Never reshuffle an already displayed question. This is a conversational aid, not a proctored exam: tool traces may expose the key.
 

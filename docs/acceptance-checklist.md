@@ -124,6 +124,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for pinned lint commands and the [host
 | `test_prepare_demo.py` | Fresh synthetic Git/index setup, all four example tests, record exclusion, and preservation of existing destinations |
 | `test_repository_content.py` | Maintained English text, local Markdown links, and the four-case smoke fixture |
 | `test_runtime_language.py` | Localized record prose, original answers, and follow-up reasons with stable schema identifiers |
+| `test_question_examples.py` | Executed before/after evidence for the documented choices, distinct near-miss outputs, and consistent complete/unsure/stopped example mappings; not generated-question or human assessment |
 
 The validator checks structure and consistency. It cannot authenticate a quotation, determine whether a test really ran, or judge whether an answer demonstrates understanding.
 
@@ -143,6 +144,38 @@ Observed locally on September 11, 2026, with Python 3.12.0 on macOS:
 Published implementation: `41d831fb2d5d033fd0e5cbff0480a29867833af5`. [GitHub Actions](https://github.com/parkyountaek/own-the-change/actions/runs/34598714224) passed all five jobs: lint and the Ubuntu/macOS matrix on Python 3.11/3.13. In disposable profiles, existing GitHub installs upgraded from 0.2.3 to 0.3.0 using Claude Code 2.1.236 and Codex CLI 0.154.0. The resulting cache contents matched the published packages (excluding Claude's `.in_use` marker); both cached Doctor helpers passed. This verifies download/update and package contents, not new interactive picker behavior.
 
 The previous known public source before this candidate was `f14d6d0b5199c9b81b022ecc9dad008862ce7908` (0.2.3). No tag or GitHub release is implied by the 0.3.0 development version. Fresh installed picker interactions, full three- and five-question conversations on both hosts, a first-save privacy decision in a real target, human-rated wording/question quality, Windows/WSL use, and delayed learning effects remain separate checks. Private conduct contacts, security-report delivery, and public-release approval still require maintainer decisions.
+
+## Concrete distractors: local 0.3.1 candidate
+
+Observed locally on September 11, 2026, on macOS with Python 3.12.0, before committing or publishing these changes. The tested worktree was based on `c6f3dbf41294d73cb6308dd9cd43b6b199224082`. These local observations do not establish remote CI, an installed-cache update, or a tagged release.
+
+- All 101 unit tests passed, including three new checks that execute the documented choice evidence instead of matching instruction wording. All six example records passed validation. Ruff 0.16.6, ShellCheck 0.11.0, distribution sync, Claude catalog/package validation, the Codex plugin validator, and six packaged skill validators passed.
+- The eleven entry bodies remain unchanged and within 250 characters. The selected debrief protocol remains 16,397 characters; the understanding selection changes from 23,595 to 23,606. The ordering-helper payload and number of helper calls per question are unchanged. Character counts do not establish token cost.
+- Two fresh Codex CLI 0.154.0 processes invoked the built 0.3.1 skill by absolute path. Requested settings were `gpt-6-astra`, medium reasoning, read-only sandbox, ephemeral execution, ignored user config, and disabled plugins/apps/hooks/multi-agent/web search. Normal host authentication was used without reading or copying credentials. This is direct packaged-skill testing, not installed-picker testing.
+- Each prompt requested the first Understanding Check question in Korean, named its two-file scope and index baseline with no HEAD commit, prohibited code edits and learning records, and supplied no question wording, options, test result, or learner response. There was one run per fixture, no retries, and no product edits between the runs.
+- The whitespace target used the existing four-test fixture. The separate synthetic cache target changed `is_fresh(saved_at, now, ttl)` from `now - saved_at <= ttl` to `now - saved_at < ttl`. Its tests covered `(100, 109, 10)`, `(100, 110, 10)`, `(100, 111, 10)`, and `(100, 100, 0)`, expecting `True`, `False`, `False`, and `False` respectively.
+
+The implementing assistant checked the following captured outputs against actual code and command results. These are English summaries of Korean outputs, not independent or blinded human ratings:
+
+| Fixture | Observed first question | Supported answer and distractor distinctions |
+| --- | --- | --- |
+| Whitespace | What whitespace handling is intended for `"  Ada   Lovelace  "`? | Position 4: trim edges and collapse internal whitespace. Alternatives preserve edges, retain old edge-only trimming, or remove all whitespace. No unrelated feature is used as a distractor. |
+| Cache expiry | What does `is_fresh(100, 110, 10)` return before and after the change? | Position 4: `True` then `False`. Alternatives reverse the boundary change, keep accepting equality, or incorrectly treat equality as already expired before the change. |
+
+Both displayed question 1 of a planned two-question check, four content choices plus uncertainty at 5, and waited without inventing a learner reply. Each ran the ordering helper once and displayed its returned order without revealing the key in the final question. Both keys happened to be 4 in separate fresh checks with empty position history; this is not evidence of a fixed position or a within-check non-repetition test. The helper trace exposes its key by design.
+
+Each host executed its four tests once with `OK` and command exit 0: `python3 -B -m unittest test_display_name` for whitespace and `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest test_cache` for cache expiry. Both Codex processes exited 0; before/after target file and index hashes matched, no file-change events occurred, and no learning record directory appeared.
+
+| Fixture | Host input | Cached input | Host output | Reasoning output | Seconds |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Whitespace | 76305 | 53248 | 978 | 0 | 61.543 |
+| Cache expiry | 96496 | 66048 | 785 | 18 | 59.315 |
+
+These execution-level JSONL fields follow the [official Codex documentation](https://learn.chatgpt.com/docs/non-interactive-mode). Cached input is included in input, not added again; cache-write input was zero. This is not another matched A/B experiment: one sample per fixture, concurrent local validation, shared host caching, and macOS Git cache warnings prevent a new savings claim. The [earlier token pilot](research/2026-09-11-token-pilot.md) remains a separate 0.2.3/0.3.0 observation.
+
+Built protocol SHA-256: `8171ec6b2a48e3f5823e2ab43222cc8a8aff247a4370b4e005dc6a2862de1567`. Local two-probe harness SHA-256: `527c09b6cf4f8a46594db73c520416cc55518e2d0d0d61f4c9852588637372d4`. Raw local logs, credentials, and generated answer transcripts are not included here.
+
+Limits: both introductions explained stopping and skipping the current question but omitted the whole-check `skip` alias. No reply was sent, so alias handling, continuation, feedback, and full coverage were not tested. Retry-limit and insufficient-distractor scenarios, Claude runtime, installed-cache behavior, human-rated plausibility, and retention remain unobserved for 0.3.1. The examples and protocol improve the authoring mechanism; they do not prove better learner discrimination.
 
 ## Remaining host checks
 

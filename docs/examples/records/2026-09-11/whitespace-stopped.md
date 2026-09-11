@@ -27,7 +27,7 @@ Fictional example. All execution results and user replies below illustrate a sce
 
 ## Changed Files
 - Core behavior in `display_name.py` changes from `value.strip()` to `" ".join(value.split())`.
-- `test_display_name.py` covers four whitespace cases; no incidental changes are in scope.
+- `test_display_name.py` covers four whitespace cases. The incidental module-docstring change does not affect execution.
 
 ## Test Evidence
 - Illustrative execution of `python3 -m unittest discover -s . -p 'test_display_name.py' -v` against the after fixture: four tests passed, exit 0.
@@ -35,13 +35,13 @@ Fictional example. All execution results and user replies below illustrate a sce
 
 ## Key Explanation
 - Planned total: two questions for this low-risk fixture.
-- Question 1/2: Why was the edge-only trim replaced here?
-  1. Remove only surrounding whitespace.
-  2. Normalize inconsistent whitespace in display names.
-  3. Reject names containing internal whitespace.
-  4. Remove all whitespace from names.
+- Question 1/2: Which input/output pair needs the new implementation, rather than the old `strip()`?
+  1. `" Ada Lovelace "` -> `"Ada Lovelace"`
+  2. `"Ada  Lovelace"` -> `"Ada Lovelace"`
+  3. `"Ada Lovelace\t"` -> `"Ada Lovelace"`
+  4. `"Ada Lovelace"` -> `"Ada Lovelace"`
   5. I'm not sure.
-- Expected answer: 2, supported by the stated normalization goal. The first reply correctly selects 2 and also asks to stop. Feedback acknowledges the recognized goal and ends the check without presenting question 2.
+- Expected answer: 2. Only the internal double-space case fails with `strip()` and passes with the new implementation. The first reply correctly selects 2 and also asks to stop. Feedback acknowledges the recognized reason and ends the check without presenting question 2.
 - Stopped after one answered question. The planned behavior topic was not asked or assessed; no second question or answer is invented. The earlier selection remains an answered multiple-choice response.
 
 ## User Response

@@ -27,7 +27,7 @@ Fictional example. All execution results and user replies below illustrate a sce
 
 ## Changed Files
 - Core behavior in `display_name.py` changes from `value.strip()` to `" ".join(value.split())`.
-- `test_display_name.py` covers four whitespace cases; no incidental changes are in scope.
+- `test_display_name.py` covers four whitespace cases. The incidental module-docstring change does not affect execution.
 
 ## Test Evidence
 - Illustrative execution of `python3 -m unittest discover -s . -p 'test_display_name.py' -v` against the after fixture: four tests passed, exit 0.
@@ -35,18 +35,18 @@ Fictional example. All execution results and user replies below illustrate a sce
 
 ## Key Explanation
 - Planned total: two questions for this low-risk fixture. Both received selections; the sequence is complete.
-- Question 1/2: Why was the edge-only trim replaced here?
-  1. Remove only surrounding whitespace.
-  2. Normalize inconsistent whitespace in display names.
-  3. Reject names containing internal whitespace.
-  4. Remove all whitespace from names.
+- Question 1/2: Which input/output pair needs the new implementation, rather than the old `strip()`?
+  1. `" Ada Lovelace "` -> `"Ada Lovelace"`
+  2. `"Ada  Lovelace"` -> `"Ada Lovelace"`
+  3. `"Ada Lovelace\t"` -> `"Ada Lovelace"`
+  4. `"Ada Lovelace"` -> `"Ada Lovelace"`
   5. I'm not sure.
-- Expected answer: 2, supported by the stated normalization goal. The first reply selects uncertainty, not an incorrect substantive option or a skip. Feedback explains the goal, then continues the planned sequence without another attempt or a written reason.
-- Question 2/2: What does `display_name("   ")` return?
+- Expected answer: 2. Only the internal double-space case fails with `strip()` and passes with the new implementation. The first reply selects uncertainty, not an incorrect substantive option or a skip. Feedback contrasts it with already-working edge-trimming and clean-name cases, then continues without another attempt or a written reason.
+- Question 2/2: What does `display_name(" \t ")` return?
   1. An empty string, `""`.
   2. A single space, `" "`.
-  3. It raises an error.
-  4. The original three spaces.
+  3. A tab, `"\t"`.
+  4. The unchanged input, `" \t "`.
   5. I'm not sure.
 - Expected answer: 1. Splitting whitespace-only input gives no words, so joining returns an empty string; the fixture tests this case. The second reply correctly selects 1. Feedback explains this behavior and the intentional-spacing risk, then finishes. The later correct selection does not erase the earlier uncertainty.
 

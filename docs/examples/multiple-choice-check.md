@@ -10,12 +10,12 @@ This small, low-risk fixture uses two questions; a normal medium-risk check uses
 
 > Two short questions for this low-risk change. Reply with a number. Say `stop` or `skip` to end, or `skip this question` to move on.
 >
-> Question 1/2: Why was the edge-only trim replaced here?
+> Question 1/2: Which input/output pair needs the new implementation, rather than the old `strip()`?
 >
-> 1. Remove only surrounding whitespace.
-> 2. Normalize inconsistent whitespace in display names.
-> 3. Reject names containing internal whitespace.
-> 4. Remove all whitespace from names.
+> 1. `" Ada Lovelace "` -> `"Ada Lovelace"`
+> 2. `"Ada  Lovelace"` -> `"Ada Lovelace"`
+> 3. `"Ada Lovelace\t"` -> `"Ada Lovelace"`
+> 4. `"Ada Lovelace"` -> `"Ada Lovelace"`
 > 5. I'm not sure.
 
 The illustrative user replies:
@@ -26,14 +26,14 @@ The illustrative user replies:
 
 The agent explains briefly, then asks the next planned question:
 
-> The stated goal is consistent whitespace throughout names, not edge-only trimming or input rejection.
+> `strip()` already handles the surrounding space and final tab, and leaves the clean name unchanged. It leaves two spaces inside the name, which the new implementation collapses.
 >
-> Question 2/2: What does `display_name("   ")` return?
+> Question 2/2: What does `display_name(" \t ")` return?
 >
 > 1. An empty string, `""`.
 > 2. A single space, `" "`.
-> 3. It raises an error.
-> 4. The original three spaces.
+> 3. A tab, `"\t"`.
+> 4. The unchanged input, `" \t "`.
 > 5. I'm not sure.
 
 The illustrative user replies `1`. The agent finishes:
@@ -44,7 +44,9 @@ If saving is chosen, the [choice-only record](records/2026-09-11/whitespace-choi
 
 ## If the answer is wrong or unsure
 
-Choosing `1` for question 1 gets a short correction: the earlier edge-only trim did not meet the goal of normalizing internal whitespace too. Choosing `5` gets the same useful explanation without implying that the user guessed wrong. Either way, the agent continues to question 2 without a retry, remedial question, or essay. The [unsure record](records/2026-09-11/whitespace-unsure.md) shows that a later correct selection does not erase earlier uncertainty.
+Choosing `1` for question 1 gets a short correction: `strip()` already removes the surrounding spaces; the internal double space is what needs the change. Choosing `5` gets the explanation without implying that the user guessed wrong. Either way, the agent continues to question 2 without a retry, remedial question, or essay. The [unsure record](records/2026-09-11/whitespace-unsure.md) shows that a later correct selection does not erase earlier uncertainty.
+
+In question 2, the distractors distinguish collapsing whitespace without removing the edges, trimming only ordinary spaces, and leaving whitespace-only input unchanged. A wrong selection gets the relevant contrast, not a generic verdict. These examples avoid unrelated features; their behavior is checked by `tests/test_question_examples.py`, not a claim that a script can judge arbitrary generated questions.
 
 ## Stopping early
 

@@ -1,6 +1,13 @@
 # Changelog
 
-## Unreleased - 0.3.0 development
+## Unreleased - 0.3.1 development
+
+- Check the reason through concrete before/after cases or tests instead of defaulting to an abstract first question. Internally ground each distractor in a distinct code or requirement misunderstanding; do not print extra rationale or extend the ordering-helper payload.
+- Replace weak fictional whitespace options with executable input/output and near-miss distinctions. Regression tests check their answer evidence and complete, unsure, and stopped record mappings; they do not certify arbitrary generated questions or human learning.
+- Preserve the four-content-plus-uncertainty format, risk-based question budgets, number-only replies, short entry points, no-save behavior, and record schema. Refresh both host packages to 0.3.1; no tag, release, publication, or personal reinstall is implied.
+- Retain the [0.2.3 versus 0.3.0 token pilot](docs/research/2026-09-11-token-pilot.md) with all eight runs and its limitations. Those savings are not measurements of 0.3.1.
+
+## 0.3.0 development
 
 - Bundle Demo and read-only Doctor actions for Claude and Codex; no source clone is needed to try the synthetic change.
 - Use four content choices plus an explicit fifth uncertainty choice. A stateless helper preserves answer content while varying its position without a fixed cycle or immediate repeat.

@@ -26,3 +26,5 @@ For Understanding Check, you can request one question or stop early. A compact a
 ## Measure honestly
 
 Use the same client/model/settings and comparable task scope when comparing versions. Record only host-supplied per-execution input/output/cached-token data and whether a record was saved; separate first invocation from subsequent answers. Do not publish raw session logs or private code. If the host does not provide attributable usage, report `unknown` rather than estimating from characters or account totals. A single run cannot establish typical savings or equal learning quality.
+
+The [September 11 pilot](research/2026-09-11-token-pilot.md) compared 0.2.3 with 0.3.0 on one synthetic change: mean input fell, but first-question output increased and per-run cache behavior varied. It does not measure 0.3.1, a complete conversation, typical bills, or human learning.
