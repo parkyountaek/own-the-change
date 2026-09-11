@@ -43,7 +43,7 @@ That gap matters when you need to review a pull request, fix a bug, or extend a 
 
 For example, tests for new retry logic may pass even if you're unsure which failures trigger a retry or where to change the retry limit. You need enough context to work on that code later.
 
-Own The Change uses the Git diff and test results to explain what changed and why, and saves a local Markdown record you can revisit. If you request an Understanding Check, it starts with a quick multiple-choice question. You can answer with a number; writing your own explanation is optional.
+Own The Change uses the Git diff and test results to explain what changed and why, and saves a local Markdown record you can revisit. If you request an Understanding Check, it offers a short multiple-choice sequence, one question at a time. You can answer with a number; writing your own explanation is optional.
 
 You can skip questions and keep coding. There are no scores, and the plugin doesn't approve your code. Passing tests and understanding a change are tracked separately.
 
@@ -53,7 +53,7 @@ The goal is simple: a week later, you can still explain why the change was neede
 
 1. **Plan Check (optional):** think through likely changes, risks, and tests before coding.
 2. **Change Debrief:** review what changed, why, what was tested, and what still needs checking.
-3. **Understanding Check (optional):** answer one multiple-choice question and read a short explanation. Ask for more depth or a free-text check only if you want it.
+3. **Understanding Check (optional):** normally answer three multiple-choice questions, one at a time, with short feedback. Simple changes use two; high-risk changes can use up to five. You can stop early or request free text.
 4. **Save and revisit:** the agent saves a Markdown record at `docs/ai-understanding/YYYY-MM-DD/<task-id>.md`.
 
 The [understanding protocol](docs/protocol/understanding-protocol.md) defines learning, record, and privacy behavior. The plugin does not edit or approve your code. It adds no separate server or telemetry; your coding agent's own data policies still apply.
@@ -280,7 +280,9 @@ Next, ask your coding agent to make the change. The Plan Check doesn't edit your
 
 ### 3. Check understanding with a number
 
-When you want to check your understanding, invoke `/own-the-change:own-understanding-check` in Claude or select **Own The Change: Understanding Check** from Codex's `/skills` menu. The agent offers one multiple-choice question about the change. Reply with a number, choose "I'm not sure," or skip. It gives a short explanation and finishes; no essay or retry-until-correct loop is required.
+When you want to check your understanding, invoke `/own-the-change:own-understanding-check` in Claude or select **Own The Change: Understanding Check** from Codex's `/skills` menu. A normal check covers reason, impact, and a caution in three multiple-choice questions, shown one at a time as `1/3`, `2/3`, and `3/3`. Simple changes use two questions; high-risk changes can use up to five when there are distinct points to check.
+
+Reply with a number or choose "I'm not sure." After short feedback, the agent moves to the next planned question, including after a wrong or unsure answer. No essay or retry-until-correct loop is required. Say `stop` or `skip` to end, `skip this question` to move on, or `Just one question` for a shorter check. Earlier answers remain in the record when you stop.
 
 For a deeper conversation, say `Let me explain it in my own words.` Short keywords are fine too. A correct selection is recorded separately from an independent explanation; it does not become proof that you can explain the change unaided. See the [multiple-choice example](docs/examples/multiple-choice-check.md) and [status definitions](docs/protocol/understanding-protocol.md#status). Neither a valid record nor a passing test proves you understand the change.
 
@@ -298,7 +300,7 @@ To return to a saved task, ask your agent:
 
 ```text
 Use Own The Change to review docs/ai-understanding/YYYY-MM-DD/<task-id>.md.
-Start with one multiple-choice question about the reason, risk, or where a related fix starts.
+Ask multiple-choice questions one at a time about the reason, risk, or where a related fix starts.
 Do not change the implementation.
 ```
 

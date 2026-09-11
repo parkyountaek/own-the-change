@@ -34,22 +34,38 @@ Fictional example. All execution results and user replies below illustrate a sce
 - These tests do not establish all Unicode behavior or whether changing preferred name spacing is acceptable.
 
 ## Key Explanation
-- Question 1: What does `display_name("Ada   Lovelace")` return after this change?
-  1. `"Ada   Lovelace"`, preserving the internal spaces.
-  2. `"Ada Lovelace"`, with one internal space.
-  3. `"AdaLovelace"`, without an internal space.
+- Planned total: two questions for this low-risk fixture. Both received selections; the sequence is complete.
+- Question 1/2: Which stated requirement motivated replacing the edge-only trim?
+  1. Remove only surrounding whitespace.
+  2. Normalize inconsistent whitespace in display names.
+  3. Reject names containing internal whitespace.
   4. I'm not sure.
-- Expected answer: 2. Unlike the earlier edge-only trim, `split()` and `join()` also collapse internal whitespace.
-- The reply below selects uncertainty for question 1, not an incorrect substantive option and not a skip. Feedback explains the result and intentional-spacing risk, then ends the check. The agent does not require another attempt or a written reason.
+- Expected answer: 2, supported by the stated normalization goal. The first reply selects uncertainty, not an incorrect substantive option or a skip. Feedback explains the goal, then continues the planned sequence without another attempt or a written reason.
+- Question 2/2: What does `display_name("   ")` return?
+  1. An empty string, `""`.
+  2. A single space, `" "`.
+  3. It raises an error.
+  4. I'm not sure.
+- Expected answer: 1. Splitting whitespace-only input gives no words, so joining returns an empty string; the fixture tests this case. The second reply correctly selects 1. Feedback explains this behavior and the intentional-spacing risk, then finishes. The later correct selection does not erase the earlier uncertainty.
 
 ## User Response
+Question 1:
+
+```text
 4
+```
+
+Question 2:
+
+```text
+1
+```
 
 ## Understanding Status
-- `needs_follow_up`: the user expressed uncertainty about the internal-whitespace effect. The check is complete; any later review is optional.
+- `needs_follow_up`: the user expressed uncertainty about the reason for the change, despite recognizing the whitespace-only behavior. The check is complete; any later review is optional.
 
 ## Remaining Risks
-- The user's understanding of the changed behavior and the acceptability of modifying preferred spacing remain unverified.
+- Independent understanding of the reason and the acceptability of modifying preferred spacing remain unverified.
 
 ## Next Check
 - If the user wants to revisit it, compare an intentionally spaced name before and after normalization. Do not ask another question now or block coding.

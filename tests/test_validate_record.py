@@ -164,6 +164,41 @@ class ValidateRecordTests(unittest.TestCase):
         self.assert_invalid(record().replace("response_mode: none", "response_mode: none\nresponse_mode: none"),
                             "duplicate front matter key: response_mode")
 
+    def test_multi_question_transcripts_are_validated_without_rewriting_replies(self):
+        scenarios = [
+            ("low", ["2", "1"], "not_confirmed"),
+            ("medium", ["4", "1", "2"], "needs_follow_up"),
+            ("high", ["2", "1", "4", "3", "2"], "needs_follow_up"),
+            ("low", ["2. stop"], "not_confirmed"),
+            ("medium", ["4", "stop"], "needs_follow_up"),
+        ]
+        for risk, replies, status in scenarios:
+            with self.subTest(risk=risk, replies=replies), tempfile.TemporaryDirectory() as directory:
+                response = "\n\n".join(f"Turn {index}:\n\n```text\n{reply}\n```"
+                                         for index, reply in enumerate(replies, 1))
+                content = record(status=status, risk=risk, response_status="answered",
+                                 response=response, response_mode="multiple_choice",
+                                 dates=("2026-09-10", "2026-09-16") if risk == "high" else (),
+                                 reason="Revisit the failure path" if risk == "high" else "none")
+                path = Path(directory) / "2026-09-09/sample-change.md"
+                path.parent.mkdir()
+                path.write_text(content, encoding="utf-8")
+                original = path.read_bytes()
+                result = subprocess.run([sys.executable, str(VALIDATOR), str(path)],
+                                        capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(path.read_bytes(), original)
+
+    def test_partial_choice_record_cannot_reset_answer_fields_or_claim_confirmation(self):
+        response = "Question 1:\n\n```text\n2\n```\n\nNext turn:\n\n```text\nstop\n```"
+        self.assert_invalid(record(response=response, response_status="not_answered",
+                                   response_mode="multiple_choice"), "response_mode")
+        self.assert_invalid(record(response=response, response_status="answered",
+                                   response_mode="none"), "response_mode")
+        self.assert_invalid(record(response=response, response_status="answered",
+                                   response_mode="multiple_choice", status="confirmed"),
+                            "not multiple_choice alone")
+
     def test_legacy_records_without_response_mode_remain_unchanged(self):
         for status in ["confirmed", "needs_follow_up", "not_confirmed", "unknown"]:
             with self.subTest(status=status), tempfile.TemporaryDirectory() as directory:

@@ -23,7 +23,7 @@ execution_metadata:
 Fictional example. All execution results and user replies below illustrate a scenario; they are not evidence of a real user's participation.
 
 ## Goal
-- Normalize display-name whitespace and check recognition of the changed behavior.
+- Normalize display-name whitespace and check recognition of its reason and behavior.
 
 ## Changed Files
 - Core behavior in `display_name.py` changes from `value.strip()` to `" ".join(value.split())`.
@@ -35,19 +35,35 @@ Fictional example. All execution results and user replies below illustrate a sce
 
 ## Key Explanation
 - The requested normalization collapses whitespace inside names, not just at their edges.
-- Question 1: What does `display_name("Ada   Lovelace")` return after this change?
-  1. `"Ada   Lovelace"`, preserving the internal spaces.
-  2. `"Ada Lovelace"`, with one internal space.
-  3. `"AdaLovelace"`, without an internal space.
+- Planned total: two questions for this low-risk fixture. Both received selections; the sequence is complete.
+- Question 1/2: Which stated requirement motivated replacing the edge-only trim?
+  1. Remove only surrounding whitespace.
+  2. Normalize inconsistent whitespace in display names.
+  3. Reject names containing internal whitespace.
   4. I'm not sure.
-- Expected answer: 2, because `split()` separates the words and `join()` inserts one space.
-- The reply below selects option 2 for question 1. Feedback acknowledges the correct selection and explains the intentional-spacing risk, then ends the check without asking for a written reason or another answer.
+- Expected answer: 2, supported by the stated normalization goal. The first reply selects 2; feedback distinguishes normalization throughout names from edge-only trimming and input rejection, then advances to question 2.
+- Question 2/2: What does `display_name("   ")` return?
+  1. An empty string, `""`.
+  2. A single space, `" "`.
+  3. It raises an error.
+  4. I'm not sure.
+- Expected answer: 1. Splitting whitespace-only input gives no words, so joining returns an empty string; the fixture tests this case. The second reply selects 1. Feedback explains this behavior and the unverified intentional-spacing requirement, then finishes without a written explanation or extra question.
 
 ## User Response
+Question 1:
+
+```text
 2
+```
+
+Question 2:
+
+```text
+1
+```
 
 ## Understanding Status
-- `not_confirmed`: the choice was correct, but the user did not independently explain the reason and impact. The multiple-choice check is complete; this is not a failing grade or a request for an essay.
+- `not_confirmed`: both selections were correct, but the user did not independently explain the reason and impact. The multiple-choice check is complete; this is not a failing grade or a request for an essay.
 
 ## Remaining Risks
 - Product requirements for intentional name spacing and downstream consumers remain unverified.

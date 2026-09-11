@@ -1,5 +1,5 @@
 ---
-description: Check a change with a quick multiple-choice question and feedback.
+description: Check a change with short multiple-choice questions and feedback.
 ---
 
 # Understanding Check

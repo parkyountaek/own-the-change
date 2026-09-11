@@ -4,7 +4,9 @@ You do not need to clone the repository again. Refresh the marketplace, update i
 
 On September 11, 2026, both command sequences below upgraded existing GitHub installations from 0.2.1 to 0.2.2 in disposable profiles, using Claude Code 2.1.236 and Codex CLI 0.153.4. See the [0.2.2 verification details](acceptance-checklist.md#multiple-choice-update-022); the earlier [0.2.0 to 0.2.1 check](acceptance-checklist.md#published-update-from-020-to-021) is retained separately.
 
-Version 0.2.2 changes Understanding Check to a number-only multiple-choice default and adds `response_mode` to new records. Update both the installed instructions and bundled validator, then start a fresh session. The new validator accepts existing 0.2.1 records without rewriting them; an older validator will reject the new field. Installation checks do not by themselves verify a conversation; the acceptance page records the separate synthetic Codex probes and remaining host checks.
+Version 0.2.3 expands Understanding Check to normally three questions, two for low-risk changes, and up to five for high-risk changes, one at a time with visible progress. Incorrect or unsure replies receive feedback before the next planned question; stopping early preserves earlier answers. Update the installed instructions and start a fresh session to replace the 0.2.2 single-question behavior. Record fields do not change in 0.2.3.
+
+Version 0.2.2 introduced `response_mode` to new records. The current bundled validator accepts existing 0.2.1 records without rewriting them; a pre-0.2.2 validator will reject the new field. Installation checks do not by themselves verify a conversation; the acceptance page records separate synthetic probes and remaining host checks.
 
 ## Claude Code
 

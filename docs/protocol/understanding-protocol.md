@@ -10,7 +10,7 @@ A bare invocation of Own The Change defaults to a Change Debrief for the current
 
 Lead with the current conclusion or next small action; group core behavior, tests, and incidental changes instead of reading the whole diff aloud.
 
-Adapt the conversation to the request. Reuse answers and current evidence already supplied; do not repeat a question or rerun a test just to fill a checklist. The question counts below are maximums, not targets. A user can skip or stop a checkpoint without blocking their coding task. Output length, formatting, and order are flexible. Accurate evidence, honest status reporting, and privacy are required.
+Adapt the conversation to the request. Reuse answers and current evidence already supplied; do not repeat a question or rerun a test just to fill a checklist. Use the question budgets below when there are distinct, evidence-supported points to check; never pad a check to reach a count. A user can skip or stop a checkpoint without blocking their coding task. Output length, formatting, and order are flexible. Accurate evidence, honest status reporting, and privacy are required.
 
 ## Runtime language
 
@@ -60,29 +60,39 @@ Separate core behavior, tests, and incidental changes. Keep these distinctions a
 
 ## Understanding Check
 
-### Default: one multiple-choice question
+### Default: a short multiple-choice sequence
 
-Start with one short, change-specific multiple-choice question. Ask about a reason, predicted behavior, or meaningful consequence of the actual scoped change, not whether the user feels they understand it. Use numbered text in the conversation so a number-only reply works without host-specific form tools. Offer about three plausible content choices with one evidence-supported best answer, plus an explicit "I'm not sure" choice in the conversation's language. Allow skipping without making the user select a substantive answer.
+Plan a short check from the actual scoped change, normally three questions. Adjust the total to the consequences of the change:
+
+| Risk | Question budget | Distinct coverage |
+| --- | --- | --- |
+| `low` | Two questions | Reason and changed behavior |
+| `medium` | Three questions (the normal default) | Reason, impact, and an important caution or test limit |
+| `high` | Up to five questions | Reason, impact, risk/test limit, an exception or failure path, and applying the idea to a related fix |
+
+High-risk areas include authentication, authorization, payment, database migration, concurrency, deployment, and external integration. Risk is based on consequences, not the number of changed lines. For high risk, plan five when all five areas support distinct questions. Use fewer questions when the scoped evidence offers fewer distinct points, the user already supplied an answer, or the user requests a shorter check. Briefly explain that reduction; do not silently revert every check to one question. Never invent evidence, repeat the same fact in different words, or expand scope to fill the budget.
+
+State the planned total and show progress on each question, such as `Question 1/3`, `Question 2/3`, and `Question 3/3`. This is position, not a score. Ask only the current question and wait for the user's reply; do not present the whole sequence at once or supply their answers. If the user changes the length, show the revised total and count questions already asked rather than restarting the budget.
+
+Keep each question short and change-specific. Ask about a reason, predicted behavior, or meaningful consequence, not whether the user feels they understand it. Use numbered text in the conversation so a number-only reply works without host-specific form tools. Offer about three plausible content choices with one evidence-supported best answer, plus an explicit "I'm not sure" choice in the conversation's language. At the start, explain that `skip` or `stop` ends the check, while `skip this question` moves to the next planned question; accept equivalent phrases in the user's language. Neither requires a substantive answer.
 
 Keep the options unambiguous, similarly concise, and grounded in the change. Do not mark the correct choice as recommended, preselect it, or reveal the answer before the user responds. Establish the answer from the evidence before evaluating a selection; do not change the key to agree with the user. If the required evidence is missing or no reliable question can be formed, explain that limit and finish with `unknown` instead of inventing a correct answer.
 
-Accept a number, an option label, or the equivalent short selection. Do not require a reason, a complete sentence, or a paragraph afterward. If the response does not identify a valid choice, offer one brief clarification or the option to skip; do not guess their answer or create a retry loop. Ask one question at a time and wait for the user, never supplying their answer yourself.
+Accept a number, an option label, or the equivalent short selection. Do not require a reason, a complete sentence, or a paragraph afterward. If the response does not identify a valid choice, offer one brief clarification or the option to skip; do not guess their answer or create a retry loop. Clarifying the same selection does not consume another question.
 
-After a valid selection, give a brief explanation of the correct behavior and any important misconception or limit, then finish the check. An incorrect or unsure answer gets useful explanation, not a forced retry, another question, or a demand to write an explanation. Completing the check does not require a correct answer or a `confirmed` status. Keep feedback conversational: distinguish recognition from independent explanation without presenting the status as a grade or a reason to continue testing.
+After each valid selection, give a brief explanation of the correct behavior and any important misconception or limit. Then ask the next planned question in the same reply, or finish if the planned sequence is exhausted or the user asks to stop. An incorrect or unsure answer does not end the sequence early or add remedial questions: give useful feedback and continue the existing plan without a forced retry or written explanation. Keep later questions distinct from the answer just explained, rather than testing whether the user can repeat it. A skipped individual question counts toward progress; do not replace it with an extra question.
+
+On early stop, acknowledge the stopping point and leave unasked or skipped topics explicitly unchecked. Preserve any earlier answers and gaps; do not label an interrupted check as fully answered or erase it as "No response." Completing the check does not require a correct answer or a `confirmed` status. Keep feedback conversational: distinguish recognition from independent explanation without presenting the status as a grade or a reason to continue testing. Disclose important unverified risks even when the user ends the check.
 
 ### Optional depth
 
-Use free-text questions only when the user asks for them or asks to explain the change in their own words. Accept concise keywords and fragments as well as sentences. Reuse an explanation the user voluntarily supplies rather than insisting they choose a number. A deeper check can use more questions if requested, but preserve these total limits for the checkpoint, including any question already asked:
+Use free-text questions only when the user asks for them or asks to explain the change in their own words. Accept concise keywords and fragments as well as sentences. Reuse an explanation the user voluntarily supplies rather than insisting they choose a number. A request for more depth alone need not switch to free text, and high risk never requires an essay.
 
-- `low`: up to one question about the changed behavior, reason, or impact.
-- `medium`: up to two questions about reason and impact.
-- `high`: at most three questions covering reason, consequences/risks, and applying the idea in a new scenario.
-
-A request for more depth alone need not switch to free text. High risk does not automatically expand the default single question or require an essay. High-risk areas include authentication, authorization, payment, database migration, concurrency, deployment, and external integration. Risk is based on consequences, not the number of changed lines; disclose unverified risks even when the user ends the check.
+Honor a request for a shorter check, including just one question. If the user requests more depth, use the remaining risk-based budget above; count questions already asked across format changes and never exceed five in a checkpoint. Switching to free text does not require filling the budget: one explanation may cover several planned areas. Do not ask for a separate written reason after every selection.
 
 ### Feedback and interaction evidence
 
-Record each question, its numbered options when used, the evidence-supported answer and rationale, and how the actual response maps to that question. Keep this trace in Key Explanation and preserve the user's original reply in User Response. Distinguish correct selection, incorrect selection, uncertainty, skipping, and independent explanation in the feedback. Agent-written answer choices and feedback are not the user's own explanation, even when selected or repeated.
+Record the planned total, the stopping/completion point, each asked question, its numbered options when used, the evidence-supported answer and rationale, and how the actual response maps to that question. Keep this trace in Key Explanation and preserve the user's original replies in User Response, labeled by question or turn without rewriting them. Identify skipped and unasked topics separately; do not invent questions or answers for them. Distinguish correct selection, incorrect selection, uncertainty, skipping, and independent explanation in the feedback. Agent-written answer choices and feedback are not the user's own explanation, even when selected or repeated.
 
 Identify the important gap and a concrete optional next check without assigning scores, giving vague praise, or using the agent's confidence as evidence. Do not manufacture answers or treat an agent-written example as a real user response. A sufficient voluntary explanation may identify where to start a related repair without implementing it.
 
@@ -99,7 +109,7 @@ These are the only understanding status values:
 
 An effect-only or filename-only answer does not satisfy `confirmed`, including for a low-risk task. Preserve the question limit and record the gap rather than adding questions solely to obtain confirmation. With no answer, only `not_confirmed` or `unknown` is permitted. With missing required evidence, never use `confirmed` or `needs_follow_up`. Test success, a build, agent self-assessment, or validator success never confirms understanding.
 
-A correct multiple-choice selection alone stays `not_confirmed`, with feedback stating what was recognized. An incorrect or "I'm not sure" selection uses `needs_follow_up` when evidence is available. In a longer requested choice check, any important incorrect/unsure selection takes precedence over correct selections. With voluntary free text, evaluate only what the user independently explained against the same `confirmed` rule; selected or copied answer text cannot supply the missing explanation. Missing required evidence takes precedence over these cases and uses `unknown`. Never turn these statuses into a score or block completion on a status change.
+A correct multiple-choice selection alone stays `not_confirmed`, with feedback stating what was recognized. An incorrect or "I'm not sure" selection uses `needs_follow_up` when evidence is available. Across a multi-question choice check, any important incorrect/unsure selection takes precedence over correct selections, including when a later answer is correct or the user stops early. With voluntary free text, evaluate only what the user independently explained against the same `confirmed` rule; selected or copied answer text cannot supply the missing explanation. Missing required evidence takes precedence over these cases and uses `unknown`. Never turn these statuses into a score or block completion on a status change.
 
 ## Record contract
 
@@ -133,7 +143,7 @@ execution_metadata:
 
 Include every shown field in new records. The validator also accepts pre-0.2.2 records without `response_mode` as legacy records with unspecified response mode; it does not infer a mode, rewrite their contents, or reassess their status. All other fields remain required. When explicitly updating an older record, derive the mode only from its actual interaction evidence; do not invent an explanation or silently migrate unrelated records.
 
-`response_mode` describes the responses actually supplied, not the question format offered: `none` with `not_answered`, `multiple_choice` for selections alone, `free_text` for independent prose/keywords alone, and `mixed` when both selections and independent explanation were supplied. An "I'm not sure" selection counts as `answered` and `multiple_choice`; skipping without an answer uses `not_answered` and `none`, with the skip noted in Key Explanation. A prose restatement of an option is still a selection, not independent free text. `confirmed` is incompatible with explicit `none` or `multiple_choice`. A `free_text` or `mixed` label alone never establishes correctness or understanding.
+`response_mode` describes the responses actually supplied, not the question format offered: `none` with `not_answered`, `multiple_choice` for selections alone, `free_text` for independent prose/keywords alone, and `mixed` when both selections and independent explanation were supplied. An "I'm not sure" selection counts as `answered` and `multiple_choice`; skipping without any answer uses `not_answered` and `none`, with the skip noted in Key Explanation. Stopping or skipping after an earlier answer keeps `answered` and the mode derived from those earlier replies; it does not reset the record to `none` or `No response.` A prose restatement of an option is still a selection, not independent free text. `confirmed` is incompatible with explicit `none` or `multiple_choice`. A `free_text` or `mixed` label alone never establishes correctness or understanding.
 
 `record_kind` is `actual` or `example`; examples belong under `docs/examples/records/YYYY-MM-DD/`, visibly carry the label `Fictional example`, and cannot serve as actual user or execution evidence. Actual records must not be placed in that public example directory. Directory aliases do not bypass this separation. `user_response_status` is `answered` or `not_answered`; `evidence_status` is `available` or `unavailable`. With available evidence, `diff_scope` describes the inspected range or working-tree scope. Keep unavailable provider, model, turn, token, and cost values as `unknown`; only execution-tool-supplied values may replace them. Record the tool/source of any known metadata in Test Evidence. A model's self-identification, a configured model name, and account-wide totals are not execution telemetry for this task. Metadata emitted only after a host session finishes is unavailable to a record written earlier unless it is later supplied explicitly.
 

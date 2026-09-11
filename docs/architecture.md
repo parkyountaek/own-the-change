@@ -30,7 +30,7 @@ Own The Change is a local learning aid that lives in a repository and needs no s
 
 1. Before a task, the user may answer or skip the Plan Check questions.
 2. After the task, the agent writes a Change Debrief from the actual `git diff` and actual test output.
-3. A requested Understanding Check follows the [conversation rules](protocol/understanding-protocol.md#understanding-check), starting with one multiple-choice question.
+3. A requested Understanding Check follows the [conversation rules](protocol/understanding-protocol.md#understanding-check), using a short risk-based multiple-choice sequence with visible progress, one question at a time.
 4. The agent preserves the actual reply and response mode, and applies the [status rules](protocol/understanding-protocol.md#status) without treating recognition as independent explanation.
 5. The validator checks structure, response/evidence presence, declared response-mode consistency, status agreement, and follow-up dates. It cannot establish understanding or the truth of the declared mode.
 

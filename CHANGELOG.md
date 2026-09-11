@@ -1,6 +1,13 @@
 # Changelog
 
-## Unreleased - 0.2.2 development
+## Unreleased - 0.2.3 development
+
+- Understanding Check now normally asks three multiple-choice questions, with two for low-risk changes and up to five for high-risk changes. Distinct evidence-supported coverage, visible progress, and one-question-at-a-time pacing replace the single-question default.
+- Brief feedback advances the planned sequence even after an incorrect or unsure reply, without adding retries, remedial questions, or required essays. Users can shorten the check, skip a question, or stop; earlier answers and gaps are preserved.
+- Conversation examples and smoke scenarios cover complete and interrupted checks. Record fields and the distinction between recognition and independent explanation are unchanged.
+- Both host packages advance to 0.2.3 for the changed instructions. Update the installed plugin and start a fresh session. No tag or GitHub release is implied.
+
+## 0.2.2 development
 
 - Understanding Check now defaults to one multiple-choice question with number-only answers, an unsure choice, short feedback, and no required essay or retry. Free-text explanation and additional depth are opt-in.
 - New records include `response_mode`. The validator rejects choice-only `confirmed` records and contradictory response modes, while continuing to read older records without the new field unchanged.

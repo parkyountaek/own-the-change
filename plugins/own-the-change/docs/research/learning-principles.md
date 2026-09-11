@@ -25,7 +25,7 @@ The studies below examine human learning tasks. They do not directly prove that 
 ## 4. Cognitive load
 
 - Evidence: Sweller, J. (1988). *Cognitive Load During Problem Solving: Effects on Learning*. Cognitive Science, 12(2), 257-285. DOI: [10.1207/s15516709cog1202_4](https://doi.org/10.1207/s15516709cog1202_4).
-- Application: split a debrief into core behavior, tests, and incidental changes. Start an Understanding Check with one multiple-choice question; additional depth is optional. Whether this improves participation or reduces experienced burden has not been measured.
+- Application: split a debrief into core behavior, tests, and incidental changes. Present a short Understanding Check one multiple-choice question at a time, with visible progress and an early-stop option. The risk-based question budgets are a product choice, not a research-established optimum; their effect on participation and experienced burden has not been measured.
 - Limit: a small diff can be difficult and a large diff can be simple. Risk level is only a guide.
 
 ## 5. Spaced practice
