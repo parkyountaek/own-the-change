@@ -4,6 +4,8 @@ You do not need to clone the repository again. Refresh the marketplace, update i
 
 The 0.3.0 development package adds Demo, Doctor, four content choices plus uncertainty, compact entry instructions, and conversation-only completion. The record schema is unchanged. See the [current acceptance scope](acceptance-checklist.md#onboarding-and-compact-instructions-030); older verification below applies only to its stated versions.
 
+On September 11, 2026, these commands upgraded existing GitHub installations from 0.2.3 to 0.3.0 in disposable profiles with Claude Code 2.1.236 and Codex CLI 0.154.0. Both cache contents matched published commit `41d831fb2d5d033fd0e5cbff0480a29867833af5`. Start a new session after updating; installation success alone does not establish that a running conversation has loaded new instructions.
+
 On September 11, 2026, both command sequences below upgraded existing GitHub installations from 0.2.2 to 0.2.3 in disposable profiles, using Claude Code 2.1.236 and Codex CLI 0.153.4. See the [0.2.3 verification details](acceptance-checklist.md#multi-question-update-023); the earlier [0.2.2 verification](acceptance-checklist.md#multiple-choice-update-022) and [0.2.0 to 0.2.1 check](acceptance-checklist.md#published-update-from-020-to-021) are retained separately.
 
 Version 0.2.3 expands Understanding Check to normally three questions, two for low-risk changes, and up to five for high-risk changes, one at a time with visible progress. Incorrect or unsure replies receive feedback before the next planned question; stopping early preserves earlier answers. Update the installed instructions and start a fresh session to replace the 0.2.2 single-question behavior. Record fields do not change in 0.2.3.
