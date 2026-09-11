@@ -1,6 +1,12 @@
 # Changelog
 
-## Unreleased - 0.2.1 development
+## Unreleased - 0.2.2 development
+
+- Understanding Check now defaults to one multiple-choice question with number-only answers, an unsure choice, short feedback, and no required essay or retry. Free-text explanation and additional depth are opt-in.
+- New records include `response_mode`. The validator rejects choice-only `confirmed` records and contradictory response modes, while continuing to read older records without the new field unchanged.
+- Both host packages advance to 0.2.2. No tag or GitHub release is implied. Update the installed plugin and start a new session to receive the changed protocol.
+
+## 0.2.1 development
 
 No tag or GitHub release has been created. Development packages are available through this repository's Claude and Codex marketplaces. See the [acceptance checklist](docs/acceptance-checklist.md) for tested installation methods and known limits.
 

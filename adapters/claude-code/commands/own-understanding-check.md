@@ -1,5 +1,5 @@
 ---
-description: Discuss your explanation of a change and identify remaining gaps.
+description: Check a change with a quick multiple-choice question and feedback.
 ---
 
 # Understanding Check

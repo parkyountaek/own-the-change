@@ -7,13 +7,13 @@ The studies below examine human learning tasks. They do not directly prove that 
 ## 1. Retrieval practice
 
 - Evidence: Roediger, H. L., & Karpicke, J. D. (2006). *Test-Enhanced Learning: Taking Memory Tests Improves Long-Term Retention*. Psychological Science, 17(3), 249-255. DOI: [10.1111/j.1467-9280.2006.01693.x](https://doi.org/10.1111/j.1467-9280.2006.01693.x). Karpicke, J. D., & Blunt, J. R. (2011). *Retrieval Practice Produces More Learning than Elaborative Studying with Concept Mapping*. Science, 331(6018), 772-775. DOI: [10.1126/science.1199327](https://doi.org/10.1126/science.1199327).
-- Application: ask the user to explain the reason and impact of a change instead of only reading a debrief.
+- Application: offer independent explanation as an opt-in deeper check. The default multiple-choice interaction lowers the requested writing effort but is not treated as unaided recall.
 - Limit: a short answer does not prove long-term maintainability. Do not require an answer; use `not_confirmed` when none is given.
 
 ## 2. Self-explanation
 
 - Evidence: Chi, M. T. H., Bassok, M., Lewis, M. W., Reimann, P., & Glaser, R. (1989). *Self-Explanations: How Students Study and Use Examples in Learning to Solve Problems*. Cognitive Science, 13(2), 145-182. DOI: [10.1207/s15516709cog1302_1](https://doi.org/10.1207/s15516709cog1302_1).
-- Application: ask not only what changed but why this approach was chosen and what it affects.
+- Application: in requested free-text checks, ask not only what changed but why this approach was chosen and what it affects. A selected explanation supplied by the agent is not the user's self-explanation.
 - Limit: classroom tasks and real repositories differ. A fluent explanation can still be wrong.
 
 ## 3. Worked examples and fading support
@@ -25,7 +25,7 @@ The studies below examine human learning tasks. They do not directly prove that 
 ## 4. Cognitive load
 
 - Evidence: Sweller, J. (1988). *Cognitive Load During Problem Solving: Effects on Learning*. Cognitive Science, 12(2), 257-285. DOI: [10.1207/s15516709cog1202_4](https://doi.org/10.1207/s15516709cog1202_4).
-- Application: split a debrief into core behavior, tests, and incidental changes. Limit checkpoint questions to three.
+- Application: split a debrief into core behavior, tests, and incidental changes. Start an Understanding Check with one multiple-choice question; additional depth is optional. Whether this improves participation or reduces experienced burden has not been measured.
 - Limit: a small diff can be difficult and a large diff can be simple. Risk level is only a guide.
 
 ## 5. Spaced practice

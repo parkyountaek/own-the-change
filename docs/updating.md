@@ -4,6 +4,8 @@ You do not need to clone the repository again. Refresh the marketplace, update i
 
 On September 10, 2026, both command sequences below upgraded existing GitHub installations from 0.2.0 to 0.2.1 in disposable profiles, using Claude Code 2.1.236 and Codex CLI 0.153.4. See the [verification details](acceptance-checklist.md#published-update-from-020-to-021).
 
+Version 0.2.2 changes Understanding Check to a number-only multiple-choice default and adds `response_mode` to new records. Update both the installed instructions and bundled validator, then start a fresh session. The new validator accepts existing 0.2.1 records without rewriting them; an older validator will reject the new field. The historical installation checks above do not by themselves verify a 0.2.2 conversation.
+
 ## Claude Code
 
 Run in a terminal:

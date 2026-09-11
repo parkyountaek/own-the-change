@@ -2,7 +2,7 @@
 
 ## Overview
 
-Own The Change is a local learning aid that lives in a repository and needs no server. After an agent changes code, it gives the user a chance to explain the reason and risk in their own words, then stores that result in Markdown.
+Own The Change is a local learning aid that lives in a repository and needs no server. After an agent changes code, it explains the change and offers an optional multiple-choice Understanding Check, then stores the result in Markdown. Independent explanation is an optional deeper mode.
 
 ## Components
 
@@ -30,9 +30,9 @@ Own The Change is a local learning aid that lives in a repository and needs no s
 
 1. Before a task, the user may answer or skip the Plan Check questions.
 2. After the task, the agent writes a Change Debrief from the actual `git diff` and actual test output.
-3. The user answers at most three questions appropriate to the risk.
-4. Without an answer, the agent records `not_confirmed`. With an important gap, it records `needs_follow_up`.
-5. The validator checks structure, response/evidence presence, status agreement, and follow-up dates. Semantic decisions follow the [canonical status rules](protocol/understanding-protocol.md#status); validator success cannot establish understanding.
+3. A requested Understanding Check follows the [conversation rules](protocol/understanding-protocol.md#understanding-check), starting with one multiple-choice question.
+4. The agent preserves the actual reply and response mode, and applies the [status rules](protocol/understanding-protocol.md#status) without treating recognition as independent explanation.
+5. The validator checks structure, response/evidence presence, declared response-mode consistency, status agreement, and follow-up dates. It cannot establish understanding or the truth of the declared mode.
 
 ## Adding another agent
 

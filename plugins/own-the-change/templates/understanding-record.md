@@ -5,6 +5,7 @@ record_kind: actual
 understanding_status: not_confirmed
 risk_level: low
 user_response_status: not_answered
+response_mode: none
 evidence_status: unavailable
 diff_scope: unknown
 follow_up_at: []

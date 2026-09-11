@@ -43,7 +43,7 @@ That gap matters when you need to review a pull request, fix a bug, or extend a 
 
 For example, tests for new retry logic may pass even if you're unsure which failures trigger a retry or where to change the retry limit. You need enough context to work on that code later.
 
-Own The Change uses the Git diff and test results to explain what changed and why. It then asks you to explain the change in your own words, helps with anything you've missed, and saves a local Markdown record you can revisit.
+Own The Change uses the Git diff and test results to explain what changed and why, and saves a local Markdown record you can revisit. If you request an Understanding Check, it starts with a quick multiple-choice question. You can answer with a number; writing your own explanation is optional.
 
 You can skip questions and keep coding. There are no scores, and the plugin doesn't approve your code. Passing tests and understanding a change are tracked separately.
 
@@ -53,7 +53,7 @@ The goal is simple: a week later, you can still explain why the change was neede
 
 1. **Plan Check (optional):** think through likely changes, risks, and tests before coding.
 2. **Change Debrief:** review what changed, why, what was tested, and what still needs checking.
-3. **Understanding Check (optional):** explain the change in your own words, with up to three questions based on its risk.
+3. **Understanding Check (optional):** answer one multiple-choice question and read a short explanation. Ask for more depth or a free-text check only if you want it.
 4. **Save and revisit:** the agent saves a Markdown record at `docs/ai-understanding/YYYY-MM-DD/<task-id>.md`.
 
 The [understanding protocol](docs/protocol/understanding-protocol.md) defines learning, record, and privacy behavior. The plugin does not edit or approve your code. It adds no separate server or telemetry; your coding agent's own data policies still apply.
@@ -278,11 +278,11 @@ Keep the Plan Check brief. Do not implement the change during this checkpoint.
 
 Next, ask your coding agent to make the change. The Plan Check doesn't edit your code. Once the coding task is finished, run the debrief above.
 
-### 3. Explain the change in your own words
+### 3. Check understanding with a number
 
-When you want to check your understanding, invoke `/own-the-change:own-understanding-check` in Claude or select **Own The Change: Understanding Check** from Codex's `/skills` menu. Answer the short questions in your own words; the agent identifies important gaps and records the outcome.
+When you want to check your understanding, invoke `/own-the-change:own-understanding-check` in Claude or select **Own The Change: Understanding Check** from Codex's `/skills` menu. The agent offers one multiple-choice question about the change. Reply with a number, choose "I'm not sure," or skip. It gives a short explanation and finishes; no essay or retry-until-correct loop is required.
 
-You can say `I don't understand the permission change yet; explain that part.` or `Skip the questions for now.` You don't need to guess to keep working. The [status definitions](docs/protocol/understanding-protocol.md#status) explain how your response is recorded. Neither a valid record nor a passing test proves you understand the change.
+For a deeper conversation, say `Let me explain it in my own words.` Short keywords are fine too. A correct selection is recorded separately from an independent explanation; it does not become proof that you can explain the change unaided. See the [multiple-choice example](docs/examples/multiple-choice-check.md) and [status definitions](docs/protocol/understanding-protocol.md#status). Neither a valid record nor a passing test proves you understand the change.
 
 ### 4. Find your record and return later
 
@@ -298,7 +298,7 @@ To return to a saved task, ask your agent:
 
 ```text
 Use Own The Change to review docs/ai-understanding/YYYY-MM-DD/<task-id>.md.
-Ask me to recall the reason, the risk, and where I would start a related fix.
+Start with one multiple-choice question about the reason, risk, or where a related fix starts.
 Do not change the implementation.
 ```
 
@@ -331,6 +331,7 @@ record_kind: example
 understanding_status: needs_follow_up
 risk_level: high
 user_response_status: answered
+response_mode: free_text
 evidence_status: available
 diff_scope: Fictional authorization change for documentation only
 follow_up_at:
@@ -355,6 +356,8 @@ python3 scripts/validate_record.py "docs/ai-understanding/YYYY-MM-DD/<task-id>.m
 See the [low-risk](docs/examples/low-risk-change.md), [authorization](docs/examples/authentication-change.md), and [database](docs/examples/database-change.md) examples.
 
 Earlier records using a scalar `follow_up_at` need explicit migration to the date list and separate reason, plus the new response, evidence, kind, and diff-scope fields. The validator reports errors and never rewrites records or judges the explanation's correctness.
+
+Version 0.2.2 adds `response_mode` to distinguish selections, free text, mixed responses, and no answer. Its validator still reads 0.2.1 records without that field without rewriting them. Use the updated bundled validator for new records; older validators do not recognize the new field.
 
 ## Repository layout
 

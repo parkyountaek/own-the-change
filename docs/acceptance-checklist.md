@@ -8,9 +8,9 @@ Observed on macOS on 2026-09-09 and 2026-09-10, unless another environment is li
 
 | Area | Observed result | Limit |
 | --- | --- | --- |
-| Automated suite | All 75 tests passed on macOS with Python 3.12.0 after the Codex checkpoint skills and demo preparation helper were added. | Structural and behavioral tests are not an agent or human assessment. The earlier platform matrix below covered 65 tests. |
+| Automated suite | On 2026-09-11, all 81 tests passed on macOS with Python 3.12.0 after the multiple-choice protocol and response-mode guard were added. | Structural and behavioral tests are not an agent or human assessment. The earlier platform matrix below covered 65 tests. |
 | Development lint | Ruff 0.16.6 and ShellCheck 0.11.0 passed with the pinned development requirements. | Lint does not prove runtime correctness. |
-| Package validation | Both packages build without symlinks or private records; the three public example records validate. Claude manifests and the Codex manifest/skill validators pass. | A valid manifest alone does not prove host discovery. |
+| Package validation | On 2026-09-11, both 0.2.2 packages built without symlinks or private records; all five public example records validated. Claude manifests and the Codex manifest/skill validators passed. | A valid manifest alone does not prove host discovery. |
 | Package portability | Both packages resolve a foreign nested Git target and validate a record after their original source snapshot is removed. | Host installation behavior needs a separate test. |
 | Claude Code 2.1.236 | All three commands ran through `--plugin-dir`. Interactive marketplace addition and project-scope installation succeeded; a new installed session completed a Korean debrief, four fixture tests, exact-path privacy checks, and record validation. | That local catalog remained available. Cache-only loading is unverified. |
 | Repository-root Claude marketplace | On 2026-09-10, Claude Code 2.1.236 validated the root catalog and tracked package. With a disposable `CLAUDE_CONFIG_DIR`, CLI catalog addition and user-scope installation succeeded. `plugin details` discovered all three checkpoint commands, the shared skill, and the Stop hook. | The first test used a temporary local copy. The published GitHub route was subsequently verified below. No new model conversation was run. |
@@ -56,6 +56,19 @@ Both marketplace snapshots resolved to the published commit, and both installed 
 
 On 2026-09-10, the repository description, README homepage link, and nine relevant topics were set. Discussions and a `feedback` issue label were enabled for voluntary reports. GitHub's private vulnerability reporting API returned `enabled: true` after activation. No advisory, outreach post, directory application, tag, or GitHub release was created by this setup. A private conduct-reporting contact and end-to-end security-report delivery remain unverified.
 
+### Multiple-choice update, 0.2.2
+
+Observed on macOS on 2026-09-11:
+
+- The 81-test suite includes 64 response-mode/status/answer/evidence combinations, number-only and unsure replies, Korean choice text, rejection of choice-only confirmation, and byte-preserving validation of legacy records without `response_mode`. Both built packages enforce the same new guard after their source snapshot is moved away.
+- Ruff 0.16.6, ShellCheck 0.11.0, all five fictional example records, the skill/manifest validators, and distribution synchronization passed. Validation dependencies were installed only in a temporary Python environment.
+- Disposable Claude Code 2.1.236 and Codex CLI 0.153.4 profiles installed 0.2.2 from local catalogs. A separate temporary Codex source copy also passed the Plugin Creator cachebuster/reinstall flow with the `0.2.2` prefix preserved; that development suffix is not part of the public package.
+- Three read-only Codex CLI probes explicitly loaded the generated 0.2.2 skill path. The first inspected the index-based synthetic whitespace diff, passed all four fixture tests, asked one numbered question with an unsure option, and waited. Separate fresh probes received that question plus a synthetic `2` or `4` reply. Both reran the four tests, gave short feedback, and ended without an essay or retry; the correct selection stayed `not_confirmed`, and the unsure selection used `needs_follow_up`.
+
+The conversation probes used [non-interactive execution](https://learn.chatgpt.com/docs/non-interactive-mode), `--ephemeral`, `--ignore-user-config`, a read-only sandbox, and invocation-only disabling of plugins, apps, hooks, multi-agent work, and web search. Authentication remained with the normal host; no credentials were copied or inspected. The explicit package path was used instead of testing picker discovery. No source files or learning records were written. macOS emitted Git/Xcode cache warnings in the read-only sandbox, but the inspected diff, resolver, and test commands returned exit 0 with usable output.
+
+These are synthetic instruction-following observations, not a continuous installed conversation or a real learner assessment. Claude multiple-choice conversations, incorrect/invalid/skipped replies in a model session, optional-depth behavior, and live record creation with the new mode remain to be observed. The tests do not establish reduced burden, better recall, or future maintenance ability.
+
 ### Local platform matrix
 
 All 65 tests passed in each environment after the runtime fixes:
@@ -87,7 +100,7 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for pinned lint commands and the [host
 
 | Test file | Coverage |
 | --- | --- |
-| `test_validate_record.py` | Status/response/evidence consistency, required sections, YAML scalars, status punctuation, actual/example separation, and follow-up dates |
+| `test_validate_record.py` | Status/response/evidence/mode consistency, legacy record preservation, required sections, YAML scalars, status punctuation, actual/example separation, and follow-up dates |
 | `test_resolve_context.py` | Foreign nested targets, source aliases, exact record tracking/ignore checks, external links, and path conflicts |
 | `test_build_plugins.py` | Complete packages, private-input exclusion, source independence, safe output handling, and normalized POSIX permissions |
 | `test_sync_marketplace.py` | Tracked distribution consistency, complete catalog target, stale-file detection, private-input exclusion, and preservation of unexpected files or symlinks |
@@ -114,7 +127,7 @@ Use only synthetic, non-sensitive fixtures for automated host probes. Role-play 
 
 ## Delayed learning check
 
-With a participating user, revisit an important actual change on its recorded follow-up dates. Ask why the change was needed, what could fail, and where they would start a small related repair. Record only the actual answer and any gaps.
+With a participating user, revisit an important actual change on its recorded follow-up dates using the [canonical follow-up workflow](protocol/understanding-protocol.md#follow-up). If the user opts into independent recall, ask why the change was needed, what could fail, and where they would start a small related repair. A correct selection in the default choice mode does not complete the unaided-recall checks below. Record only the actual answer and any gaps.
 
 - [ ] D+1: actual recall and a concrete next check recorded.
 - [ ] D+7: actual recall and a related-maintenance direction recorded.

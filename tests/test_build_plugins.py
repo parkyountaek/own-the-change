@@ -136,6 +136,14 @@ class BuildPluginsTests(unittest.TestCase):
                     validation = subprocess.run([sys.executable, context["validator"], str(destination)],
                                                 cwd=nested, capture_output=True, text=True, check=False)
                     self.assertEqual(validation.returncode, 0, validation.stderr)
+                    for status, expected_code in [("not_confirmed", 0), ("confirmed", 1)]:
+                        destination.write_text(record(status=status, response_status="answered", response="2",
+                                                      response_mode="multiple_choice"), encoding="utf-8")
+                        validation = subprocess.run([sys.executable, context["validator"], str(destination)],
+                                                    cwd=nested, capture_output=True, text=True, check=False)
+                        self.assertEqual(validation.returncode, expected_code, validation.stderr)
+                        if expected_code:
+                            self.assertIn("not multiple_choice alone", validation.stderr)
                     if host == "claude-code":
                         hook = subprocess.run([str(package / "hooks/suggest-debrief.sh")], input="{}",
                                               capture_output=True, text=True, check=False)

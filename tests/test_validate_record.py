@@ -2,6 +2,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from itertools import product
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -10,11 +11,13 @@ VALIDATOR = ROOT / "scripts" / "validate_record.py"
 
 def record(*, date="2026-09-09", status="not_confirmed", include_tests=True,
            response_status="not_answered", evidence="available", risk="low",
-           dates=(), reason="none", response=None):
+           dates=(), reason="none", response=None, response_mode=None):
     tests = "## Test Evidence\n- `python3 -m unittest` was run.\n" if include_tests else ""
     follow_up = "\n" + "\n".join("  - " + item for item in dates) if dates else " []"
     response = response if response is not None else "No response."
     diff_scope = "HEAD and current working-tree changes" if evidence == "available" else "unknown"
+    if response_mode is None:
+        response_mode = "none" if response_status == "not_answered" else "free_text"
     return f"""---
 task_id: sample-change
 date: {date}
@@ -22,6 +25,7 @@ record_kind: actual
 understanding_status: {status}
 risk_level: {risk}
 user_response_status: {response_status}
+response_mode: {response_mode}
 evidence_status: {evidence}
 diff_scope: {diff_scope}
 follow_up_at:{follow_up}
@@ -116,6 +120,62 @@ class ValidateRecordTests(unittest.TestCase):
     def test_body_status_must_agree_with_front_matter(self):
         content = record().replace("- not_confirmed: structural", "- confirmed: structural")
         self.assert_invalid(content, "same status as front matter")
+
+    def test_response_mode_status_and_evidence_combinations(self):
+        for mode, response_status, status, evidence in product(
+            ["none", "multiple_choice", "free_text", "mixed"],
+            ["answered", "not_answered"],
+            ["confirmed", "needs_follow_up", "not_confirmed", "unknown"],
+            ["available", "unavailable"],
+        ):
+            with self.subTest(mode=mode, response_status=response_status, status=status, evidence=evidence):
+                assessed = status in {"confirmed", "needs_follow_up"}
+                expected = (
+                    ((mode == "none") == (response_status == "not_answered"))
+                    and (not assessed or (response_status == "answered" and evidence == "available"))
+                    and not (status == "confirmed" and mode == "multiple_choice")
+                )
+                response = "No response." if response_status == "not_answered" else {
+                    "none": "2", "multiple_choice": "2", "free_text": "Avoid duplicate saves; allow retry after failure.",
+                    "mixed": "2. Avoid duplicate saves; allow retry after failure.",
+                }[mode]
+                result = self.run_validator(record(status=status, response_status=response_status,
+                                                   evidence=evidence, response=response, response_mode=mode))
+                self.assertEqual(result.returncode == 0, expected, result.stderr)
+
+    def test_choice_only_confirmation_is_rejected_even_with_a_prose_selection(self):
+        for response in ["2", "The second option.", "I'm not sure."]:
+            with self.subTest(response=response):
+                self.assert_invalid(record(status="confirmed", response_status="answered",
+                                           response=response, response_mode="multiple_choice"),
+                                    "not multiple_choice alone")
+
+    def test_number_only_and_unsure_responses_can_finish_without_an_essay(self):
+        for response, status in [("2", "not_confirmed"), ("1", "needs_follow_up"),
+                                 ("I'm not sure.", "needs_follow_up")]:
+            with self.subTest(response=response, status=status):
+                result = self.run_validator(record(status=status, response_status="answered",
+                                                   response=response, response_mode="multiple_choice"))
+                self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_unknown_and_duplicate_response_modes_are_rejected(self):
+        for mode in ["essay", "unknown", "NONE"]:
+            self.assert_invalid(record(response_mode=mode), "response_mode must be one of")
+        self.assert_invalid(record().replace("response_mode: none", "response_mode: none\nresponse_mode: none"),
+                            "duplicate front matter key: response_mode")
+
+    def test_legacy_records_without_response_mode_remain_unchanged(self):
+        for status in ["confirmed", "needs_follow_up", "not_confirmed", "unknown"]:
+            with self.subTest(status=status), tempfile.TemporaryDirectory() as directory:
+                content = record(status=status, response_status="answered", response="A legacy supplied answer.")
+                content = content.replace("response_mode: free_text\n", "")
+                path = Path(directory) / "2026-09-09/sample-change.md"
+                path.parent.mkdir()
+                path.write_text(content, encoding="utf-8")
+                original = path.read_bytes()
+                result = subprocess.run([sys.executable, str(VALIDATOR), str(path)], capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(path.read_bytes(), original)
 
     def test_status_accepts_common_dash_separators_without_accepting_a_different_value(self):
         for separator in ["-", "\u2013", "\u2014"]:

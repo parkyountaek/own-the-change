@@ -10,11 +10,13 @@ In Codex CLI, type `/skills`, choose **List skills**, and search for `own-change
 | --- | --- | --- |
 | Explain a completed change | `/own-the-change:own-change-debrief` | `$own-the-change:own-change-debrief` |
 | Think through a change before coding | `/own-the-change:own-plan-check` | `$own-the-change:own-plan-check` |
-| Explain it yourself and get feedback | `/own-the-change:own-understanding-check` | `$own-the-change:own-understanding-check` |
+| Take a quick multiple-choice check | `/own-the-change:own-understanding-check` | `$own-the-change:own-understanding-check` |
 
 Codex CLI 0.153.4 reports the plugin-qualified names above. You do not need to type them out: select the entry from **Own The Change** and keep the mention inserted by your client. Unqualified shortcut names are not a verified alias. Add filenames or a task description when multiple changes are present. If the scope is missing, the agent asks which task you mean.
 
 The original **Own The Change** entry remains supported. Its local-skill name is `$own-the-change`; the native plugin reports `$own-the-change:own-the-change`. Invoking it alone starts a Change Debrief; naming another checkpoint selects that workflow. Asking how to install or use the plugin does not start a checkpoint.
+
+Understanding Check uses numbered choices in the conversation, so you can send just a number; it does not depend on a native form or a special slash command for answers. See the [multiple-choice walkthrough](examples/multiple-choice-check.md). Ask to explain it in your own words only when you want that deeper mode.
 
 ## Why not `/own-change-debrief`?
 

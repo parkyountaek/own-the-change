@@ -15,6 +15,8 @@ FIELDS = {
     "user_response_status", "evidence_status", "diff_scope", "follow_up_at",
     "follow_up_reason", "execution_metadata",
 }
+OPTIONAL_FIELDS = {"response_mode"}
+RESPONSE_MODES = {"none", "multiple_choice", "free_text", "mixed"}
 METADATA_KEYS = ("provider", "model", "turn", "token", "cost")
 REQUIRED_SECTIONS = (
     "Goal",
@@ -73,7 +75,7 @@ def parse_front_matter(text):
             data["follow_up_at"].append(scalar(item.group(1).strip()))
         elif top:
             key, value = top.groups()
-            if key not in FIELDS or key in data:
+            if key not in FIELDS | OPTIONAL_FIELDS or key in data:
                 fail(f"unknown or duplicate front matter key: {key}")
             value, current = value.strip(), key
             if key == "execution_metadata":
@@ -173,6 +175,15 @@ def validate(path):
             fail("confirmed and needs_follow_up require an answered user response")
         if data["evidence_status"] != "available":
             fail("confirmed and needs_follow_up require available change evidence")
+    # Missing mode is legacy, not implicit evidence of independent explanation.
+    if "response_mode" in data:
+        mode = data["response_mode"]
+        if mode not in RESPONSE_MODES:
+            fail("response_mode must be one of: " + ", ".join(sorted(RESPONSE_MODES)))
+        if (mode == "none") != (data["user_response_status"] == "not_answered"):
+            fail("response_mode none requires not_answered; other modes require answered")
+        if data["understanding_status"] == "confirmed" and mode == "multiple_choice":
+            fail("confirmed requires independent explanation, not multiple_choice alone")
     if data["evidence_status"] == "available" and (data["diff_scope"].lower() == "unknown" or is_placeholder(data["diff_scope"])):
         fail("available evidence requires a known diff_scope")
     follow_up = [calendar_date(value, "follow_up_at") for value in data["follow_up_at"]]

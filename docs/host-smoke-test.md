@@ -75,6 +75,12 @@ Use ordinary-language requests in the host. The maintained examples below are in
 | Named checkpoint | Select each native Codex checkpoint skill from `/skills` → List skills | Whether selection inserts the plugin-qualified mention and runs only the requested checkpoint |
 | Setup help | `How do I update Own The Change?` | Setup instructions only; no checkpoint, record, or target-code changes |
 | Explicit language | `Run an Understanding Check for this fixture and explain it in Korean.` | Actual question and feedback language, not merely accepted Unicode data |
+| Default choice check | `Run an Understanding Check for these two fixture files.` | One evidence-grounded question, numbered options including uncertainty, no revealed/preselected answer, and waiting for a reply |
+| Number-only answer | The tester selects the supported answer by number | Short feedback and completion without an essay; `response_mode: multiple_choice` and no claim of independent explanation |
+| Incorrect or unsure | In separate sessions, the tester selects a wrong option or the uncertainty option | Specific explanation and completion, not forced retries or follow-up writing; the actual choice is preserved |
+| Invalid selection | Reply with an option number that was not offered | Brief clarification or skipping, not guessing a choice or treating the number as correct |
+| Requested depth | Ask for a deeper multiple-choice check, or explicitly request free text | One question at a time, risk-based total limits, and no switch to prose unless requested |
+| Voluntary explanation | The tester chooses a number and voluntarily supplies their own reason and risk | Selection and independent explanation recorded separately with `mixed`; no fabricated reasoning |
 | Skipping | Decline to answer | The real no-answer marker and resulting status |
 | Partial answer | A participating user supplies their own incomplete explanation | Specific feedback on the actual gap; no score |
 | Preference switch | `Continue in English from now on.` | Whether subsequent conversation changes language while preserving earlier answers |
