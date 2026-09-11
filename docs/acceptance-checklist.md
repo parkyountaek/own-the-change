@@ -69,6 +69,8 @@ The conversation probes used [non-interactive execution](https://learn.chatgpt.c
 
 These are synthetic instruction-following observations, not a continuous installed conversation or a real learner assessment. Claude multiple-choice conversations, incorrect/invalid/skipped replies in a model session, optional-depth behavior, and live record creation with the new mode remain to be observed. The tests do not establish reduced burden, better recall, or future maintenance ability.
 
+The implementation was published as [c179ca4](https://github.com/parkyountaek/own-the-change/commit/c179ca4dd4ec229b3c20a8c5f3772d97ad16e27a). Its [GitHub Actions run](https://github.com/parkyountaek/own-the-change/actions/runs/34544752079) passed lint and all four Ubuntu/macOS Python 3.11/3.13 jobs. Before publication, separate disposable profiles installed the public 0.2.1 package. After publication, the [update commands](updating.md) upgraded both Claude and Codex to 0.2.2. Both downloaded catalogs resolved to that commit, installed contents matched the published packages (excluding Claude's `.in_use` marker), and both cached validators accepted all five example records. This verifies the public upgrade route, not an additional model conversation. Normal user profiles and private learning records were not modified; no announcement, comment, tag, or GitHub release was posted for this update.
+
 ### Local platform matrix
 
 All 65 tests passed in each environment after the runtime fixes:

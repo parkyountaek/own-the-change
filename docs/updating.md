@@ -2,9 +2,9 @@
 
 You do not need to clone the repository again. Refresh the marketplace, update its installed package, then start a new session. These steps apply to installation from `parkyountaek/own-the-change`; [local installations](#local-installations) use a different source.
 
-On September 10, 2026, both command sequences below upgraded existing GitHub installations from 0.2.0 to 0.2.1 in disposable profiles, using Claude Code 2.1.236 and Codex CLI 0.153.4. See the [verification details](acceptance-checklist.md#published-update-from-020-to-021).
+On September 11, 2026, both command sequences below upgraded existing GitHub installations from 0.2.1 to 0.2.2 in disposable profiles, using Claude Code 2.1.236 and Codex CLI 0.153.4. See the [0.2.2 verification details](acceptance-checklist.md#multiple-choice-update-022); the earlier [0.2.0 to 0.2.1 check](acceptance-checklist.md#published-update-from-020-to-021) is retained separately.
 
-Version 0.2.2 changes Understanding Check to a number-only multiple-choice default and adds `response_mode` to new records. Update both the installed instructions and bundled validator, then start a fresh session. The new validator accepts existing 0.2.1 records without rewriting them; an older validator will reject the new field. The historical installation checks above do not by themselves verify a 0.2.2 conversation.
+Version 0.2.2 changes Understanding Check to a number-only multiple-choice default and adds `response_mode` to new records. Update both the installed instructions and bundled validator, then start a fresh session. The new validator accepts existing 0.2.1 records without rewriting them; an older validator will reject the new field. Installation checks do not by themselves verify a conversation; the acceptance page records the separate synthetic Codex probes and remaining host checks.
 
 ## Claude Code
 
