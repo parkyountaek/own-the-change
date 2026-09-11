@@ -1,6 +1,16 @@
 # Changelog
 
-## Unreleased - 0.2.3 development
+## Unreleased - 0.3.0 development
+
+- Bundle Demo and read-only Doctor actions for Claude and Codex; no source clone is needed to try the synthetic change.
+- Use four content choices plus an explicit fifth uncertainty choice. A stateless helper preserves answer content while varying its position without a fixed cycle or immediate repeat.
+- Strengthen concrete prediction/related-fix questions, specific misconception feedback, and natural conversational wording. Correct selections still do not prove independent explanation or long-term learning.
+- Keep all eleven skill/command entry bodies within 250 characters. Load relevant canonical sections on demand, reuse unchanged evidence, and avoid repeated record writes. Actual token savings are not yet measured.
+- Offer conversation-only completion and an explicit first-save destination/privacy choice. Record schema and legacy compatibility are unchanged.
+- Replace the free-text first-use issue template with a selection-based form; explanations and follow-up remain optional. Add an informal two-task comparison and a learning-design review.
+- Both host manifests advance to 0.3.0. This is a development version, not a tag or GitHub release. See the acceptance ledger for observed checks and remaining gaps.
+
+## 0.2.3 development
 
 - Understanding Check now normally asks three multiple-choice questions, with two for low-risk changes and up to five for high-risk changes. Distinct evidence-supported coverage, visible progress, and one-question-at-a-time pacing replace the single-question default.
 - Brief feedback advances the planned sequence even after an incorrect or unsure reply, without adding retries, remedial questions, or required essays. Users can shorten the check, skip a question, or stop; earlier answers and gaps are preserved.

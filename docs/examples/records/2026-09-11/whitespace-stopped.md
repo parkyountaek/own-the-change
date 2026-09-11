@@ -35,11 +35,12 @@ Fictional example. All execution results and user replies below illustrate a sce
 
 ## Key Explanation
 - Planned total: two questions for this low-risk fixture.
-- Question 1/2: Which stated requirement motivated replacing the edge-only trim?
+- Question 1/2: Why was the edge-only trim replaced here?
   1. Remove only surrounding whitespace.
   2. Normalize inconsistent whitespace in display names.
   3. Reject names containing internal whitespace.
-  4. I'm not sure.
+  4. Remove all whitespace from names.
+  5. I'm not sure.
 - Expected answer: 2, supported by the stated normalization goal. The first reply correctly selects 2 and also asks to stop. Feedback acknowledges the recognized goal and ends the check without presenting question 2.
 - Stopped after one answered question. The planned behavior topic was not asked or assessed; no second question or answer is invented. The earlier selection remains an answered multiple-choice response.
 

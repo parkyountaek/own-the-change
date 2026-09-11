@@ -11,12 +11,16 @@ In Codex CLI, type `/skills`, choose **List skills**, and search for `own-change
 | Explain a completed change | `/own-the-change:own-change-debrief` | `$own-the-change:own-change-debrief` |
 | Think through a change before coding | `/own-the-change:own-plan-check` | `$own-the-change:own-plan-check` |
 | Take a quick multiple-choice check | `/own-the-change:own-understanding-check` | `$own-the-change:own-understanding-check` |
+| Try bundled synthetic code | `/own-the-change:own-demo` | `$own-the-change:own-demo` |
+| Diagnose plugin prerequisites | `/own-the-change:own-doctor` | `$own-the-change:own-doctor` |
 
-Codex CLI 0.153.4 reports the plugin-qualified names above. You do not need to type them out: select the entry from **Own The Change** and keep the mention inserted by your client. Unqualified shortcut names are not a verified alias. Add filenames or a task description when multiple changes are present. If the scope is missing, the agent asks which task you mean.
+The table uses the plugin-qualified form previously observed for the checkpoint entries in Codex CLI 0.153.4. Demo and Doctor add new entries in 0.3.0; consult the [acceptance scope](acceptance-checklist.md#onboarding-and-compact-instructions-030) for tested clients and picker limits. Select the entry from **Own The Change** and keep the mention inserted by your client. Unqualified shortcuts are not verified aliases. Add filenames or a task description when multiple changes are present.
 
 The original **Own The Change** entry remains supported. Its local-skill name is `$own-the-change`; the native plugin reports `$own-the-change:own-the-change`. Invoking it alone starts a Change Debrief; naming another checkpoint selects that workflow. Asking how to install or use the plugin does not start a checkpoint.
 
-Understanding Check uses numbered choices in the conversation, so you can send just a number; it does not depend on a native form or a special slash command for answers. See the [multiple-choice walkthrough](examples/multiple-choice-check.md). Ask to explain it in your own words only when you want that deeper mode.
+Understanding Check uses four content choices plus choice 5 for uncertainty, so you can send just a number; it does not depend on a native form or a special slash command for answers. See the [multiple-choice walkthrough](examples/multiple-choice-check.md). Ask to explain it in your own words only when you want that deeper mode.
+
+Demo and Doctor are new in 0.3.0 and can start outside a project. Doctor checks local prerequisites and package resources; it does not sign in, test a model, or change settings. For a lower-overhead checkpoint, say `Keep it brief and do not save a record.` Evidence and risk checks still apply. See [context and token use](token-usage.md).
 
 ## Why not `/own-change-debrief`?
 
@@ -35,7 +39,7 @@ codex plugin add own-the-change@own-the-change
 
 Start a new thread to load the updated skills. Use `/plugins` to check installation and `/skills` to choose an action; installing a plugin does not itself run a debrief.
 
-If you installed only the legacy local skill link, it exposes **Own The Change**, not the three native-plugin shortcuts. Refresh that source checkout and send `$own-the-change`, or follow the [marketplace migration guide](installation-layout.md#github-marketplace). Avoid installing duplicate copies under different scopes.
+If you installed only the legacy local skill link, it exposes **Own The Change**, not the named native-plugin shortcuts. Refresh that source checkout and send `$own-the-change` with your chosen action, or follow the [marketplace migration guide](installation-layout.md#github-marketplace). Avoid installing duplicate copies under different scopes.
 
 ## If the action is missing
 

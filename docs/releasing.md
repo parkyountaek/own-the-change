@@ -87,6 +87,8 @@ The temporary Claude marketplace root is `claude-code/`; its catalog points to `
 
 ## Publication decision
 
+For recovery, record the exact candidate and previous known commit IDs as well as package versions. Do not assume either client supports version-pinning flags. To inspect an older source without changing an existing checkout, clone into a new directory and use `git switch --detach <known-commit>` there, then build into a fresh output directory. Review that build and use an explicitly chosen disposable/local marketplace; do not silently replace an existing user's registration. Host rollback and copied-cache behavior need their own check. A normal update does not delete or migrate learning records.
+
 - [ ] Review the exact files to publish. Actual records remain local unless a user explicitly chooses to share a reviewed, redacted record.
 - [ ] Review repository access and Git author metadata separately from package contents. The package excludes `.git`; publishing source history may expose metadata that is not present in the built plugin.
 - [ ] With explicit authorization, commit the reviewed candidate and record its commit ID for release traceability. Local tests on a dirty tree do not establish that a future commit or tag contains the same files.

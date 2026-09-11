@@ -2,6 +2,4 @@
 description: Check a change with short multiple-choice questions and feedback.
 ---
 
-# Understanding Check
-
-Run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/resolve_context.py" --target <current-working-directory>`. Read the reported protocol, including its **Runtime language** section, and follow **Understanding Check**. Use the reported template, validator, and target record root.
+Run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/read_protocol.py" --mode understanding` and follow its output. If unavailable, read `${CLAUDE_PLUGIN_ROOT}/docs/protocol/understanding-protocol.md`.

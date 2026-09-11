@@ -43,5 +43,28 @@ The studies below examine human learning tasks. They do not directly prove that 
 ## 7. Avoiding the illusion of understanding
 
 - Evidence: Rozenblit, L., & Keil, F. (2002). *The Misunderstood Limits of Folk Science: An Illusion of Explanatory Depth*. Cognitive Science, 26(5), 521-562. DOI: [10.1207/s15516709cog2605_1](https://doi.org/10.1207/s15516709cog2605_1).
-- Application: ask whether the user can explain the change without looking at the code, separately from a confidence question.
+- Application: distinguish recognizing an option from independently explaining the reason and impact. Offer unaided explanation only when requested; a confidence statement is not evidence of understanding.
 - Limit: some practical skill is hard to explain verbally. An answer is evidence for the next learning conversation, not a grade.
+
+## 8. Correcting distractors and applying ideas
+
+- Evidence: Butler, A. C., & Roediger, H. L. (2008). *Feedback enhances the positive effects and reduces the negative effects of multiple-choice testing*. Memory & Cognition, 36(3), 604-616. [Study abstract](https://pubmed.ncbi.nlm.nih.gov/18491500/). Multiple-choice distractors can introduce false information; their experiments investigated corrective feedback, not just answer selection.
+- Evidence: Butler, A. C., Black-Maier, A. C., Raley, N. D., & Marsh, E. J. (2017). *Retrieving and applying knowledge to different examples promotes transfer of learning*. Journal of Experimental Psychology: Applied, 23(4), 433-446. [Author's institutional study abstract](https://scholars.duke.edu/publication/1292911), DOI [10.1037/xap0000142](https://doi.org/10.1037/xap0000142). The experiments found benefits from varied application examples in a geology-learning setting.
+- Application: correct the specific misconception selected, and include a concrete prediction or related-fix scenario within the existing question budget. Do not merely repeat an answer that was just explained.
+- Limit: these studies do not validate AI-authored questions, this plugin, a four-content-choice optimum, its answer-position rule, or long-term coding ability.
+
+## Implementation review: 0.3.0
+
+This is a design review, not a measured learning result. Common behavior remains defined only in the [protocol](../protocol/understanding-protocol.md).
+
+| Mechanism | Implemented support | Still unproven or limited |
+| --- | --- | --- |
+| A usable mental model | Actual diff/test evidence and a small before/after example when useful | Agent explanations can still be wrong or incomplete |
+| Active thinking | Concrete behavior prediction or a related-fix scenario within the existing budget | A correct choice alone is recognition, not unaided understanding |
+| Corrective feedback | Explain the selected misconception's boundary without forcing retries | Ordering tests cannot judge factual truth or ambiguity |
+| Independent explanation | Optional keywords or free text, evaluated separately from selections | Not forced by risk level or a desire to get a better status |
+| Transfer | Distinct inputs, exceptions, or related repairs grounded in the change | No real-user maintenance study has been completed |
+| Delayed review | User-initiated review and suggested dates for important saved work | No reminders; a date is not evidence that review occurred |
+| Manageable effort | One question at a time, brief natural wording, unsure/skip/stop, no-save choice | Four content choices can increase reading effort; monitor voluntary feedback |
+
+The [two-task invitation](https://github.com/parkyountaek/own-the-change/blob/main/docs/launch/early-access.md) separates ease of use, perceived usefulness, actual reuse, and missing follow-up. Validate retention or transfer only through real voluntary participation; do not replace those observations with stars, synthetic replies, immediate correctness, or token savings.

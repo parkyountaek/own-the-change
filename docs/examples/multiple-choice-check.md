@@ -6,16 +6,17 @@ After a coding task, invoke `/own-the-change:own-understanding-check` in Claude 
 
 ## Default interaction
 
-This small, low-risk fixture uses two questions; a normal medium-risk check uses three and a high-risk check can use up to five. The agent shows only the current question:
+This small, low-risk fixture uses two questions; a normal medium-risk check uses three and a high-risk check can use up to five. Each question has four content choices and an uncertainty choice. These are illustrative positions; actual questions use the ordering helper. The agent shows only the current question:
 
 > Two short questions for this low-risk change. Reply with a number. Say `stop` or `skip` to end, or `skip this question` to move on.
 >
-> Question 1/2: Which stated requirement motivated replacing the edge-only trim?
+> Question 1/2: Why was the edge-only trim replaced here?
 >
 > 1. Remove only surrounding whitespace.
 > 2. Normalize inconsistent whitespace in display names.
 > 3. Reject names containing internal whitespace.
-> 4. I'm not sure.
+> 4. Remove all whitespace from names.
+> 5. I'm not sure.
 
 The illustrative user replies:
 
@@ -32,17 +33,18 @@ The agent explains briefly, then asks the next planned question:
 > 1. An empty string, `""`.
 > 2. A single space, `" "`.
 > 3. It raises an error.
-> 4. I'm not sure.
+> 4. The original three spaces.
+> 5. I'm not sure.
 
 The illustrative user replies `1`. The agent finishes:
 
 > Whitespace-only input gives `split()` no words, so joining them returns an empty string. The fixture test covers this case. Check complete; no written explanation is needed. The tests do not settle whether the product should alter someone's intentionally chosen name spacing.
 
-The [choice-only record](records/2026-09-11/whitespace-choice.md) preserves both original replies, their question mappings, and the feedback. Its response mode is `multiple_choice`; the record distinguishes selecting correct answers from independently explaining the reason and risk.
+If saving is chosen, the [choice-only record](records/2026-09-11/whitespace-choice.md) preserves both original replies, their question mappings, and the feedback. Its response mode is `multiple_choice`; the record distinguishes selecting correct answers from independently explaining the reason and risk.
 
 ## If the answer is wrong or unsure
 
-Choosing `1` for question 1 gets a short correction: the earlier edge-only trim did not meet the goal of normalizing internal whitespace too. Choosing `4` gets the same useful explanation without implying that the user guessed wrong. Either way, the agent continues to question 2 without a retry, remedial question, or essay. The [unsure record](records/2026-09-11/whitespace-unsure.md) shows that a later correct selection does not erase earlier uncertainty.
+Choosing `1` for question 1 gets a short correction: the earlier edge-only trim did not meet the goal of normalizing internal whitespace too. Choosing `5` gets the same useful explanation without implying that the user guessed wrong. Either way, the agent continues to question 2 without a retry, remedial question, or essay. The [unsure record](records/2026-09-11/whitespace-unsure.md) shows that a later correct selection does not erase earlier uncertainty.
 
 ## Stopping early
 

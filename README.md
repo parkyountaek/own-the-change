@@ -43,7 +43,7 @@ That gap matters when you need to review a pull request, fix a bug, or extend a 
 
 For example, tests for new retry logic may pass even if you're unsure which failures trigger a retry or where to change the retry limit. You need enough context to work on that code later.
 
-Own The Change uses the Git diff and test results to explain what changed and why, and saves a local Markdown record you can revisit. If you request an Understanding Check, it offers a short multiple-choice sequence, one question at a time. You can answer with a number; writing your own explanation is optional.
+Own The Change uses the Git diff and test results to explain what changed and why, with an optional local Markdown record you can revisit. If you request an Understanding Check, it offers a short multiple-choice sequence, one question at a time. You can answer with a number; writing your own explanation is optional.
 
 You can skip questions and keep coding. There are no scores, and the plugin doesn't approve your code. Passing tests and understanding a change are tracked separately.
 
@@ -127,9 +127,9 @@ Start a new Codex session in your project. Type `/skills`, choose **List skills*
 $own-the-change:own-change-debrief
 ```
 
-No long prompt is needed when the current task is clear. For planning or understanding questions, select the corresponding checkpoint instead. See the [Claude/Codex command map](docs/codex-usage.md) for all three actions, desktop differences, and troubleshooting.
+No long prompt is needed when the current task is clear. For planning or understanding questions, select the corresponding checkpoint instead. See the [Claude/Codex command map](docs/codex-usage.md) for checkpoints, Demo, Doctor, desktop differences, and troubleshooting.
 
-Codex reads `.agents/plugins/marketplace.json` and installs the native package from `plugins/own-the-change/`. It includes the shared skill, three checkpoint shortcuts, and their resources. No manual clone, build, or source checkout is needed. You can inspect available plugins with `/plugins` inside Codex. The CLI commands were checked on Codex CLI 0.153.4; if `codex plugin` is unavailable, update your client or use the local skill setup below. See [OpenAI's plugin documentation](https://learn.chatgpt.com/docs/build-plugins) and [marketplace format](https://learn.chatgpt.com/docs/enterprise/plugin-management#supported-formats).
+Codex reads `.agents/plugins/marketplace.json` and installs the native package from `plugins/own-the-change/`. It includes the shared skill, three checkpoint shortcuts, Demo, Doctor, and their resources. No manual clone, build, or source checkout is needed. You can inspect available plugins with `/plugins` inside Codex. The CLI commands were checked on Codex CLI 0.153.4; if `codex plugin` is unavailable, update your client or use the local skill setup below. See [OpenAI's plugin documentation](https://learn.chatgpt.com/docs/build-plugins) and [marketplace format](https://learn.chatgpt.com/docs/enterprise/plugin-management#supported-formats).
 
 To update, refresh the marketplace and install its current package, then start a new session:
 
@@ -261,7 +261,7 @@ Debrief the display-name whitespace change.
 Explain it in Korean using the actual diff and available test results.
 ```
 
-You'll get a short explanation of what changed, why, which files and features are affected, which tests ran, and what they didn't cover. The agent also saves and validates a local record. If it can't collect the needed evidence or write the record, it should say so.
+You'll get a short explanation of what changed, why, which files and features are affected, which tests ran, and what they didn't cover. You can save a validated local record or finish without saving. Before the first save, the agent shows the destination and Git tracking/ignore result. If it can't collect the needed evidence or write the record, it should say so.
 
 If the task is already committed, supply its actual commit range. If several tasks are mixed together, identify the relevant files and unrelated edits. You do not need to paste the entire diff or terminal history.
 
@@ -282,13 +282,13 @@ Next, ask your coding agent to make the change. The Plan Check doesn't edit your
 
 When you want to check your understanding, invoke `/own-the-change:own-understanding-check` in Claude or select **Own The Change: Understanding Check** from Codex's `/skills` menu. A normal check covers reason, impact, and a caution in three multiple-choice questions, shown one at a time as `1/3`, `2/3`, and `3/3`. Simple changes use two questions; high-risk changes can use up to five when there are distinct points to check.
 
-Reply with a number or choose "I'm not sure." After short feedback, the agent moves to the next planned question, including after a wrong or unsure answer. No essay or retry-until-correct loop is required. Say `stop` or `skip` to end, `skip this question` to move on, or `Just one question` for a shorter check. Earlier answers remain in the record when you stop.
+Each question has four content choices plus **5. I'm not sure**. Reply with a number. Answer positions vary without a fixed cycle or immediate repeat. After short feedback, the agent moves to the next planned question, including after a wrong or unsure answer. No essay or retry-until-correct loop is required. Say `stop` or `skip` to end, `skip this question` to move on, or `Just one question` for a shorter check. Earlier answers are preserved if you choose to save a record.
 
 For a deeper conversation, say `Let me explain it in my own words.` Short keywords are fine too. A correct selection is recorded separately from an independent explanation; it does not become proof that you can explain the change unaided. See the [multiple-choice example](docs/examples/multiple-choice-check.md) and [status definitions](docs/protocol/understanding-protocol.md#status). Neither a valid record nor a passing test proves you understand the change.
 
 ### 4. Find your record and return later
 
-The agent reports the record it created under your **target project's Git root**:
+If you choose to save, the agent reports the record it created under your **target project's Git root**:
 
 ```text
 docs/ai-understanding/YYYY-MM-DD/<task-id>.md
@@ -307,6 +307,10 @@ Do not change the implementation.
 Dates in `follow_up_at` are suggested review dates, not reminders. Start a new conversation when you're ready to review; the [follow-up workflow](docs/protocol/understanding-protocol.md#follow-up) keeps the original record intact.
 
 ### If something does not work
+
+Try `/own-the-change:own-doctor` in Claude or **Own The Change: Doctor** in Codex's skill picker. It checks local prerequisites and bundled resources without changing settings. To try the plugin without project code or a source clone, use `/own-the-change:own-demo` or **Own The Change: Demo**. Both are new in 0.3.0; see the [demo guide](docs/demo.md).
+
+For less overhead, ask for a brief debrief without saving. Entry instruction bodies stay within 250 characters; relevant detailed rules load on demand. See [context and token use](docs/token-usage.md) for what is optimized and what has not been measured.
 
 - **Command or skill missing:** check your installation method and start a new agent session. Claude loads the built package, not the source `adapters/` directory; Codex's user skill needs its source checkout to remain available.
 - **Build destination already exists:** choose a new `--output` path. Rebuilding does not update a previous package or an installed cache.
@@ -373,7 +377,7 @@ adapters/codex/        Codex manifest and shared-skill link
 adapters/generic/      generic agent integration notes
 .agents/skills/        Codex and Copilot project discovery link
 .cursor/skills/        Cursor project discovery link
-skills/                one shared skill
+skills/                shared entry and named actions
 docs/protocol/         canonical learning rules and record schema
 docs/research/         learning principles, research citations, and product hypotheses
 docs/ai-understanding/ private local understanding records, ignored by Git

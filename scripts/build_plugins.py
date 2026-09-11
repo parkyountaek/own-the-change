@@ -20,10 +20,18 @@ SHARED_FILES = (
     "templates/understanding-record.md",
     "scripts/resolve_context.py",
     "scripts/validate_record.py",
+    "scripts/prepare_demo.py",
+    "scripts/doctor.py",
+    "scripts/prepare_question.py",
+    "scripts/read_protocol.py",
 )
+ASSET_FILES = {
+    f"tests/fixtures/host-smoke/{name}": f"assets/demo/{name}"
+    for name in ("before/display_name.py", "after/display_name.py", "after/test_display_name.py")
+}
 CODEX_FILES = tuple(
     f"skills/{name}/{relative}"
-    for name in ("own-change-debrief", "own-plan-check", "own-understanding-check")
+    for name in ("own-change-debrief", "own-plan-check", "own-understanding-check", "own-demo", "own-doctor")
     for relative in ("SKILL.md", "agents/openai.yaml")
 )
 MARKETPLACE_TEMPLATE = "templates/claude-marketplace.json"
@@ -33,6 +41,8 @@ HOST_FILES = {
         "commands/own-plan-check.md",
         "commands/own-change-debrief.md",
         "commands/own-understanding-check.md",
+        "commands/own-demo.md",
+        "commands/own-doctor.md",
         "hooks/hooks.json",
         "hooks/suggest-debrief.sh",
     ),
@@ -64,6 +74,7 @@ def build_plugins(output, source=SOURCE_ROOT):
     for host, files in HOST_FILES.items():
         adapter = source / "adapters" / host
         plans[host] = [(source / path, path) for path in SHARED_FILES]
+        plans[host] += [(source / original, destination) for original, destination in ASSET_FILES.items()]
         if host == "codex":
             plans[host] += [(source / path, path) for path in CODEX_FILES]
         plans[host] += [(adapter / path, path) for path in files]

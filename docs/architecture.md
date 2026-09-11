@@ -2,13 +2,13 @@
 
 ## Overview
 
-Own The Change is a local learning aid that lives in a repository and needs no server. After an agent changes code, it explains the change and offers an optional multiple-choice Understanding Check, then stores the result in Markdown. Independent explanation is an optional deeper mode.
+Own The Change is a local learning aid that needs no server. After an agent changes code, it explains the change and offers an optional multiple-choice Understanding Check, with optional Markdown storage. Independent explanation is an optional deeper mode.
 
 ## Components
 
 - `docs/protocol/understanding-protocol.md`: the only common learning-rule source for every agent.
 - `skills/own-the-change/`: the shared skill entry point. It refers to the protocol without copying its rules.
-- `skills/own-change-debrief/`, `skills/own-plan-check/`, and `skills/own-understanding-check/`: thin named checkpoint entry points bundled only in the native Codex plugin. They refer to the shared entry point and protocol, with UI metadata for skill pickers.
+- `skills/own-change-debrief/`, `skills/own-plan-check/`, and `skills/own-understanding-check/`: thin named checkpoint entry points bundled only in the native Codex plugin. They select canonical protocol sections through the reader, with UI metadata for skill pickers.
 - `adapters/claude-code/`: Claude Code manifest, commands, hook, and a link to the shared skill.
 - `adapters/codex/`: Codex metadata and a link to the shared skill.
 - `.agents/skills/` and `.cursor/skills/`: project discovery links to the same shared skill.
@@ -17,7 +17,11 @@ Own The Change is a local learning aid that lives in a repository and needs no s
 - `scripts/validate_record.py`: checks record format and consistency. It does not assess understanding.
 - `scripts/resolve_context.py`: resolves source resources and a target Git root without writing files.
 - `scripts/launch_claude.py`: builds a temporary plugin and starts a session in the user's project without registering a marketplace.
-- `scripts/prepare_demo.py`: prepares a fresh synthetic Git change without launching an agent or creating a learning record; not bundled in runtime plugins.
+- `skills/own-demo/` and `skills/own-doctor/`: thin Codex setup actions; Claude exposes corresponding commands. Every skill/command body stays within 250 characters.
+- `scripts/read_protocol.py`: selects complete verbatim sections from the canonical protocol for the requested mode. It fails on unmapped headings so new rules cannot silently disappear.
+- `scripts/prepare_question.py`: stateless ordering of four evidence-authored content choices and an uncertainty choice; no model call, record, or semantic correctness claim.
+- `scripts/doctor.py`: read-only prerequisites/resource checks, optionally using an exact target/record context.
+- `scripts/prepare_demo.py`: prepares a fresh synthetic Git change without launching an agent or creating a learning record. The builder maps the three canonical smoke fixture files into bundled `assets/demo/` paths for both hosts.
 - `scripts/build_plugins.py`: copies explicitly listed canonical inputs into self-contained host packages without symlinks, private records, or a second maintained rule source.
 - `scripts/sync_marketplace.py`: refreshes or checks both tracked distributions against the canonical build.
 - `.claude-plugin/marketplace.json` and `plugins/claude-code/own-the-change/`: generated Claude catalog and complete package for installation from GitHub.

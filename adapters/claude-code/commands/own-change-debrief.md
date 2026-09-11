@@ -2,6 +2,4 @@
 description: Explain a completed change using its actual Git diff and test results.
 ---
 
-# Change Debrief
-
-Run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/resolve_context.py" --target <current-working-directory>`. Read the reported protocol, including its **Runtime language** section, and follow **After work: Change Debrief**. Use the reported template, validator, and target record root.
+Run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/read_protocol.py" --mode debrief` and follow its output. If unavailable, read `${CLAUDE_PLUGIN_ROOT}/docs/protocol/understanding-protocol.md`.

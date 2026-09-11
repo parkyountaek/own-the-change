@@ -2,6 +2,8 @@
 
 You do not need to clone the repository again. Refresh the marketplace, update its installed package, then start a new session. These steps apply to installation from `parkyountaek/own-the-change`; [local installations](#local-installations) use a different source.
 
+The 0.3.0 development package adds Demo, Doctor, four content choices plus uncertainty, compact entry instructions, and conversation-only completion. The record schema is unchanged. See the [current acceptance scope](acceptance-checklist.md#onboarding-and-compact-instructions-030); older verification below applies only to its stated versions.
+
 On September 11, 2026, both command sequences below upgraded existing GitHub installations from 0.2.2 to 0.2.3 in disposable profiles, using Claude Code 2.1.236 and Codex CLI 0.153.4. See the [0.2.3 verification details](acceptance-checklist.md#multi-question-update-023); the earlier [0.2.2 verification](acceptance-checklist.md#multiple-choice-update-022) and [0.2.0 to 0.2.1 check](acceptance-checklist.md#published-update-from-020-to-021) are retained separately.
 
 Version 0.2.3 expands Understanding Check to normally three questions, two for low-risk changes, and up to five for high-risk changes, one at a time with visible progress. Incorrect or unsure replies receive feedback before the next planned question; stopping early preserves earlier answers. Update the installed instructions and start a fresh session to replace the 0.2.2 single-question behavior. Record fields do not change in 0.2.3.
@@ -43,7 +45,7 @@ Do not delete personal configuration or learning records to force an update. The
 
 ## Local installations
 
-- **Linked Codex skill:** update the source checkout with `git pull --ff-only`, then start a new session. Keep that checkout available. This route exposes only the generic skill; use the native marketplace plugin for all three named shortcuts.
+- **Linked Codex skill:** update the source checkout with `git pull --ff-only`, then start a new session. Keep that checkout available. This route exposes only the generic skill; use the native marketplace plugin for the named shortcuts.
 - **Claude launcher:** update the source checkout, then rerun `scripts/launch_claude.py`; it builds a fresh temporary package.
 - **Manually built package or local marketplace:** pulling source alone does not rebuild that package. Build into a new output directory and follow the [local release verification](releasing.md#build-and-inspect) for the exact catalog you installed.
 

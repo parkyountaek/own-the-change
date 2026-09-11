@@ -20,7 +20,7 @@ SPEC.loader.exec_module(BUILD)
 class BuildPluginsTests(unittest.TestCase):
     def copy_source_inputs(self, workspace):
         source = workspace / "source"
-        inputs = [*BUILD.SHARED_FILES, *BUILD.CODEX_FILES, BUILD.MARKETPLACE_TEMPLATE]
+        inputs = [*BUILD.SHARED_FILES, *BUILD.CODEX_FILES, *BUILD.ASSET_FILES, BUILD.MARKETPLACE_TEMPLATE]
         for host, paths in BUILD.HOST_FILES.items():
             inputs.extend(f"adapters/{host}/{path}" for path in paths)
         for relative in inputs:
@@ -110,7 +110,8 @@ class BuildPluginsTests(unittest.TestCase):
                     self.assertTrue((package / "SECURITY.md").is_file())
                     expected_skills = {"own-the-change"}
                     if host == "codex":
-                        expected_skills.update({"own-change-debrief", "own-plan-check", "own-understanding-check"})
+                        expected_skills.update({"own-change-debrief", "own-plan-check", "own-understanding-check",
+                                                "own-demo", "own-doctor"})
                     self.assertEqual({path.name for path in (package / "skills").iterdir()}, expected_skills)
                     for name in expected_skills:
                         entry = package / "skills" / name
@@ -119,6 +120,24 @@ class BuildPluginsTests(unittest.TestCase):
                         self.assertEqual((entry / "../../docs/protocol/understanding-protocol.md").resolve(),
                                          package / "docs/protocol/understanding-protocol.md")
                     self.assertEqual((package / "docs/protocol/understanding-protocol.md").read_bytes(), expected_protocol)
+                    doctor = subprocess.run([sys.executable, str(package / "scripts/doctor.py")],
+                                            cwd=workspace, capture_output=True, text=True)
+                    self.assertEqual(doctor.returncode, 0, doctor.stderr)
+                    self.assertFalse(any(check["status"] == "error" for check in json.loads(doctor.stdout)["checks"]))
+                    demo = subprocess.run([sys.executable, str(package / "scripts/prepare_demo.py"),
+                                           "--output", str(workspace / (host + " demo")), "--path-only"],
+                                          cwd=workspace, capture_output=True, text=True)
+                    self.assertEqual(demo.returncode, 0, demo.stderr)
+                    demo_target = Path(demo.stdout.strip())
+                    smoke = subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", ".", "-v"],
+                                           cwd=demo_target, capture_output=True, text=True)
+                    self.assertEqual(smoke.returncode, 0, smoke.stderr)
+                    self.assertIn("Ran 4 tests", smoke.stderr)
+                    self.assertFalse((demo_target / "docs/ai-understanding").exists())
+                    reader = subprocess.run([sys.executable, str(package / "scripts/read_protocol.py"),
+                                             "--mode", "debrief"], capture_output=True, text=True)
+                    self.assertEqual(reader.returncode, 0, reader.stderr)
+                    self.assertLess(len(reader.stdout), len(expected_protocol.decode()))
                     result = subprocess.run(
                         [sys.executable, str(package / "scripts/resolve_context.py"), "--target", str(nested)],
                         capture_output=True, text=True, check=False,
@@ -151,7 +170,7 @@ class BuildPluginsTests(unittest.TestCase):
                         self.assertIn("systemMessage", json.loads(hook.stdout))
                         for command in (package / "commands").glob("*.md"):
                             self.assertNotIn("$CLAUDE_PLUGIN_ROOT", command.read_text())
-                            self.assertIn("${CLAUDE_PLUGIN_ROOT}/scripts/resolve_context.py", command.read_text())
+                            self.assertIn("${CLAUDE_PLUGIN_ROOT}/scripts/read_protocol.py", command.read_text())
 
     def test_existing_output_is_preserved(self):
         with tempfile.TemporaryDirectory(prefix="own-change-output-") as directory:

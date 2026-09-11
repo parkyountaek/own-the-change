@@ -35,24 +35,26 @@ Fictional example. All execution results and user replies below illustrate a sce
 
 ## Key Explanation
 - Planned total: two questions for this low-risk fixture. Both received selections; the sequence is complete.
-- Question 1/2: Which stated requirement motivated replacing the edge-only trim?
+- Question 1/2: Why was the edge-only trim replaced here?
   1. Remove only surrounding whitespace.
   2. Normalize inconsistent whitespace in display names.
   3. Reject names containing internal whitespace.
-  4. I'm not sure.
+  4. Remove all whitespace from names.
+  5. I'm not sure.
 - Expected answer: 2, supported by the stated normalization goal. The first reply selects uncertainty, not an incorrect substantive option or a skip. Feedback explains the goal, then continues the planned sequence without another attempt or a written reason.
 - Question 2/2: What does `display_name("   ")` return?
   1. An empty string, `""`.
   2. A single space, `" "`.
   3. It raises an error.
-  4. I'm not sure.
+  4. The original three spaces.
+  5. I'm not sure.
 - Expected answer: 1. Splitting whitespace-only input gives no words, so joining returns an empty string; the fixture tests this case. The second reply correctly selects 1. Feedback explains this behavior and the intentional-spacing risk, then finishes. The later correct selection does not erase the earlier uncertainty.
 
 ## User Response
 Question 1:
 
 ```text
-4
+5
 ```
 
 Question 2:

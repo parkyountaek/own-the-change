@@ -29,7 +29,9 @@ class SyncMarketplaceTests(unittest.TestCase):
             package = (source / metadata["plugins"][0]["source"]).resolve()
             self.assertEqual(package, source / SYNC.PACKAGE)
             self.assertTrue((package / ".claude-plugin/plugin.json").is_file())
-            self.assertEqual(len(list((package / "commands").glob("*.md"))), 3)
+            self.assertEqual({path.stem for path in (package / "commands").glob("*.md")},
+                             {"own-plan-check", "own-change-debrief", "own-understanding-check",
+                              "own-demo", "own-doctor"})
             self.assertTrue((package / "scripts/resolve_context.py").is_file())
             self.assertFalse((package / "docs/ai-understanding").exists())
             self.assertFalse((package / ".env").exists())

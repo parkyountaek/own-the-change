@@ -1,0 +1,4 @@
+interface:
+  display_name: "Own The Change: Demo"
+  short_description: "Try a debrief on bundled synthetic code"
+  default_prompt: "Use $own-the-change:own-demo to try the synthetic demo."

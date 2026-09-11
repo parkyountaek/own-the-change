@@ -1,0 +1,86 @@
+name: First-use feedback
+description: A few selections about trying the plugin; written explanations are optional.
+title: "[Feedback] First use"
+labels: [feedback]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is public. Do not attach source code, private learning records, secrets,
+        full logs, contact information, or employer details. Feedback does not authorize
+        marketing quotes. See the [privacy guidance](https://github.com/parkyountaek/own-the-change/blob/main/docs/protocol/understanding-protocol.md#privacy-and-safety).
+        Selecting answers is enough; versions and explanations below are optional.
+  - type: dropdown
+    id: host
+    attributes:
+      label: Which coding agent did you try?
+      options:
+        - Claude Code
+        - Codex CLI
+        - Codex desktop or IDE
+        - Another client
+        - Not tried yet
+    validations:
+      required: true
+  - type: dropdown
+    id: progress
+    attributes:
+      label: How far did you get?
+      options:
+        - Completed a debrief without help
+        - Completed a debrief after getting help
+        - Installed but could not find or start the action
+        - Started but could not finish the debrief
+        - Could not install
+        - Not tried yet
+    validations:
+      required: true
+  - type: dropdown
+    id: usefulness
+    attributes:
+      label: Compared with asking your agent to explain its diff?
+      options:
+        - More useful for this task
+        - About the same
+        - Less useful for this task
+        - Have not compared
+        - Could not complete a debrief
+    validations:
+      required: true
+  - type: dropdown
+    id: repeat_use
+    attributes:
+      label: Have you actually used it on a second task?
+      options:
+        - Used it on a second task
+        - Had another suitable task but did not use it
+        - No other suitable task yet
+        - Have not completed the first task
+    validations:
+      required: true
+  - type: dropdown
+    id: burden
+    attributes:
+      label: If you tried understanding questions, how was the effort?
+      options:
+        - Manageable
+        - Too many questions or choices
+        - Too much explanation or waiting
+        - Too shallow to be useful
+        - Did not try questions
+  - type: input
+    id: versions
+    attributes:
+      label: Client version, plugin version, and OS (optional)
+      placeholder: "Example: Codex CLI 0.153.4, plugin 0.3.0, macOS"
+  - type: textarea
+    id: details
+    attributes:
+      label: Anything else? (optional)
+      description: A confusing step or a fictional example is enough. No code or logs needed.
+  - type: checkboxes
+    id: follow_up
+    attributes:
+      label: Optional follow-up
+      options:
+        - label: The maintainer may ask one follow-up question in this public issue after about a week.

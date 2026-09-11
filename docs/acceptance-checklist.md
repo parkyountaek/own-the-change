@@ -127,6 +127,21 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for pinned lint commands and the [host
 
 The validator checks structure and consistency. It cannot authenticate a quotation, determine whether a test really ran, or judge whether an answer demonstrates understanding.
 
+## Onboarding and compact instructions: 0.3.0
+
+Observed locally on September 11, 2026, with Python 3.12.0 on macOS:
+
+- The full `python3 -m unittest discover -s tests -v` suite passed all 98 tests. Six public example records passed validation. Ruff 0.16.6, ShellCheck 0.11.0, distribution sync checks, and `git diff --check` passed.
+- Both packages build from explicit inputs. With their copied source snapshot moved out of reach, the bundled Demo helper prepared a new target, its four fixture tests passed, Doctor ran outside Git, and the protocol reader and validator worked. No learning record was created by demo preparation.
+- Five-question ordering tests preserve all four content choices, the matching key, and uncertainty last. They reject malformed input and prevent consecutive identical correct positions without a fixed cycle. They do not test semantic quality or establish better discrimination between learners.
+- All eleven canonical entry bodies contain 183-246 characters, excluding YAML discovery metadata, and have a tested 250-character ceiling. The reader selects complete verbatim sections and rejects an unmapped/duplicate heading. A debrief selection contains 16,397 characters versus 34,314 in the complete protocol at this candidate; these are text sizes, not token or billing measurements.
+- Claude Code 2.1.236 validated the repository catalog and complete package. The Codex Plugin Creator validator and all six skill validators passed. The new feedback YAML parsed with unique IDs and no required free-text body field; GitHub rendering has not yet been observed.
+- Codex CLI 0.154.0 ran a bounded synthetic Understanding Check from the built package with read-only sandboxing, normal host authentication, user configuration ignored, and plugins/apps/hooks/multi-agent/web search disabled. The first Korean response honored an explicit three-question request, inspected the index-based fixture, ran four passing tests, used the ordering helper, and displayed question 1/3 with correct position 4 and uncertainty at 5. No code or learning record was written.
+- A fresh-process replay supplied an explicitly synthetic uncertainty reply of `5`; the next response explained the reason and asked a distinct NBSP behavior question as 2/3, with correct position 3 and uncertainty at 5. It did not force an essay or retry. These are tool/response probes, not a continuous installed-picker conversation or real-user learning evidence. Host usage was emitted, but there is no matched old-version comparison and no measured savings claim.
+- A final fresh-process replay supplied a correct second selection plus an early-stop request. The response ended without question 3, preserved the earlier uncertainty as `needs_follow_up`, left the unasked topic unchecked, and created no code changes or learning record. No real participant is represented by these replies.
+
+The previous known public source before this candidate was `f14d6d0b5199c9b81b022ecc9dad008862ce7908` (0.2.3). No tag or GitHub release is implied by the 0.3.0 development version. Fresh installed picker interactions, full three- and five-question conversations on both hosts, a first-save privacy decision in a real target, human-rated wording/question quality, Windows/WSL use, and delayed learning effects remain separate checks. Private conduct contacts, security-report delivery, and public-release approval still require maintainer decisions.
+
 ## Remaining host checks
 
 These are additional acceptance scenarios, not claims of completed testing:

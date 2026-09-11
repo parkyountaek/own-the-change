@@ -32,11 +32,18 @@ An illustrative debrief:
 
 ## 4. Return to it when you need it
 
-In a real checkpoint, the agent saves and validates a local record and reports its path. Skipping questions does not establish understanding. The [protocol](protocol/understanding-protocol.md) governs the actual workflow; this page is not a learning record.
+In a real checkpoint, you can save a validated local record or finish without saving. Skipping questions does not establish understanding. The [protocol](protocol/understanding-protocol.md) governs the actual workflow; this page is not a learning record.
 
 ## Try the real workflow
 
-Install the plugin using the [README](../README.md#install-and-verify). To reproduce the example without using private project code, download or clone this repository and run from its root:
+Install or update to plugin 0.3.0 using the [README](../README.md#install-and-verify), then start a fresh session. No source clone is needed:
+
+- Claude Code: `/own-the-change:own-demo`.
+- Codex CLI: `/skills` > **List skills** > **Own The Change: Demo**, then send the selection.
+
+The agent prepares the bundled fixture in a new temporary Git repository, runs its four tests, and explains the observed change and limits. The caller does not need to be inside Git. The demo defaults to no questions and no saved learning record. Ask for an Understanding Check if you want to try the number-only interaction.
+
+For manual fixture preparation from a source checkout, the same helper remains available:
 
 ```sh
 python3 scripts/prepare_demo.py
@@ -52,4 +59,4 @@ Open Claude or Codex in that printed directory and use the prompt above. The scr
 
 The directory remains available after the script exits. When finished, remove only that printed demo directory using your file manager. For all checkpoints and adversarial scenarios, see the [host smoke test](host-smoke-test.md).
 
-Tried it? Share an optional, sanitized [first-use report](../.github/ISSUE_TEMPLATE/first_use_feedback.md). A useful report says what was hard to find or explain; it does not need your code or record.
+Tried it? Share an optional [first-use report](https://github.com/parkyountaek/own-the-change/issues/new?template=first_use_feedback.yml). Selections are enough; written explanations, code, and records are not required.
