@@ -82,6 +82,8 @@ Observed on macOS on 2026-09-11:
 
 The probes used the same [non-interactive execution](https://learn.chatgpt.com/docs/non-interactive-mode) isolation as the 0.2.2 probes: read-only sandbox, ephemeral sessions, ignored user configuration, and unrelated integrations disabled for the invocation. Previous assistant output and explicitly synthetic replies were supplied to fresh continuation processes. They were not a continuous installed conversation or real user participation. Three- and five-question model conversations, Claude's updated conversation flow, individual-question skipping, invalid replies, format changes, and live partial-record creation remain unobserved. Structural tests and these bounded probes do not establish reduced burden or a learning benefit.
 
+The implementation was published as [2147b85](https://github.com/parkyountaek/own-the-change/commit/2147b85fdb27771ceed61fc93521b484f4fbfca3). Its [GitHub Actions run](https://github.com/parkyountaek/own-the-change/actions/runs/34556194696) passed lint and all four Ubuntu/macOS Python 3.11/3.13 jobs. Disposable profiles installed public 0.2.2 before publication, then used the documented update commands to reach 0.2.3 in Claude Code 2.1.236 and Codex CLI 0.153.4. Both downloaded catalogs resolved to that commit; both installed packages matched the published contents, excluding Claude's `.in_use` marker, and their cached validators accepted all six example records. Normal user profiles and private records were not modified. No announcement, comment, tag, or GitHub release was posted.
+
 ### Local platform matrix
 
 All 65 tests passed in each environment after the runtime fixes:
