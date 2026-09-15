@@ -13,6 +13,7 @@ Own The Change is a local learning aid that needs no server. After an agent chan
 - `adapters/codex/`: Codex metadata and a link to the shared skill.
 - `.agents/skills/` and `.cursor/skills/`: project discovery links to the same shared skill.
 - `adapters/generic/`: guidance for another agent to use the canonical protocol.
+- `AGENTS.md`: the single set of development instructions for contributing agents. `CLAUDE.md` only loads it so Claude Code picks it up automatically.
 - `templates/understanding-record.md`: the shared record template.
 - `scripts/validate_record.py`: checks record format and consistency. It does not assess understanding.
 - `scripts/resolve_context.py`: resolves source resources and a target Git root without writing files.
