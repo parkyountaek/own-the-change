@@ -2,6 +2,8 @@
 
 ## Unreleased - 0.3.1 development
 
+- Show the Claude Stop shortcut only when the working tree has pending Git changes; a clean tree or a directory outside Git stays quiet. The hook still only suggests commands and never writes a record.
+- State "follow links" in the shared skill entry so symlinked project discovery resolves the bundled helper paths, matching the named checkpoint skills.
 - Check the reason through concrete before/after cases or tests instead of defaulting to an abstract first question. Internally ground each distractor in a distinct code or requirement misunderstanding; do not print extra rationale or extend the ordering-helper payload.
 - Replace weak fictional whitespace options with executable input/output and near-miss distinctions. Regression tests check their answer evidence and complete, unsure, and stopped record mappings; they do not certify arbitrary generated questions or human learning.
 - Preserve the four-content-plus-uncertainty format, risk-based question budgets, number-only replies, short entry points, no-save behavior, and record schema. Refresh both host packages to 0.3.1; no tag, release, publication, or personal reinstall is implied.

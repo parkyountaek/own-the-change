@@ -164,7 +164,8 @@ class BuildPluginsTests(unittest.TestCase):
                         if expected_code:
                             self.assertIn("not multiple_choice alone", validation.stderr)
                     if host == "claude-code":
-                        hook = subprocess.run([str(package / "hooks/suggest-debrief.sh")], input="{}",
+                        # The nested repository holds an unstaged record, so the gate opens.
+                        hook = subprocess.run([str(package / "hooks/suggest-debrief.sh")], cwd=nested, input="{}",
                                               capture_output=True, text=True, check=False)
                         self.assertEqual(hook.returncode, 0, hook.stderr)
                         self.assertIn("systemMessage", json.loads(hook.stdout))

@@ -112,9 +112,20 @@ class InstallLayoutTests(unittest.TestCase):
         result = self.run_user_install("codex-user", Path("relative-path"))
         self.assertEqual(result.returncode, 2)
 
-    def test_stop_hook_emits_a_visible_nonblocking_message_and_valid_commands(self):
+    def test_stop_hook_suggests_commands_only_for_pending_changes(self):
         hook = CLAUDE_ADAPTER / "hooks/suggest-debrief.sh"
-        result = subprocess.run([str(hook)], input="{}", capture_output=True, text=True, check=False)
+        with tempfile.TemporaryDirectory(prefix="own-change-hook-") as directory:
+            target = Path(directory) / "repo"
+            target.mkdir()
+            subprocess.run(["git", "init", "--quiet", str(target)], check=True)
+            for cwd, expected in [(Path(directory), ""), (target, "")]:
+                quiet = subprocess.run([str(hook)], cwd=cwd, input="{}",
+                                       capture_output=True, text=True, check=False)
+                self.assertEqual(quiet.returncode, 0, quiet.stderr)
+                self.assertEqual(quiet.stdout, expected)
+            (target / "pending.txt").write_text("pending change", encoding="utf-8")
+            result = subprocess.run([str(hook)], cwd=target, input="{}",
+                                    capture_output=True, text=True, check=False)
         self.assertEqual(result.returncode, 0, result.stderr)
         payload = json.loads(result.stdout)
         self.assertEqual(set(payload), {"systemMessage"})
