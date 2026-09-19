@@ -47,6 +47,25 @@ class ReadProtocolTests(unittest.TestCase):
         for title in ("Status", "Record choice", "Privacy and safety", "Evidence collection"):
             self.assertIn("\n## " + title + "\n", selected)
 
+    def test_have_prints_only_sections_the_earlier_modes_did_not_load(self):
+        document = READER.PROTOCOL.read_text()
+        delta = READER.select_sections(document, "understanding", ["debrief"])
+        remaining = set(READER.MODES["understanding"]) - set(READER.MODES["debrief"])
+        for section in document.split("\n## ")[1:]:
+            title = section.splitlines()[0]
+            self.assertEqual("## " + section in delta, title in remaining)
+        full = READER.select_sections(document, "understanding")
+        self.assertLess(len(delta), len(full))
+        self.assertEqual(READER.select_sections(document, "debrief", ["plan", "debrief"]),
+                         document.split("## ", 1)[0])
+
+    def test_cli_accepts_repeated_have_modes(self):
+        result = subprocess.run([sys.executable, str(ROOT / "scripts/read_protocol.py"), "--mode", "understanding",
+                                 "--have", "plan", "--have", "debrief"], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout,
+                         READER.select_sections(READER.PROTOCOL.read_text(), "understanding", ["plan", "debrief"]))
+
     def test_cli_returns_the_same_selection(self):
         result = subprocess.run([sys.executable, str(ROOT / "scripts/read_protocol.py"), "--mode", "understanding"],
                                 capture_output=True, text=True)

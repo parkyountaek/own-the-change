@@ -22,7 +22,7 @@ MODES = {
 }
 
 
-def select_sections(document, mode):
+def select_sections(document, mode, have=()):
     if mode == "all":
         return document
     parts = re.split(r"(?=^## )", document, flags=re.MULTILINE)
@@ -35,16 +35,18 @@ def select_sections(document, mode):
     expected = {title for titles in MODES.values() for title in titles}
     if set(sections) != expected:
         raise ValueError("Protocol section map is stale; read the complete canonical protocol")
-    requested = set(MODES[mode])
+    requested = set(MODES[mode]).difference(*(MODES[loaded] for loaded in have), ())
     return parts[0] + "".join(section for title, section in sections.items() if title in requested)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", choices=[*MODES, "all"], required=True)
+    parser.add_argument("--have", action="append", choices=list(MODES), default=[],
+                        help="a mode already loaded this session; its sections are omitted (repeatable)")
     args = parser.parse_args()
     try:
-        print(select_sections(PROTOCOL.read_text(encoding="utf-8"), args.mode), end="")
+        print(select_sections(PROTOCOL.read_text(encoding="utf-8"), args.mode, args.have), end="")
     except (OSError, ValueError) as exc:
         print(str(exc), file=sys.stderr)
         return 1

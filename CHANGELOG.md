@@ -2,6 +2,7 @@
 
 ## Unreleased - 0.3.1 development
 
+- Let the protocol reader skip already loaded sections on a mode switch with repeatable `--have <earlier-mode>`. In the complete workflow this avoids reprinting the shared sections (about half of three full mode loads); characters are still not billed tokens, and compaction or a version change requires a full reread.
 - Show the Claude Stop shortcut only when the working tree has pending Git changes; a clean tree or a directory outside Git stays quiet. The hook still only suggests commands and never writes a record.
 - State "follow links" in the shared skill entry so symlinked project discovery resolves the bundled helper paths, matching the named checkpoint skills.
 - Check the reason through concrete before/after cases or tests instead of defaulting to an abstract first question. Internally ground each distractor in a distinct code or requirement misunderstanding; do not print extra rationale or extend the ordering-helper payload.
