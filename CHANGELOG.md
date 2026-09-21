@@ -1,11 +1,15 @@
 # Changelog
 
-## Unreleased - 0.3.1 development
+## Unreleased - 0.3.2 development
 
 - Ground Understanding Check questions in the final scoped change only: subagent or reviewer commentary, intermediate attempts, and discarded alternatives are not question material unless their effect survives in the code or a recorded remaining risk. Add a host smoke scenario for checks run after internal review commentary.
 - Let the protocol reader skip already loaded sections on a mode switch with repeatable `--have <earlier-mode>`. In the complete workflow this avoids reprinting the shared sections (about half of three full mode loads); characters are still not billed tokens, and compaction or a version change requires a full reread.
 - Show the Claude Stop shortcut only when the working tree has pending Git changes; a clean tree or a directory outside Git stays quiet. The hook still only suggests commands and never writes a record.
 - State "follow links" in the shared skill entry so symlinked project discovery resolves the bundled helper paths, matching the named checkpoint skills.
+- Both host packages advance to 0.3.2 for the changed hook, skill entry, reader, and protocol. Update the installed plugin and start a fresh session. No tag or GitHub release is implied.
+
+## 0.3.1 development
+
 - Check the reason through concrete before/after cases or tests instead of defaulting to an abstract first question. Internally ground each distractor in a distinct code or requirement misunderstanding; do not print extra rationale or extend the ordering-helper payload.
 - Replace weak fictional whitespace options with executable input/output and near-miss distinctions. Regression tests check their answer evidence and complete, unsure, and stopped record mappings; they do not certify arbitrary generated questions or human learning.
 - Preserve the four-content-plus-uncertainty format, risk-based question budgets, number-only replies, short entry points, no-save behavior, and record schema. Refresh both host packages to 0.3.1; no tag, release, publication, or personal reinstall is implied.

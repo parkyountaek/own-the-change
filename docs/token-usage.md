@@ -5,7 +5,7 @@ Own The Change uses the host agent's normal model and account. It has no separat
 ## What changes in 0.3.0
 
 - Each skill/command entry body is limited to 250 characters, excluding YAML discovery metadata. An automated check enforces this limit; characters are not tokens.
-- The protocol reader loads complete relevant sections from one canonical document. A debrief does not load the quiz procedure, planning procedure, or record schema before they are needed. Since 0.3.1, a mode switch in the same session can pass `--have <earlier-mode>` to skip the shared sections that are already in context.
+- The protocol reader loads complete relevant sections from one canonical document. A debrief does not load the quiz procedure, planning procedure, or record schema before they are needed. Since 0.3.2, a mode switch in the same session can pass `--have <earlier-mode>` to skip the shared sections that are already in context.
 - The host is instructed to reuse current evidence and loaded rules across number-only answers instead of rereading files and rerunning tests each turn.
 - Scope inventories precede focused diff/caller/test inspection. Generated duplicates, unrelated history, and full logs are not default context.
 - Questions have four short content choices plus uncertainty. The ordering helper returns only reordered choices and a key, not repeated question text and rationale.
