@@ -42,7 +42,7 @@ First tagged release (`v0.3.2`). Earlier versions were installable development s
 
 ## 0.2.1 development
 
-No tag or GitHub release has been created. Development packages are available through this repository's Claude and Codex marketplaces. See the [acceptance checklist](docs/acceptance-checklist.md) for tested installation methods and known limits.
+At this point no tag or GitHub release existed; development packages were available through this repository's Claude and Codex marketplaces. See the [acceptance checklist](docs/acceptance-checklist.md) for tested installation methods and known limits.
 
 ### Added
 
