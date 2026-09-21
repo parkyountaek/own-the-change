@@ -2,6 +2,7 @@
 
 ## Unreleased - 0.3.1 development
 
+- Ground Understanding Check questions in the final scoped change only: subagent or reviewer commentary, intermediate attempts, and discarded alternatives are not question material unless their effect survives in the code or a recorded remaining risk. Add a host smoke scenario for checks run after internal review commentary.
 - Let the protocol reader skip already loaded sections on a mode switch with repeatable `--have <earlier-mode>`. In the complete workflow this avoids reprinting the shared sections (about half of three full mode loads); characters are still not billed tokens, and compaction or a version change requires a full reread.
 - Show the Claude Stop shortcut only when the working tree has pending Git changes; a clean tree or a directory outside Git stays quiet. The hook still only suggests commands and never writes a record.
 - State "follow links" in the shared skill entry so symlinked project discovery resolves the bundled helper paths, matching the named checkpoint skills.
