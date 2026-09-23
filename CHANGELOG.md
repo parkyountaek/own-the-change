@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.3 development
+
+- Show the Claude Stop shortcut once per set of pending changes in a session. When the same session stops again with identical staged, unstaged, and untracked content (for example after a debrief or a question-only turn), the hook stays quiet; a new edit or a new session shows it again. The hook keeps only a checksum per session in a private per-user temporary directory, reads no file contents into output, and still never writes a record. Without a session ID on stdin it shows the shortcut as before.
+- Both host packages advance to 0.3.3 for the changed hook. Update the installed plugin and start a fresh session. No tag or GitHub release is implied.
+
 ## 0.3.2 - 2026-09-21
 
 First tagged release (`v0.3.2`). Earlier versions were installable development snapshots from this repository's marketplaces and were never tagged.

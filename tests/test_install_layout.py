@@ -1,5 +1,6 @@
 import subprocess
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -133,6 +134,33 @@ class InstallLayoutTests(unittest.TestCase):
         for command in ["own-change-debrief", "own-understanding-check"]:
             self.assertIn(f"/{plugin}:{command}", payload["systemMessage"])
             self.assertTrue((CLAUDE_ADAPTER / "commands" / (command + ".md")).is_file())
+
+    def test_stop_hook_repeats_only_after_pending_changes_change(self):
+        hook = CLAUDE_ADAPTER / "hooks/suggest-debrief.sh"
+        with tempfile.TemporaryDirectory(prefix="own-change-hook-") as directory:
+            target = Path(directory) / "repo"
+            target.mkdir()
+            subprocess.run(["git", "init", "--quiet", str(target)], check=True)
+            (target / "pending.txt").write_text("first", encoding="utf-8")
+            env = {**os.environ, "TMPDIR": directory}
+
+            def stop(session):
+                result = subprocess.run([str(hook)], cwd=target, input=json.dumps({"session_id": session}),
+                                        capture_output=True, text=True, check=False, env=env)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                return result.stdout
+
+            self.assertIn("systemMessage", stop("session-a"))
+            self.assertEqual(stop("session-a"), "")
+            self.assertIn("systemMessage", stop("session-b"))
+            (target / "pending.txt").write_text("second", encoding="utf-8")
+            self.assertIn("systemMessage", stop("session-a"))
+            self.assertEqual(stop("session-a"), "")
+            state = Path(directory) / f"own-the-change-{os.getuid()}"
+            self.assertEqual(state.stat().st_mode & 0o777, 0o700)
+            self.assertEqual(sorted(path.name for path in state.iterdir()), ["session-a", "session-b"])
+            for path in state.iterdir():
+                self.assertNotIn("second", path.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

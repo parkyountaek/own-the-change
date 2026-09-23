@@ -104,7 +104,7 @@ Do not fill the user-answer rows with a generated script and then claim human un
 
 For the distractor regression, record each stem and option against the inspected implementation. Separately check the unique supported answer and the mistaken boundary behind each wrong option; do not grade quality from the presence of five numbered lines. Include a case whose scope cannot support three defensible distractors and observe whether the host changes the point or explains a shorter check rather than inventing features. See the [number-only example](examples/multiple-choice-check.md) for executable before/after and near-miss distinctions; its unit tests do not validate arbitrary host-generated prose.
 
-Observe the Claude Stop shortcut after a turn that leaves pending Git changes: it should show command names without starting a checkpoint or writing a record itself. After a turn with a clean work tree, or outside a Git repository, no shortcut should appear. Record discovery, shortcut display, conversation behavior, and cached installation as separate observations.
+Observe the Claude Stop shortcut after a turn that leaves pending Git changes: it should show command names without starting a checkpoint or writing a record itself. After a turn with a clean work tree, or outside a Git repository, no shortcut should appear. A later turn in the same session that leaves the pending changes unchanged, such as the debrief itself, should also stay quiet; a new edit shows the shortcut again. Record discovery, shortcut display, conversation behavior, and cached installation as separate observations.
 
 ## 5. Validate and retain only necessary evidence
 
