@@ -22,6 +22,8 @@ Understanding Check uses four content choices plus choice 5 for uncertainty, so 
 
 Demo and Doctor are new in 0.3.0 and can start outside a project. Doctor checks local prerequisites and package resources; it does not sign in, test a model, or change settings. For a lower-overhead checkpoint, say `Keep it brief and do not save a record.` Evidence and risk checks still apply. See [context and token use](token-usage.md).
 
+Since 0.3.4 the named entries are configured to run only when you select or mention them, as Claude's commands do; they stay in the skill list. Plain-language requests are meant to go to **Own The Change**, which loads the same protocol mode. Claude's Stop shortcut has no Codex equivalent.
+
 ## Why not `/own-change-debrief`?
 
 Codex CLI's documented route is `/skills` or a `$` mention. Claude plugin commands are a different interface; installing this plugin does not register Claude-style slash commands in Codex. Legacy `/prompts:...` custom prompts are deprecated, so this package does not install files into your personal prompts directory. See the official [skills guide](https://learn.chatgpt.com/docs/build-skills), [CLI command reference](https://learn.chatgpt.com/docs/developer-commands?surface=cli), and [custom prompt notice](https://developers.openai.com/codex/custom-prompts).

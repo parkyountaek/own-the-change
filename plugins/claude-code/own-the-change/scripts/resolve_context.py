@@ -27,11 +27,6 @@ def resolve_context(target, record=None):
         raise ValueError("Target must be a directory inside a Git working tree")
     root = Path(result.stdout.strip()).resolve()
     record_root = root / "docs/ai-understanding"
-    if not record_root.resolve().is_relative_to(root):
-        raise ValueError("Record directory resolves outside the target repository; inspect its symbolic links")
-    for directory in [root / "docs", record_root]:
-        if directory.exists() and not directory.is_dir():
-            raise ValueError(f"Record path component is not a directory: {directory}")
     context = {
         "source_root": str(source),
         "target_root": str(root),
@@ -39,6 +34,12 @@ def resolve_context(target, record=None):
         "record_root": str(record_root),
     }
     if record is not None:
+        # Storage checks belong to a save; conversation-only checkpoints skip them.
+        if not record_root.resolve().is_relative_to(root):
+            raise ValueError("Record directory resolves outside the target repository; inspect its symbolic links")
+        for directory in [root / "docs", record_root]:
+            if directory.exists() and not directory.is_dir():
+                raise ValueError(f"Record path component is not a directory: {directory}")
         record = Path(record)
         if not record.is_absolute():
             raise ValueError("The --record path must be absolute")

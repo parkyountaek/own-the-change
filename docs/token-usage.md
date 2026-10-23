@@ -13,6 +13,15 @@ Own The Change uses the host agent's normal model and account. It has no separat
 
 These are instruction and tooling changes, not a host-enforced token ceiling. The [canonical efficiency rules](protocol/understanding-protocol.md#efficient-execution) preserve required evidence, privacy, and risk checks. Broader inspection remains appropriate when the change requires it. More choices can increase output; not every task will cost less.
 
+## What changes in 0.3.4
+
+- Tighter protocol wording shortens the reader modes by up to 11.6 percent in characters: `understanding` 24,223 to 21,405, `plan` 9.9 percent, `debrief` 9.2 percent, `record` 5.4 percent. `demo` and `doctor` shrink only 0.3 percent because they also load the new wording rule; `research` is unchanged. A test keeps every mode under 25,000 characters as a growth guard below Claude Code's default 30,000-character Bash output. Characters are not tokens, so this cannot guarantee delivery on every host.
+- Named entries are configured for explicit invocation on both hosts, so only the shared skill stays in each host's implicit skill list, which is loaded into every session.
+- One canonical wording rule asks for one short sentence per debrief topic, one-sentence questions, brief choices, and at most two feedback sentences.
+- The ordering helper takes and returns choice numbers only (`--order`), so choice text is no longer repeated in its command and output.
+
+These are character counts, not measured tokens or bills.
+
 ## Request a smaller checkpoint
 
 After selecting Change Debrief, you can say:

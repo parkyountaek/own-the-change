@@ -2,3 +2,5 @@ interface:
   display_name: "Own The Change: Understanding Check"
   short_description: "Check understanding with short multiple-choice questions"
   default_prompt: "Use $own-the-change:own-understanding-check for the current task."
+policy:
+  allow_implicit_invocation: false

@@ -15,6 +15,7 @@ MODES = {
     "plan": (*COMMON, "Before work: Plan Check"),
     "debrief": (*COMMON, "After work: Change Debrief"),
     "understanding": (*COMMON, "Understanding Check"),
+    "review": (*COMMON, "Follow-up"),
     "demo": ("Runtime language", "Demo and environment diagnosis", "Privacy and safety"),
     "doctor": ("Runtime language", "Demo and environment diagnosis", "Privacy and safety"),
     "record": ("Runtime language", "Record choice", "Record contract", "Follow-up", "Privacy and safety"),

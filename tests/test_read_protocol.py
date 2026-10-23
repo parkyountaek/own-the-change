@@ -59,6 +59,25 @@ class ReadProtocolTests(unittest.TestCase):
         self.assertEqual(READER.select_sections(document, "debrief", ["plan", "debrief"]),
                          document.split("## ", 1)[0])
 
+    def test_every_mode_fits_both_hosts_default_output_limits(self):
+        # A growth guard: Claude Code returns at most 30,000 Bash characters by
+        # default and Codex caps exec output by tokens. Characters are not tokens,
+        # so this cannot guarantee delivery; the protocol asks to recover truncation.
+        document = READER.PROTOCOL.read_text()
+        for mode in READER.MODES:
+            with self.subTest(mode=mode):
+                self.assertLessEqual(len(READER.select_sections(document, mode)), 25_000)
+
+    def test_review_mode_loads_follow_up_rules_without_saving(self):
+        document = READER.PROTOCOL.read_text()
+        review = READER.select_sections(document, "review")
+        self.assertIn("\n## Follow-up\n", review)
+        self.assertNotIn("\n## Record contract\n", review)
+        self.assertNotIn("\n## Follow-up\n", READER.select_sections(document, "understanding"))
+        questions = READER.select_sections(document, "understanding", ["review"])
+        self.assertIn("\n## Understanding Check\n", questions)
+        self.assertNotIn("\n## Status\n", questions)
+
     def test_cli_accepts_repeated_have_modes(self):
         result = subprocess.run([sys.executable, str(ROOT / "scripts/read_protocol.py"), "--mode", "understanding",
                                  "--have", "plan", "--have", "debrief"], capture_output=True, text=True)

@@ -50,7 +50,8 @@ class InstallLayoutTests(unittest.TestCase):
     def test_claude_commands_have_discoverable_descriptions(self):
         for command in (CLAUDE_ADAPTER / "commands").glob("*.md"):
             with self.subTest(command=command.name):
-                self.assertRegex(command.read_text(encoding="utf-8"), r"\A---\ndescription: [^\n]+\n---\n")
+                self.assertRegex(command.read_text(encoding="utf-8"),
+                                 r"\A---\ndescription: [^\n]+\ndisable-model-invocation: true\n---\n")
 
     def test_claude_project_hint_uses_the_launcher_without_a_reused_build_path(self):
         result = subprocess.run(
@@ -161,6 +162,65 @@ class InstallLayoutTests(unittest.TestCase):
             self.assertEqual(sorted(path.name for path in state.iterdir()), ["session-a", "session-b"])
             for path in state.iterdir():
                 self.assertNotIn("second", path.read_text(encoding="utf-8"))
+
+    def run_stop_hook(self, cwd, session, state_root):
+        result = subprocess.run([str(CLAUDE_ADAPTER / "hooks/suggest-debrief.sh")], cwd=cwd,
+                                input=json.dumps({"session_id": session}), capture_output=True, text=True,
+                                check=False, env={**os.environ, "TMPDIR": str(state_root)})
+        self.assertEqual(result.returncode, 0, result.stderr)
+        return "systemMessage" in result.stdout
+
+    def test_stop_hook_sees_untracked_edits_from_a_subdirectory_and_past_links(self):
+        with tempfile.TemporaryDirectory(prefix="own-change-hook-") as directory:
+            target = Path(directory) / "repo"
+            (target / "src").mkdir(parents=True)
+            subprocess.run(["git", "init", "--quiet", str(target)], check=True)
+            (target / "notes.txt").write_text("first", encoding="utf-8")
+            # Links sort first and used to stop hashing before the edited file.
+            (Path(directory) / "elsewhere").mkdir()
+            (target / "0-dir-link").symlink_to(Path(directory) / "elsewhere")
+            (target / "0-broken-link").symlink_to("missing")
+
+            self.assertTrue(self.run_stop_hook(target / "src", "session-a", directory))
+            self.assertFalse(self.run_stop_hook(target / "src", "session-a", directory))
+            (target / "notes.txt").write_text("second", encoding="utf-8")
+            self.assertTrue(self.run_stop_hook(target / "src", "session-a", directory))
+            self.assertFalse(self.run_stop_hook(target, "session-a", directory))
+            state = Path(directory) / f"own-the-change-{os.getuid()}"
+            self.assertEqual([path.name for path in state.iterdir()], ["session-a"])
+
+    def test_stop_hook_suggests_without_caching_when_a_path_cannot_be_hashed(self):
+        cases = ["nested_repository", "unreadable_index"]
+        if hasattr(os, "geteuid") and os.geteuid() != 0:
+            cases += ["unreadable_untracked_file", "unreadable_tracked_file"]
+        for case in cases:
+            with self.subTest(case=case), tempfile.TemporaryDirectory(prefix="own-change-hook-") as directory:
+                target = Path(directory) / "repo"
+                target.mkdir()
+                subprocess.run(["git", "init", "--quiet", str(target)], check=True)
+                pending = target / "pending.txt"
+                if case == "unreadable_tracked_file":
+                    # `git diff` stops at this file, which would hide later edits.
+                    pending.write_text("committed", encoding="utf-8")
+                    subprocess.run(["git", "-C", str(target), "add", "pending.txt"], check=True)
+                    subprocess.run(["git", "-C", str(target), "-c", "user.name=Test", "-c", "user.email=test@example.com",
+                                    "commit", "--quiet", "-m", "base"], check=True)
+                pending.write_text("pending", encoding="utf-8")
+                if case == "nested_repository":
+                    subprocess.run(["git", "init", "--quiet", str(target / "nested")], check=True)
+                    (target / "nested/file.txt").write_text("nested", encoding="utf-8")
+                elif case == "unreadable_index":
+                    # `git status` fails here, which must not look like a clean tree.
+                    (target / ".git/index").write_bytes(b"not an index")
+                else:
+                    pending.chmod(0)
+                try:
+                    for _ in range(2):
+                        self.assertTrue(self.run_stop_hook(target, "session-a", directory))
+                finally:
+                    pending.chmod(0o600)
+                state = Path(directory) / f"own-the-change-{os.getuid()}"
+                self.assertEqual(list(state.iterdir()) if state.exists() else [], [])
 
 
 if __name__ == "__main__":

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.4 development
+
+- The five named entries are configured for explicit invocation on both hosts (`disable-model-invocation` in Claude, `allow_implicit_invocation: false` in Codex), so plain-language requests use the shared skill on both. Contract tests check that matching entries load the same protocol mode.
+- One canonical wording rule: lead with the conclusion, one short sentence per debrief topic, one-sentence questions, brief parallel choices, at most two feedback sentences, and the shorter word when the meaning is the same. Questions and choices are numbered plain text, never a host question or form tool.
+- Tighter protocol wording makes the reader modes up to 11.6 percent shorter in characters (`understanding` 24,223 to 21,405; `demo` and `doctor` 0.3 percent; `research` unchanged); the intended rule changes are the ones listed here. A test keeps every mode under 25,000 characters as a growth guard, not a token guarantee, and a truncated read must be completed before continuing.
+- A new `review` mode loads follow-up rules for a later review without saving. Status is now fixed for missing evidence: `unknown` outside a Plan Check, `not_confirmed` with evidence and no answer, and `not_confirmed` for a Plan Check with a known goal. The validator still accepts earlier records.
+- A conversation-only checkpoint no longer fails when `docs/ai-understanding` is unusable; that check runs only for a record path.
+- Answer ordering uses `prepare_question.py --order` with choice numbers only. The JSON form put braces and quotes into the command, which Claude Code's shell check holds for approval, so Claude needed a prompt for every question while Codex did not. JSON stdin still works.
+- The Stop hook fingerprints from the repository root, hashes untracked content without stopping at links, and shows the shortcut without caching when any Git step fails (status, listing, hashing, or diff). It runs `git status` once per stop instead of twice.
+- Both host packages advance to 0.3.4. Update the plugin on each host and start a fresh session. The Stop shortcut stays Claude-only. No tag or GitHub release is implied.
+
 ## 0.3.3 development
 
 - Show the Claude Stop shortcut once per set of pending changes in a session. When the same session stops again with identical staged, unstaged, and untracked content (for example after a debrief or a question-only turn), the hook stays quiet; a new edit or a new session shows it again. The hook keeps only a checksum per session in a private per-user temporary directory, reads no file contents into output, and still never writes a record. Without a session ID on stdin it shows the shortcut as before.
