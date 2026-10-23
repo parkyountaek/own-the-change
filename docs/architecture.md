@@ -20,7 +20,7 @@ Own The Change is a local learning aid that needs no server. After an agent chan
 - `scripts/launch_claude.py`: builds a temporary plugin and starts a session in the user's project without registering a marketplace.
 - `skills/own-demo/` and `skills/own-doctor/`: thin Codex setup actions; Claude exposes corresponding commands. Every skill/command body stays within 250 characters.
 - `scripts/read_protocol.py`: selects complete verbatim sections from the canonical protocol for the requested mode. It fails on unmapped headings so new rules cannot silently disappear.
-- `scripts/prepare_question.py`: stateless ordering of four evidence-authored content choices and an uncertainty choice; no model call, record, or semantic correctness claim.
+- `scripts/prepare_question.py`: stateless ordering of four evidence-authored content choices and an uncertainty choice, by choice number (`--order`, no question text in the command) or by text from JSON stdin; no model call, record, or semantic correctness claim.
 - `scripts/doctor.py`: read-only prerequisites/resource checks, optionally using an exact target/record context.
 - `scripts/prepare_demo.py`: prepares a fresh synthetic Git change without launching an agent or creating a learning record. The builder maps the three canonical smoke fixture files into bundled `assets/demo/` paths for both hosts.
 - `scripts/build_plugins.py`: copies explicitly listed canonical inputs into self-contained host packages without symlinks, private records, or a second maintained rule source.

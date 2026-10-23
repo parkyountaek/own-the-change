@@ -70,6 +70,33 @@ class PrepareQuestionTests(unittest.TestCase):
             self.assertEqual(json.loads(result.stdout)["choices"][-1], request["unsure"])
             self.assertEqual(list(Path(directory).iterdir()), [])
 
+    def test_order_mode_uses_numbers_only_and_avoids_an_immediate_repeat(self):
+        for previous in ([], [2], [3, 1]):
+            with self.subTest(previous=previous):
+                arguments = [argument for value in previous for argument in ("--previous", str(value))]
+                for _ in range(8):
+                    result = subprocess.run([sys.executable, str(SCRIPT), "--order", *arguments],
+                                            stdin=subprocess.DEVNULL, capture_output=True, text=True)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    order = json.loads(result.stdout)
+                    self.assertEqual(sorted(order["show"]), [1, 2, 3, 4])
+                    self.assertEqual(order["show"].index(1) + 1, order["answer_position"])
+                    if previous:
+                        self.assertNotEqual(order["answer_position"], previous[-1])
+        for arguments in (["--order", "--previous", "5"], ["--previous", "2"]):
+            result = subprocess.run([sys.executable, str(SCRIPT), *arguments],
+                                    stdin=subprocess.DEVNULL, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 2)
+            self.assertEqual(result.stdout, "")
+
+    def test_order_and_json_modes_share_one_ordering(self):
+        for seed in range(20):
+            order = QUESTION.prepare_order([3], random.Random(seed))
+            result = QUESTION.prepare_question({**payload(), "previous_positions": [3]}, random.Random(seed))
+            authored = ["Collapse whitespace", "Preserve spaces", "Reject empty input", "Remove all spaces"]
+            self.assertEqual(result["choices"][:4], [authored[number - 1] for number in order["show"]])
+            self.assertEqual(result["answer_position"], order["answer_position"])
+
     def test_cli_errors_do_not_echo_payload_or_emit_a_key(self):
         for raw in ('{"private-sentinel":', "private-sentinel" * 4000):
             result = subprocess.run([sys.executable, str(SCRIPT)], input=raw, capture_output=True, text=True)

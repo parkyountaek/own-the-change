@@ -2,3 +2,5 @@ interface:
   display_name: "Own The Change: Doctor"
   short_description: "Check plugin prerequisites without changing settings"
   default_prompt: "Use $own-the-change:own-doctor to check plugin prerequisites."
+policy:
+  allow_implicit_invocation: false

@@ -162,7 +162,9 @@ class ResolveContextTests(unittest.TestCase):
                 link = target / component
                 link.parent.mkdir(parents=True, exist_ok=True)
                 link.symlink_to(external, target_is_directory=True)
-                result = self.run_resolver(target)
+                # A conversation-only checkpoint still resolves; only a save is refused.
+                self.assertEqual(self.run_resolver(target).returncode, 0)
+                result = self.run_resolver(target, record_path=target / "docs/ai-understanding/2026-09-09/a.md")
                 self.assertNotEqual(result.returncode, 0, result.stdout)
                 self.assertIn("outside the target repository", result.stderr)
                 self.assertEqual(list(external.iterdir()), [])
@@ -177,7 +179,8 @@ class ResolveContextTests(unittest.TestCase):
                 conflict = target / component
                 conflict.parent.mkdir(parents=True, exist_ok=True)
                 conflict.write_text("Keep this file", encoding="utf-8")
-                result = self.run_resolver(target)
+                self.assertEqual(self.run_resolver(target).returncode, 0)
+                result = self.run_resolver(target, record_path=target / "docs/ai-understanding/2026-09-09/a.md")
                 self.assertNotEqual(result.returncode, 0, result.stdout)
                 self.assertIn("not a directory", result.stderr)
                 self.assertEqual(conflict.read_text(), "Keep this file")
